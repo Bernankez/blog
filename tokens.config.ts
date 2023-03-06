@@ -1,4 +1,4 @@
-import { defineTheme } from 'pinceau'
+import { defineTheme } from "pinceau";
 
 export default defineTheme({
   color: {
@@ -12,7 +12,7 @@ export default defineTheme({
       600: "#CC8500",
       700: "#996300",
       800: "#664200",
-      900: "#332100"
-    }
-  }
-})
+      900: "#332100",
+    },
+  },
+});
