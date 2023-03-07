@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prepare": "simple-git-hooks",
     "dev": "nuxi dev",
     "build": "nuxi build",
     "generate": "nuxi generate",
@@ -16,7 +17,15 @@
     "@nuxt/eslint-config": "^0.1.1",
     "@unocss/nuxt": "^0.50.4",
     "eslint": "^8.35.0",
+    "lint-staged": "^13.1.2",
     "nuxt": "^3.2.2",
+    "simple-git-hooks": "^2.8.1",
     "unocss": "^0.50.4"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*": ["eslint --fix"]
   }
 }
