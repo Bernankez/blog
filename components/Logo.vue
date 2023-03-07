@@ -22,4 +22,8 @@
   color: #18181B;
   font-family: ui-sans-serif;
 }
+
+.dark .title {
+  color: #fff;
+}
 </style>
