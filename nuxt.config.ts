@@ -1,6 +1,7 @@
 /// <reference types="@unocss/nuxt" />
 import { defineNuxtConfig } from "nuxt/config";
 import { transformerDirectives } from "unocss";
+import { color } from "./utils";
 
 export default defineNuxtConfig({
   extends: "@nuxt-themes/docus",
@@ -19,6 +20,7 @@ export default defineNuxtConfig({
     theme: {
       colors: {
         nuxtGray: "var(--color-gray-900)",
+        primary: color.primary,
       },
       fontFamily: {
         "nuxt-sans": "var(--font-sans)",
