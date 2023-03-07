@@ -1,4 +1,5 @@
 /// <reference types="@unocss/nuxt" />
+/// <reference types="vite/client" />
 import { defineNuxtConfig } from "nuxt/config";
 import { transformerDirectives } from "unocss";
 import { color } from "./utils";

@@ -9,10 +9,22 @@
       </div>
     </div>
     <div class="flex justify-center lg:block lg:grid-col-span-1">
-      <img class="w-70 h-70 lg:rounded-10" src="/avatar.png" alt="avatar" />
+      <img class="w-70 h-70 lg:rounded-10" :src="src" alt="avatar" @mouseenter="() => toggleAvatar('wink')" @mouseleave="() => toggleAvatar()" @touchstart="() => toggleAvatar('wink')" @touchend="() => toggleAvatar()" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import avatar from "/avatar.png";
+import avatarWink from "/avatar-wink.png";
+
+const src = ref(avatar);
+
+function toggleAvatar(type: "default" | "wink" = "default") {
+  if (type === "wink") {
+    src.value = avatarWink;
+  } else {
+    src.value = avatar;
+  }
+}
 </script>
