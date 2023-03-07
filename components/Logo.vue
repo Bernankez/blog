@@ -1,6 +1,6 @@
 <template>
-  <img class="logo" src="/logo.png" alt="logo" />
-  <div class="title">
+  <img class="w-12 h-12 m-r-2" src="/logo.png" alt="logo" />
+  <div class="text-nuxt-gray text-nuxt-xl font-bold font-nuxt-sans dark:text-white">
     科科Cole
   </div>
 </template>
@@ -8,22 +8,3 @@
 <script setup lang="ts">
 
 </script>
-
-<style scoped>
-.logo {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-}
-
-.title {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #18181B;
-  font-family: ui-sans-serif;
-}
-
-.dark .title {
-  color: #fff;
-}
-</style>

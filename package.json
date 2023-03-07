@@ -14,7 +14,9 @@
     "@bernankez/eslint-config": "^0.2.2",
     "@nuxt-themes/docus": "^1.9.0",
     "@nuxt/eslint-config": "^0.1.1",
+    "@unocss/nuxt": "^0.50.4",
     "eslint": "^8.35.0",
-    "nuxt": "^3.2.2"
+    "nuxt": "^3.2.2",
+    "unocss": "^0.50.4"
   }
 }
