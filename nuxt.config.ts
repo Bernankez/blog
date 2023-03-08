@@ -20,7 +20,11 @@ export default defineNuxtConfig({
     transformers: [transformerDirectives()],
     theme: {
       colors: {
-        nuxtGray: "var(--color-gray-900)",
+        nuxtGray: {
+          50: "var(--color-gray-50)",
+          900: "var(--color-gray-900)",
+          400: "var(--color-gray-400)",
+        },
         primary: color.primary,
       },
       fontFamily: {

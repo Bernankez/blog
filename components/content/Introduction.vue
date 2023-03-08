@@ -4,8 +4,14 @@
       <div class="text-center lg:text-left font-bold text-15 font-nuxt-sans">
         <ContentSlot :use="$slots.title" unwrap="p" />
       </div>
-      <div class="text-center lg:text-left text-5 text-gray">
+      <div class="text-center lg:text-left text-5 text-nuxt-gray-400">
         <ContentSlot :use="$slots.subtitle" unwrap="p" />
+      </div>
+      <div class="flex justify-center lg:justify-start items-center flex-gap-6 text-center lg:text-left m-t-10">
+        <ContentSlot :use="$slots.action" unwrap="p" />
+        <NuxtLink class="text-nuxt-gray-400 hover:text-nuxt-gray-900 dark:hover:text-nuxt-gray-50 font-500" target="_blank" href="https://github.com/Bernankez/blog">
+          GitHub 上看看 →
+        </NuxtLink>
       </div>
     </div>
     <div class="flex justify-center lg:block lg:grid-col-span-1">
