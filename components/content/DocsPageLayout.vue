@@ -23,7 +23,7 @@
       <template v-if="hasBody && page && bottom">
         <DocsPageBottom />
         <DocsPrevNext />
-        <Comment v-if="config.comment" />
+        <Comment v-if="hasComment" />
       </template>
     </article>
 
@@ -55,6 +55,7 @@ const fallbackValue = (value: string, fallback = true) => {
 
 const hasBody = computed(() => !page.value || page.value?.body?.children?.length > 0);
 const hasToc = computed(() => page.value?.toc !== false && page.value?.body?.toc?.links?.length >= 2);
+const hasComment = computed(() => isDefined(page.value?.comment) ? page.value.comment : config.value.comment);
 
 // TODO: get navigation links from aside level
 const hasAside = computed(() => page.value?.aside !== false && navigation.value?.length > 1);

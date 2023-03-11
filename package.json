@@ -11,6 +11,9 @@
     "lint": "eslint . --fix",
     "lint:check": "eslint ."
   },
+  "dependencies": {
+    "gitalk": "^1.8.0"
+  },
   "devDependencies": {
     "@bernankez/eslint-config": "^0.2.2",
     "@nuxt-themes/docus": "^1.9.0",
@@ -26,6 +29,8 @@
     "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
-    "*": ["eslint --fix"]
+    "*": [
+      "eslint --fix"
+    ]
   }
 }

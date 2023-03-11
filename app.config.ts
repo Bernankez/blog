@@ -1,10 +1,12 @@
+import type Gitalk from "gitalk";
+
 export default defineAppConfig({
   docus: {
     title: "科科Cole",
     description: "Cole.blog",
     url: "https://blog.keke.cc",
     layout: "default",
-    comment: true,
+    comment: true as boolean | Gitalk.GitalkOptions,
     // TODO social card preview
     // image: "https://user-images.githubusercontent.com/904724/185365452-87b7ca7b-6030-4813-a2db-5e65c785bf88.png",
     socials: {
