@@ -14,12 +14,13 @@ import "@/styles/gitalk-overwrite.css";
 const route = useRoute();
 const { page } = useContent();
 const title = computed(() => page.value?.title || "");
+const runtimeConfig = useRuntimeConfig();
 
 const commentRef = ref<HTMLDivElement>();
 onMounted(() => {
   const gitalk = new Gitalk({
-    clientID: "40827213be1939c08aba",
-    clientSecret: "40da0008fb88ccd7c81fb004c1292543e66998c9",
+    clientID: runtimeConfig.githubClientID,
+    clientSecret: runtimeConfig.githubClientSecret,
     repo: "blog-comment",
     owner: "Bernankez",
     admin: ["Bernankez"],
