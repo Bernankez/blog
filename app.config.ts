@@ -30,7 +30,7 @@ export default defineAppConfig({
       logo: true,
     },
     footer: {
-      credits: false,
+      // credits: false,
     },
     github: {
       dir: "content",
