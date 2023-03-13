@@ -17,25 +17,30 @@ const pageTitle = computed(() => page.value?.title || "");
 const title = route.path.split("/")?.pop() || route.path;
 const runtimeConfig = useRuntimeConfig();
 
+const config = ref<Gitalk.GitalkOptions>({
+  clientID: runtimeConfig.githubClientID,
+  clientSecret: runtimeConfig.githubClientSecret,
+  repo: "blog-comment",
+  owner: "Bernankez",
+  admin: ["Bernankez"],
+  id: title,
+  labels: ["comment"],
+  title,
+  body: "",
+  distractionFreeMode: false,
+  pagerDirection: "last",
+  flipMoveOptions: {
+    appearAnimation: "fade",
+    enterAnimation: "fade",
+    leaveAnimation: "fade",
+  },
+});
+
 const commentRef = ref<HTMLDivElement>();
 onMounted(() => {
   const gitalk = new Gitalk({
-    clientID: runtimeConfig.githubClientID,
-    clientSecret: runtimeConfig.githubClientSecret,
-    repo: "blog-comment",
-    owner: "Bernankez",
-    admin: ["Bernankez"],
-    id: title,
-    labels: ["comment"],
-    title,
+    ...config.value,
     body: `${location.href}\n\n${pageTitle.value}`,
-    distractionFreeMode: false,
-    pagerDirection: "last",
-    flipMoveOptions: {
-      appearAnimation: "fade",
-      enterAnimation: "fade",
-      leaveAnimation: "fade",
-    },
   });
   gitalk.render(commentRef.value!);
 });
