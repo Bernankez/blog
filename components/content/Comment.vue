@@ -13,7 +13,8 @@ import "@/styles/gitalk-overwrite.css";
 
 const route = useRoute();
 const { page } = useContent();
-const title = computed(() => page.value?.title || "");
+const pageTitle = computed(() => page.value?.title || "");
+const title = route.path.split("/")?.pop() || route.path;
 const runtimeConfig = useRuntimeConfig();
 
 const commentRef = ref<HTMLDivElement>();
@@ -24,10 +25,10 @@ onMounted(() => {
     repo: "blog-comment",
     owner: "Bernankez",
     admin: ["Bernankez"],
-    id: route.path,
+    id: title,
     labels: ["comment"],
-    title: route.path.split("/")?.pop() || route.path,
-    body: `${location.href}\n\n${title.value}`,
+    title,
+    body: `${location.href}\n\n${pageTitle.value}`,
     distractionFreeMode: false,
     pagerDirection: "last",
     flipMoveOptions: {
