@@ -13,10 +13,6 @@ export default defineNuxtConfig({
       },
     },
   },
-  runtimeConfig: {
-    githubClientID: "40827213be1939c08aba",
-    githubClientSecret: "40da0008fb88ccd7c81fb004c1292543e66998c9",
-  },
   modules: ["@unocss/nuxt"],
   unocss: {
     uno: true,
