@@ -48,7 +48,7 @@ Syntax |
 <a href="https://content.nuxtjs.org/guide/writing/mdc" target="_blank">MDC Syntax</a>
 </samp>
 
-### Contribution
+## Contribution
 
 1. Run `pnpm install` in the root folder.
 
