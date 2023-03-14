@@ -1,4 +1,5 @@
 /// <reference types="@unocss/nuxt" />
+/// <reference types="@nuxtjs/algolia" />
 /// <reference types="vite/client" />
 import { defineNuxtConfig } from "nuxt/config";
 import { transformerDirectives } from "unocss";
@@ -13,7 +14,7 @@ export default defineNuxtConfig({
       },
     },
   },
-  modules: ["@unocss/nuxt"],
+  modules: ["@unocss/nuxt", "@nuxtjs/algolia"],
   unocss: {
     uno: true,
     icons: true,
@@ -33,6 +34,13 @@ export default defineNuxtConfig({
       fontSize: {
         "nuxt-xl": "var(--fontSize-xl)",
       },
+    },
+  },
+  algolia: {
+    apiKey: "f3c4b78009a6ed7d455512effbadf33a",
+    applicationId: "4U4R8B36SX",
+    docSearch: {
+      indexName: "keke",
     },
   },
 });
