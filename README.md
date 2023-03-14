@@ -48,7 +48,7 @@ MDC语法 |
 <a href="https://content.nuxtjs.org/guide/writing/mdc" target="_blank">MDC Syntax</a>
 </samp>
 
-### 贡献
+## 贡献
 
 1. 在根目录下运行 `pnpm install`。
 
