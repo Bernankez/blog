@@ -8,7 +8,7 @@
 
 ## 评论
 
-所有博客的评论都被放在 [blog-comment/issue](https://github.com/Bernankez/blog-comment/issues)。
+所有博客的评论都放在 [blog-comment/issue](https://github.com/Bernankez/blog-comment/issues)。
 
 ## 许可
 
@@ -18,22 +18,27 @@
 
 ## 文档
 
-### 框架
+<samp>
+框架 | 
+<a href="https://docus.dev/" target="_blank">Docus</a> · 
+<a href="https://content.nuxtjs.org/" target="_blank">nuxt/content</a> · 
+<a href="https://nuxt.com.cn/" target="_blank">Nuxt</a>
 
-[Docus](https://docus.dev/) [nuxt/content](https://content.nuxtjs.org/) [Nuxt](https://nuxt.com.cn/)
+搜索引擎 ｜ 
+<a href="https://www.algolia.com/">algolia</a> · 
+<a href="https://algolia.nuxtjs.org/">@nuxtjs/algolia</a> · 
+<a href="https://docsearch.algolia.com/docs/api" target="_blank">DocSearch API</a>
 
-### 图床
+图床 | 
+<a href="https://smms.app/" target="_blank">smms</a>
 
-[smms](https://smms.app/)
+图标 | 
+<a href="https://icones.js.org/" target="_blank">Icônes</a> · 
+<a href="https://icon-sets.iconify.design/" target="_blank">Iconify</a>
 
-### 图标
-
-[Icônes](https://icones.js.org/)
-[Iconify](https://icon-sets.iconify.design/)
-
-### MDC语法
-
-[MDC Syntax](https://content.nuxtjs.org/guide/writing/mdc)
+MDC语法 | 
+<a href="https://content.nuxtjs.org/guide/writing/mdc" target="_blank">MDC Syntax</a>
+</samp>
 
 ### 贡献
 

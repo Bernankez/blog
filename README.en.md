@@ -18,23 +18,27 @@ Words and images are licensed under [CC BY-NC-SA 4.0](https://creativecommons.or
 
 ## Document
 
-### Framework
+<samp>
+Framework | 
+<a href="https://docus.dev/" target="_blank">Docus</a> · 
+<a href="https://content.nuxtjs.org/" target="_blank">nuxt/content</a> · 
+<a href="https://nuxt.com.cn/" target="_blank">Nuxt</a>
 
-[Docus](https://docus.dev/) [nuxt/content](https://content.nuxtjs.org/) [Nuxt](https://nuxt.com/)
+Search Engine ｜ 
+<a href="https://www.algolia.com/">algolia</a> · 
+<a href="https://algolia.nuxtjs.org/">@nuxtjs/algolia</a> · 
+<a href="https://docsearch.algolia.com/docs/api" target="_blank">DocSearch API</a>
 
+Image Hosting | 
+<a href="https://smms.app/" target="_blank">smms</a>
 
-### Image host
+Icons | 
+<a href="https://icones.js.org/" target="_blank">Icônes</a> · 
+<a href="https://icon-sets.iconify.design/" target="_blank">Iconify</a>
 
-[smms](https://smms.app/)
-
-### Icons
-
-[Icônes](https://icones.js.org/)
-[Iconify](https://icon-sets.iconify.design/)
-
-### Syntax
-
-[MDC Syntax](https://content.nuxtjs.org/guide/writing/mdc)
+Syntax | 
+<a href="https://content.nuxtjs.org/guide/writing/mdc" target="_blank">MDC Syntax</a>
+</samp>
 
 ### Contribution
 
