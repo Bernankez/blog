@@ -24,25 +24,25 @@
 <a href="https://content.nuxtjs.org/" target="_blank">nuxt/content</a> · 
 <a href="https://nuxt.com.cn/" target="_blank">Nuxt</a>
 </samp>
-
+<br>
 <samp>
 搜索引擎 ｜ 
 <a href="https://www.algolia.com/">algolia</a> · 
 <a href="https://algolia.nuxtjs.org/">@nuxtjs/algolia</a> · 
 <a href="https://docsearch.algolia.com/docs/api" target="_blank">DocSearch API</a>
 </samp>
-
+<br>
 <samp>
 图床 | 
 <a href="https://smms.app/" target="_blank">smms</a>
 </samp>
-
+<br>
 <samp>
 图标 | 
 <a href="https://icones.js.org/" target="_blank">Icônes</a> · 
 <a href="https://icon-sets.iconify.design/" target="_blank">Iconify</a>
 </samp>
-
+<br>
 <samp>
 MDC语法 | 
 <a href="https://content.nuxtjs.org/guide/writing/mdc" target="_blank">MDC Syntax</a>
