@@ -27,9 +27,10 @@ Framework |
 <br>
 <samp>
 Search Engine ｜ 
-<a href="https://www.algolia.com/">algolia</a> · 
+<a href="https://crawler.algolia.com/">crawler</a> · 
+<a href="https://docsearch.algolia.com/docs/api" target="_blank">DocSearch API</a> · 
 <a href="https://algolia.nuxtjs.org/">@nuxtjs/algolia</a> · 
-<a href="https://docsearch.algolia.com/docs/api" target="_blank">DocSearch API</a>
+<a href="https://www.algolia.com/">algolia</a> 
 </samp>
 <br>
 <samp>
