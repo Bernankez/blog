@@ -16,5 +16,5 @@ Hi&nbsp;
 什么也不会<br />
 喜欢睡觉
 #action
-:ButtonLink[随便看看]{href="/blog/front-end"}
+:ButtonLink[随便看看]{href="/blog/tricks"}
 ::
