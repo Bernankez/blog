@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
+const props = defineProps({
   href: {
     type: String,
     default: "",
@@ -15,6 +15,8 @@ defineProps({
     default: "_blank",
   },
 });
+
+const target = computed(() => props.href.includes("://") ? props.target : "_self");
 </script>
 
 <style lang="ts" scoped>
