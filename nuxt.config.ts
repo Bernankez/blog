@@ -19,6 +19,10 @@ export default defineNuxtConfig({
     uno: true,
     icons: true,
     transformers: [transformerDirectives()],
+    // refer https://github.com/unocss/unocss/discussions/1947
+    extraContent: {
+      filesystem: ["./content/**/*.md"],
+    },
     theme: {
       colors: {
         nuxtGray: {
