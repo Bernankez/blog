@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "prepare": "simple-git-hooks",
-    "dev": "nuxi dev",
+    "dev": "nuxi dev -o",
     "build": "nuxi build",
     "generate": "nuxi generate",
     "preview": "nuxi preview",
