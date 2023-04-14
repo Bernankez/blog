@@ -15,6 +15,15 @@ export default defineNuxtConfig({
     },
   },
   modules: ["@unocss/nuxt", "@nuxtjs/algolia"],
+  components: [
+    {
+      // import all the components under ~/components recursively
+      path: "~/components",
+      pathPrefix: false,
+      // register globally, not on demand
+      global: true,
+    },
+  ],
   unocss: {
     uno: true,
     icons: true,
