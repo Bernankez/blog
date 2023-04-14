@@ -2,14 +2,15 @@
   "name": "docus-starter",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@8.2.0",
   "scripts": {
     "prepare": "simple-git-hooks",
     "dev": "nuxi dev -o",
     "build": "nuxi build",
     "generate": "nuxi generate",
     "preview": "nuxi preview",
-    "lint": "eslint . --fix",
-    "lint:check": "eslint ."
+    "lint": "eslint .",
+    "fix": "eslint . --fix"
   },
   "dependencies": {
     "@docsearch/css": "^3.3.3",
