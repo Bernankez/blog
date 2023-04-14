@@ -1318,7 +1318,7 @@ packages:
     resolution: {integrity: sha512-Z2UmPkBy5WjxvHKuUcl1X6vKWnIyWSP+9UGde1F+MzzZxYgAQybFud1uL2B3KCowxZdoqT1hd2WklV7EtyCwrQ==}
     hasBin: true
     dependencies:
-      '@nuxt/kit': 3.4.1(rollup@3.20.2)
+      '@nuxt/kit': 3.3.3(rollup@3.20.2)
       chalk: 5.2.0
       ci-info: 3.8.0
       consola: 3.0.2
