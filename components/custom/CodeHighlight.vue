@@ -54,7 +54,7 @@ pre {
 }
 
 .code-pre {
-  @apply block p-3 text-4.5 bg-gray-100 dark-bg-gray-900 b-solid b-1 b-gray-200 dark-b-gray-700 rounded-2 whitespace-pre-line;
+  @apply block p-3 text-4.5 bg-gray-100 dark-bg-dark-800 b-solid b-1 b-gray-200 dark-b-dark-300 rounded-2 whitespace-pre-line;
 }
 
 .copy-button {
