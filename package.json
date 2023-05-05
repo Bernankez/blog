@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@bernankez/eslint-config": "^0.4.3",
+    "@iconify/json": "^2.2.60",
     "@nuxt-themes/docus": "^1.9.9",
     "@nuxt/eslint-config": "^0.1.1",
     "@unocss/nuxt": "^0.50.4",
