@@ -19,7 +19,7 @@
     "gitalk": "^1.8.0"
   },
   "devDependencies": {
-    "@bernankez/eslint-config": "^0.2.2",
+    "@bernankez/eslint-config": "^0.4.3",
     "@nuxt-themes/docus": "^1.9.9",
     "@nuxt/eslint-config": "^0.1.1",
     "@unocss/nuxt": "^0.50.4",
