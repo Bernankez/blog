@@ -6,7 +6,7 @@
       </slot>
     </div>
     <div class="flex flex-col">
-      <NuxtLink :href="href" target="_blank" class="text-4 sm:text-5 underline underline-offset-4">
+      <NuxtLink :href="href" target="_blank" class="w-fit text-4 sm:text-5 underline underline-offset-4">
         {{ name }}
       </NuxtLink>
       <div class="text-3.5 sm:text-4 m-t-2">
