@@ -4,13 +4,9 @@ title: "获取隐藏元素（display: none）的样式"
 
 # 获取隐藏元素（`display: none`）的样式
 
-::alert{type="warning"}
-这个方法目前对火狐以及Safari浏览器不生效，暂时还没去看是哪里的问题。
-::
-
 隐藏的元素（`display: none`）无法获取到它的样式，因此大致思路是，获取到该元素，将它的`display`设置为可见，设置`visibility`为`hidden`，设置`position`为`absolute`，然后获取样式。之后复原它的`display`、`visibility`和`position`即可。
 
-我写了一个简单的Vue3下适用SSR的Composable，可能还会有bug之类的，遇到了以后再改吧。
+我写了一个简单的Vue3下适用SSR的Composable。
 
 `useHiddenElementStyle.ts`
 ```typescript
@@ -19,7 +15,7 @@ import { unrefElement, useEventListener } from "@vueuse/core";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 
 export function useHiddenElementStyle(target: MaybeComputedElementRef) {
-  const style = ref({} as CSSStyleDeclaration);
+  const style = ref<Record<keyof CSSStyleDeclaration, string>>({} as any);
 
   function updateStyle<T extends MaybeElement>(el: UnRefElementReturn<T>) {
     if (!el) { return; }
@@ -33,12 +29,12 @@ export function useHiddenElementStyle(target: MaybeComputedElementRef) {
       el.style.display = "unset";
       el.style.visibility = "hidden";
       el.style.position = "absolute";
-      style.value = { ...window.getComputedStyle(el) };
+      style.value = transformCSSProperties(window.getComputedStyle(el));
       el.style.position = <string>position;
       el.style.visibility = <string>visibility;
       el.style.display = <string>display;
     } else {
-      style.value = { ...window.getComputedStyle(el) };
+      style.value = transformCSSProperties(window.getComputedStyle(el));
     }
   }
 
@@ -67,6 +63,17 @@ export function useHiddenElementStyle(target: MaybeComputedElementRef) {
   return {
     style,
   };
+}
+
+function transformCSSProperties(styles: CSSStyleDeclaration) {
+  const style: Record<string, string> = {};
+  const length = styles.length;
+  for (let i = 0; i < length; i++) {
+    const prop = styles[i];
+    const value = styles.getPropertyValue(prop);
+    style[prop] = value;
+  }
+  return style as Record<keyof CSSStyleDeclaration, string>;
 }
 
 function createStyleSelector(options?: { style?: CSSStyleDeclaration; computedStyle?: CSSStyleDeclaration }) {
