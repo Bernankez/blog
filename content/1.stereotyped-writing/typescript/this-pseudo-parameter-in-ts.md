@@ -1,8 +1,8 @@
 ---
-title: ts中的this伪参数
+title: TS中的this伪参数
 ---
 
-# ts中的this伪参数
+# TS中的this伪参数
 
 ::alert
 Reference: [TypeScript 函数中的 this 参数](https://www.jianshu.com/p/8b3a2513d8e5)
