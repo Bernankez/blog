@@ -4,7 +4,9 @@ title: JS中的原型与继承
 
 # JS中的原型与继承
 
-> 为什么要有原型？JS设计之初没有Class的概念，所以使用了构造函数+原型实现继承机制(es6的class可以看作语法糖)
+::alert
+为什么要有原型？JS设计之初没有Class的概念，所以使用了构造函数+原型实现继承机制(es6的class可以看作语法糖)
+::
 
 ```javascript
 function Person(name){
@@ -51,7 +53,9 @@ p.constructor === Person // true
 
 ### `__proto__`
 
-> `__proto__`不是一个标准属性，是各大浏览器厂商添加的私有属性。一般可以用`Object.getPrototypeOf`获取实例对象原型。
+::alert
+`__proto__`不是一个标准属性，是各大浏览器厂商添加的私有属性。一般可以用`Object.getPrototypeOf`获取实例对象原型。
+::
 
 从上面构造函数创建实例的过程可以看出来，我们新建的对象的原型对象指向构造函数的prototype。而在实例对象中，我们可以通过`Object.getPrototypeOf`获取实例的原型。
 
@@ -88,10 +92,12 @@ Object.prototype.__proto__ === null;
 
 ## 容易困惑的点
 
-> `Object.__proto__ === Function.prototype`因为Object本身是一个函数对象，是通过`new Function()`创建的。这恒河里
+::list{type="info"}
+`Object.__proto__ === Function.prototype`因为Object本身是一个函数对象，是通过`new Function()`创建的。这恒河里
 
-> `Function.__proto__ === Function.prototype`因为Function自身也是一个函数对象，它也是通过`new Function()`创建出来的，因此它的原型对象指向它自己。这也恒河里
+`Function.__proto__ === Function.prototype`因为Function自身也是一个函数对象，它也是通过`new Function()`创建出来的，因此它的原型对象指向它自己。这也恒河里
 
-> `Function.prototype.__proto__ === Object.prototype`因为Function.prototype实际上也是一个对象，也就是它是由`new Object()`创建出来的，所以实例的`__proto__`指向构造函数的`prototype`。嗯，河里
+`Function.prototype.__proto__ === Object.prototype`因为Function.prototype实际上也是一个对象，也就是它是由`new Object()`创建出来的，所以实例的`__proto__`指向构造函数的`prototype`。嗯，河里
+::
 
 总之，`构造函数.prototype === 实例.__proto__`，而对于构造函数，它本身也是一个函数对象，因此我们也可以把它当作一个实例对象去分析。最终的原型对象指向的都是`Object.prototype.__proto__`，即`null`，保证原型链有一个终点。
