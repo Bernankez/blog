@@ -26,7 +26,7 @@ Pragma > Cache Control > Expires
 
 Pragma为http1.0通用首部。Pragma为no-cache时，表示禁用缓存。Pragma唯一指令只能是no-cache，与cache-control: no-cache效果一致。
 
-Expires是GMT时间，表示缓存有效时间。Expires是绝对时间点。如果客户端和服务端因为某些原因（失去不同，时间不准确）时间发生误差，则**强制缓存会失效**。
+Expires是GMT时间，表示缓存有效时间。Expires是绝对时间点。如果客户端和服务端因为某些原因时区不同，时间不准确）时间发生误差，则**强制缓存会失效**。
 
 ### Cache-Control
 
