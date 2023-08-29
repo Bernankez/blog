@@ -123,6 +123,10 @@ father中包含了一个空的block，这个block的margin-top 0.25rem，margin-
 
 ## BFC (Block Formatting Context)（区块格式化上下文）
 
+::Badge
+字节
+::
+
 ::alert
 Reference: [区块格式化上下文](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Block_formatting_context)
 ::

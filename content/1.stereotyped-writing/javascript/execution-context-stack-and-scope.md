@@ -4,6 +4,10 @@ title: 执行上下文与作用域
 
 # 执行上下文与作用域
 
+::Badge
+SHINE
+::
+
 ::alert
 **执行上下文** (Execution Context Stack)也可称作函数调用栈，函数执行栈。
 <br>

@@ -4,6 +4,10 @@ title: TCP三次握手与四次挥手
 
 # TCP三次握手与四次挥手
 
+::Badge
+SHINE
+::
+
 ## 网络协议
 
 OSI (Open System Interconnect)规定了七层协议模型，TCP/IP规定了四层模型，七层模型和四层模型的对应关系：

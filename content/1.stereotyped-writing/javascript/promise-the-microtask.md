@@ -4,6 +4,10 @@ title: Promise微任务
 
 # Promise微任务
 
+::Badge
+字节
+::
+
 ::alert
 相关问题：[关于 Promise 规范与执行顺序的问题？](https://segmentfault.com/q/1010000042029009)
 ::
