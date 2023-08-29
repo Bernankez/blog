@@ -1,21 +1,21 @@
 <template>
-  <div class="grid lg:grid-cols-3 gap-8 p-y-20 sm:p-y-24 lg:p-y-32 box-border">
+  <div class="grid box-border gap-8 p-y-20 lg:grid-cols-3 lg:p-y-32 sm:p-y-24">
     <div class="lg:grid-col-span-2">
-      <div class="text-center lg:text-left font-bold text-15 font-nuxt-sans">
+      <div class="text-center font-nuxt-sans text-15 font-bold lg:text-left">
         <ContentSlot :use="$slots.title" unwrap="p" />
       </div>
-      <div class="text-center lg:text-left text-5 text-nuxt-gray-400">
+      <div class="text-center text-5 text-nuxt-gray-400 lg:text-left">
         <ContentSlot :use="$slots.subtitle" unwrap="p" />
       </div>
-      <div class="flex justify-center lg:justify-start items-center flex-gap-6 text-center lg:text-left m-t-10">
+      <div class="m-t-10 flex items-center justify-center flex-gap-6 text-center lg:justify-start lg:text-left">
         <ContentSlot :use="$slots.action" unwrap="p" />
-        <NuxtLink class="text-nuxt-gray-400 hover:text-nuxt-gray-900 dark:hover:text-nuxt-gray-50 font-500" target="_blank" href="https://github.com/Bernankez/blog">
+        <NuxtLink class="font-500 text-nuxt-gray-400 hover:text-nuxt-gray-900 dark:hover:text-nuxt-gray-50" target="_blank" href="https://github.com/Bernankez/blog">
           GitHub 上看看 →
         </NuxtLink>
       </div>
     </div>
-    <div class="flex justify-center lg:block lg:grid-col-span-1">
-      <img class="w-70 h-70 lg:rounded-10" :src="src" alt="avatar" @mouseenter="() => toggleAvatar('wink')" @mouseleave="() => toggleAvatar()" @touchstart.passive="() => toggleAvatar('wink')" @touchend.passive="() => toggleAvatar()" />
+    <div class="flex justify-center lg:grid-col-span-1 lg:block">
+      <img class="h-70 w-70 lg:rounded-10" :src="src" alt="avatar" @mouseenter="() => toggleAvatar('wink')" @mouseleave="() => toggleAvatar()" @touchstart.passive="() => toggleAvatar('wink')" @touchend.passive="() => toggleAvatar()" />
     </div>
   </div>
 </template>

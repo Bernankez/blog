@@ -1,5 +1,5 @@
 <template>
-  <div class="relative m-t-3 group">
+  <div class="group relative m-t-3">
     <pre class="code-pre">
       <code v-html="code"></code>
     </pre>

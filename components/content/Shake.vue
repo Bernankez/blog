@@ -1,5 +1,5 @@
 <template>
-  <span class="inline-block shake cursor-default">
+  <span class="shake inline-block cursor-default">
     <ContentSlot :use="$slots.default" unwrap="p" />
   </span>
 </template>

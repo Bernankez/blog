@@ -1,6 +1,6 @@
 <template>
   <div ref="commentRef" class="docs-comment">
-    <div class=" flex justify-center w-full">
+    <div class="w-full flex justify-center">
       评论加载中 (ง •̀ω•́)ง
     </div>
   </div>

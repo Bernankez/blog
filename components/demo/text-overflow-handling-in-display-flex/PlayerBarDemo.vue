@@ -5,10 +5,10 @@
     </p>
     <div class="w-full bg-green">
       <div class="flex items-center flex-gap-4">
-        <div class="shrink-0 w-10 h-10 bg-gray">
+        <div class="h-10 w-10 shrink-0 bg-gray">
           头像
         </div>
-        <div class="bg-blue flex flex-col flex-gap-1 w-full">
+        <div class="w-full flex flex-col flex-gap-1 bg-blue">
           <div class="bg-orange-300">
             这是一首很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的歌名
           </div>
@@ -16,7 +16,7 @@
             歌手
           </div>
         </div>
-        <div class="shrink-0 flex items-center flex-gap-2">
+        <div class="flex shrink-0 items-center flex-gap-2">
           <div class="bg-red">
             一些播放控制按钮
           </div>
@@ -28,18 +28,18 @@
     </p>
     <div class="w-full bg-green">
       <div class="flex items-center flex-gap-4">
-        <div class="shrink-0 w-10 h-10 bg-gray">
+        <div class="h-10 w-10 shrink-0 bg-gray">
           头像
         </div>
-        <div class="bg-blue flex flex-col flex-gap-1 w-full truncate">
-          <div class="bg-orange-300 truncate">
+        <div class="w-full flex flex-col flex-gap-1 truncate bg-blue">
+          <div class="truncate bg-orange-300">
             这是一首很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的歌名
           </div>
           <div class="bg-orange-100">
             歌手
           </div>
         </div>
-        <div class="shrink-0 flex items-center flex-gap-2">
+        <div class="flex shrink-0 items-center flex-gap-2">
           <div class="bg-red">
             一些播放控制按钮
           </div>
@@ -51,18 +51,18 @@
     </p>
     <div class="w-full bg-green">
       <div class="absolute flex items-center flex-gap-4">
-        <div class="shrink-0 w-10 h-10 bg-gray">
+        <div class="h-10 w-10 shrink-0 bg-gray">
           头像
         </div>
-        <div class="bg-blue flex flex-col flex-gap-1 w-full truncate">
-          <div class="bg-orange-300 truncate">
+        <div class="w-full flex flex-col flex-gap-1 truncate bg-blue">
+          <div class="truncate bg-orange-300">
             这是一首很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的歌名
           </div>
           <div class="bg-orange-100">
             歌手
           </div>
         </div>
-        <div class="shrink-0 flex items-center flex-gap-2">
+        <div class="flex shrink-0 items-center flex-gap-2">
           <div class="bg-red">
             一些播放控制按钮
           </div>
@@ -91,19 +91,19 @@
     </pre>
     <p>此时就已经生效了。</p>
     <div class="w-full bg-green">
-      <div class="absolute flex items-center flex-gap-4 w-full">
-        <div class="shrink-0 w-10 h-10 bg-gray">
+      <div class="absolute w-full flex items-center flex-gap-4">
+        <div class="h-10 w-10 shrink-0 bg-gray">
           头像
         </div>
-        <div class="flex-auto w-0 bg-blue flex flex-col flex-gap-1">
-          <div class="bg-orange-300 truncate">
+        <div class="w-0 flex flex-auto flex-col flex-gap-1 bg-blue">
+          <div class="truncate bg-orange-300">
             这是一首很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的歌名
           </div>
           <div class="bg-orange-100">
             歌手
           </div>
         </div>
-        <div class="shrink-0 flex items-center flex-gap-2">
+        <div class="flex shrink-0 items-center flex-gap-2">
           <div class="bg-red">
             一些播放控制按钮
           </div>
