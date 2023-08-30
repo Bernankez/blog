@@ -5,7 +5,7 @@ title: 执行上下文与作用域
 # 执行上下文与作用域
 
 ::Badge
-SHINE
+SHEIN
 ::
 
 ::alert

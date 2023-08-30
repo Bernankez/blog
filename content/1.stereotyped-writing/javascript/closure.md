@@ -5,7 +5,7 @@ title: JS闭包
 # JS闭包
 
 ::Badge
-SHINE
+SHEIN
 ::
 
 ### 是什么
