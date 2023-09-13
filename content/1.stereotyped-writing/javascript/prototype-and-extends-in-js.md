@@ -18,6 +18,10 @@ const p = new Person('jack');
 
 构造函数创建实例的过程 (模拟new操作符)：
 
+::Badge
+BLOOMCHIC
+::
+
 ```javascript
 function new(constructor){
   return (...args) => {
