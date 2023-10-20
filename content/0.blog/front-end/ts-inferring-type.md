@@ -1,8 +1,8 @@
 ---
-title: ts函数重载类型推断
+title: TS函数重载类型推断
 ---
 
-# ts函数重载类型推断
+# TS函数重载类型推断
 
 ::alert
 Reference: [TypeScript: Documentation - Conditional Types (typescriptlang.org)](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#inferring-within-conditional-types)
