@@ -4,6 +4,14 @@ title: unplugin-vue-components自动导入的组件类型失效问题
 
 # `unplugin-vue-components`自动导入的组件类型失效问题
 
+`unplugin-vue-components`在[`0.25.1`](https://github.com/unplugin/unplugin-vue-components/releases/tag/v0.25.1)版本中恢复了从`vue`而不是`@vue/runtime-core`中导出类型。[`Volar`](https://github.com/vuejs/language-tools/blob/6f850196d6b9cd1bee62104d3d92867cf0b6777e/extensions/vscode/README.md?plain=1#L94C38-L94C38)中目前也是这么推荐的。但是我遇到了[这个issue](https://github.com/vuejs/language-tools/issues/3383)中的问题。也就是当同时使用`unplugin-auto-import`和`unplugin-vue-components`时，并且`unplugin-auto-import`的`vueTemplate`设置为`true`，并且`tsconfig`中`components.d.ts`排在`auto-imports.d.ts`后面时会识别不到`GlobalComponents`类型。解决方法如issue中提到的，将`auto-imports.d.ts`放在`tsconfig`的`include`的最后一项即可。
+
+目前仍然困扰的是[`vue-router`](https://github.com/vuejs/router/blob/c396d14b57be0da1e3504856e89d282f0666242f/packages/router/src/globalExtensions.ts#L11-L12)中仍然在通过`@vue/runtime-core`导出类型。不过Vue的[这个PR](https://github.com/vuejs/core/pull/3399)已经有了进展，或许3.4.0会修复这个相关问题？
+
+---
+
+::collapse{title="原文" desc="2023-05-06"}
+#content
 VSCode中我们使用Volar作为Vue3的extension，这是前提。
 
 我们都知道，ts中重复声明的interface会合并，可以实现接口的扩展。Volar就是基于重复声明`GlobalComponents`接口实现全局组件类型提示的。
@@ -44,3 +52,5 @@ Reference: <br>
 pnpm add -D @vue/runtime-core
 ```
 将`@vue/runtime-core`添加到项目的`devDependencies`，上面的导入就生效了。
+
+::
