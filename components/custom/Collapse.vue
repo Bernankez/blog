@@ -21,7 +21,7 @@ defineProps<{
   desc?: string;
 }>();
 
-const collapsed = ref(false);
+const collapsed = ref(true);
 </script>
 
 <style scoped>
