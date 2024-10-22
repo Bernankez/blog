@@ -1,56 +1,5 @@
-# 科科Cole的博客
+# Vue 3 + TypeScript + Vite
 
-**[blog.keke.cc](https://blog.keke.cc/)**
+This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
-<samp>Powered by <a href="https://docus.dev/" target="_blank">Docus</a></samp>
-
-中文 | [English](./README.en.md)
-
-## 评论
-
-所有博客的评论都放在 [blog-comment/issue](https://github.com/Bernankez/blog-comment/issues)。
-
-## 许可
-
-代码使用 [MIT](./LICENSE) 许可。
-
-文字与图像使用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可。
-
-## 文档
-
-<samp>
-框架 | 
-<a href="https://docus.dev/" target="_blank">Docus</a> · 
-<a href="https://content.nuxtjs.org/" target="_blank">nuxt/content</a> · 
-<a href="https://nuxt.com.cn/" target="_blank">Nuxt</a>
-</samp>
-<br>
-<samp>
-搜索引擎 ｜ 
-<a href="https://crawler.algolia.com/">crawler</a> · 
-<a href="https://docsearch.algolia.com/docs/api" target="_blank">DocSearch API</a> · 
-<a href="https://algolia.nuxtjs.org/">@nuxtjs/algolia</a> · 
-<a href="https://www.algolia.com/">algolia</a> 
-</samp>
-<br>
-<samp>
-图床 | 
-<a href="https://smms.app/" target="_blank">smms</a>
-</samp>
-<br>
-<samp>
-图标 | 
-<a href="https://icones.js.org/" target="_blank">Icônes</a> · 
-<a href="https://icon-sets.iconify.design/" target="_blank">Iconify</a>
-</samp>
-<br>
-<samp>
-MDC语法 | 
-<a href="https://content.nuxtjs.org/guide/writing/mdc" target="_blank">MDC Syntax</a>
-</samp>
-
-## 贡献
-
-1. 在根目录下运行 `pnpm install`。
-
-2. 运行 `pnpm dev` 启动开发服务器。
+Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
