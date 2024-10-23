@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { cva } from "cva";
+import { twMerge } from "tailwind-merge";
 import type { VariantProps } from "cva";
 
 const { variant = "primary", size = "md" } = defineProps<{
@@ -23,7 +24,7 @@ const buttonVariants = cva("transition hover:bg-opacity-90", {
       sm: "text-sm py-1 px-2 rounded-lg",
       md: "rounded-xl p-2",
       lg: "px-sm py-2 text-lg rounded-xl",
-      icon: "w-10 h-10 rounded-xl",
+      icon: "w-10 h-10 rounded-xl flex justify-center items-center",
     },
   },
 });
@@ -32,7 +33,7 @@ type ButtonVariants = VariantProps<typeof buttonVariants>;
 </script>
 
 <template>
-  <button :class="buttonVariants({ variant, size })" @click="e => emit('click', e)">
+  <button :class="twMerge(buttonVariants({ variant, size }))" @click="e => emit('click', e)">
     <slot></slot>
   </button>
 </template>

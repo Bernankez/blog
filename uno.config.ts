@@ -2,6 +2,8 @@ import { defineConfig, presetIcons, presetTypography, presetUno, transformerDire
 import presetShadcn from "./preset.shadcn";
 
 export default defineConfig({
-  presets: [presetUno(), presetTypography(), presetIcons(), presetShadcn()],
+  presets: [presetUno(), presetTypography(), presetIcons({
+    scale: 1.2,
+  }), presetShadcn()],
   transformers: [transformerDirectives()],
 });

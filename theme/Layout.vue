@@ -1,25 +1,17 @@
 <script setup lang="ts">
-import { useData } from "vitepress";
-import { toRefs } from "vue";
+import BContent from "./components/BContent.vue";
+import BFooter from "./components/BFooter.vue";
 import BNav from "./components/BNav.vue";
-
-const { frontmatter } = useData();
-
-const { layout } = toRefs(frontmatter.value);
 </script>
 
 <template>
   <BNav />
-  <div v-if="layout === 'home'">
-    home
-  </div>
-  <div v-else-if="layout === 'doc'">
-    <Content />
-  </div>
-  <div v-else-if="layout === 'page'">
-    page
-  </div>
-  <div v-else>
-    <Content />
-  </div>
+  <BContent />
+  <BFooter class="b-footer" />
 </template>
+
+<style scoped>
+.b-main {
+  min-height: calc(100vh - var(--b-nav-height) - var(--b-footer-height));
+}
+</style>
