@@ -1,15 +1,10 @@
 <script setup lang="ts">
-import { useData } from "vitepress";
-import { computed, toRefs } from "vue";
+import { useSidebar } from "../composables/useSidebar";
 import BSidebarItem from "./BSidebarItem.vue";
-import type { ThemeConfig } from "../types";
 
-const { theme } = useData<ThemeConfig>();
-
-const { sidebar } = toRefs(theme.value);
-const sidebarArray = computed(() => Array.isArray(sidebar?.value) ? sidebar.value : []);
+const { sidebar, path } = useSidebar();
 </script>
 
 <template>
-  <BSidebarItem v-for="item in sidebarArray" :key="item.link" :sidebar-item="item" />
+  <BSidebarItem v-for="item in sidebar.items" :key="item.link" :collapsed="sidebar.collapsed" :path :indent-from-level="sidebar.indentFromLevel" :item />
 </template>

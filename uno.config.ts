@@ -6,4 +6,14 @@ export default defineConfig({
     scale: 1.2,
   }), presetShadcn()],
   transformers: [transformerDirectives()],
+  theme: {
+    duration: {
+      DEFAULT: "var(--b-transition-duration)",
+    },
+    animation: {
+      timingFns: {
+        DEFAULT: "var(--b-transition-timing-function)",
+      },
+    },
+  },
 });

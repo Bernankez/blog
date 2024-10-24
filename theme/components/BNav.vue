@@ -40,7 +40,7 @@ const showDrawer = ref(false);
       </section>
     </div>
   </header>
-  <BDrawer v-model="showDrawer" class="px-3xl">
+  <BDrawer v-model="showDrawer" display-directive="show" class="px-3xl">
     <BSidebar />
   </BDrawer>
 </template>

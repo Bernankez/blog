@@ -12,7 +12,7 @@ const emit = defineEmits<{
   click: [e: MouseEvent];
 }>();
 
-const buttonVariants = cva("transition hover:bg-opacity-90", {
+const buttonVariants = cva("transition motion-reduce:transition-none hover:bg-opacity-90", {
   variants: {
     variant: {
       primary: "bg-primary text-primary-foreground",

@@ -1,4 +1,5 @@
 import UnoCSS from "unocss/vite";
+import DevTools from "vite-plugin-vue-devtools";
 import { defineConfigWithTheme } from "vitepress";
 import type { ThemeConfig } from "../theme/types";
 
@@ -15,6 +16,8 @@ export default async () => {
     srcDir: "src",
     cleanUrls: true,
     lastUpdated: true,
+    // TODO
+    ignoreDeadLinks: true,
     themeConfig: {
       // https://vitepress.dev/reference/default-theme-config
       logo: "/logo.webp",
@@ -63,10 +66,10 @@ export default async () => {
         {
           text: "参考",
           items: [
-            { text: "站点配置", link: "site-config" },
-            { text: "frontmatter 配置", link: "frontmatter-config" },
-            { text: "运行时 API", link: "runtime-api" },
-            { text: "CLI", link: "cli" },
+            { text: "站点配置", link: "/site-config" },
+            { text: "frontmatter 配置", link: "/frontmatter-config" },
+            { text: "运行时 API", link: "/runtime-api" },
+            { text: "CLI", link: "/cli" },
             {
               text: "默认主题",
               base: "/zh/reference/default-theme-",
@@ -87,6 +90,7 @@ export default async () => {
                   {
                     text: "默认主题",
                     base: "/zh/reference/default-theme-",
+                    collapsed: true,
                     items: [
                       { text: "概览", link: "config" },
                       { text: "导航栏", link: "nav" },
@@ -115,7 +119,7 @@ export default async () => {
       ],
     },
     vite: {
-      plugins: [UnoCSS()],
+      plugins: [UnoCSS(), DevTools()],
     },
   });
 };

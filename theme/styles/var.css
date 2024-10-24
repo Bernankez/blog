@@ -1,17 +1,32 @@
+/** height */
 :root {
   --b-nav-height: 70px;
   --b-nav-logo-height: 48px;
   --b-footer-height: 100px;
 }
 
+/** width */
 :root {
   --b-max-width: 1280px;
   --b-drawer-width: 320px;
 }
 
+/** z-index */
 :root {
   --b-toc-bar-z-index: 20;
   --b-nav-z-index: 30;
   --b-mask-z-index: 40;
   --b-aside-z-index: 50;
+}
+
+/** transition */
+:root {
+  --b-transition-duration: 250ms;
+  --b-transition-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --b-transition-duration: 0;
+  }
 }

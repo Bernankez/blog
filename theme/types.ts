@@ -66,11 +66,20 @@ export interface NavItemWithChildren {
 
 // sidebar --------------------------------------------------------------
 
-export type Sidebar = SidebarItem[] | SidebarMulti;
+export type Sidebar = SidebarSingle | SidebarMulti;
+
+export interface SidebarObject {
+  items: SidebarItem[];
+  collapsed?: boolean;
+  base?: string;
+  indentFromLevel?: number;
+}
+
+export type SidebarSingle = SidebarItem[] | SidebarObject;
 
 export interface SidebarMulti {
-  [path: string]: SidebarItem[] | { items: SidebarItem[]; base: string };
-}
+  [path: string]: SidebarSingle;
+};
 
 export interface SidebarItem {
   /**
@@ -101,6 +110,11 @@ export interface SidebarItem {
    * Base path for the children items.
    */
   base?: string;
+
+  /**
+   * Show indent from which level, defaults to 1
+   */
+  indentFromLevel?: number;
 
   /**
    * Customize text that appears on the footer of previous/next page.
