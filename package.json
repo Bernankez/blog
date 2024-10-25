@@ -13,6 +13,7 @@
     "fix": "eslint . -f mo --fix"
   },
   "dependencies": {
+    "@floating-ui/vue": "^1.1.5",
     "@vueuse/core": "^11.1.0",
     "cva": "npm:class-variance-authority@^0.7.0",
     "tailwind-merge": "^2.5.4",

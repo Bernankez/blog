@@ -1,61 +1,52 @@
-import { inBrowser } from "vitepress";
-import { onUnmounted, readonly, type Ref, ref, watch } from "vue";
+import { type MaybeRefOrGetter, type Ref, ref } from "vue";
 
-interface UsePopupOptions {
-  el: Ref<HTMLElement | undefined>;
-  onFocus?: () => void;
-  onBlur?: () => void;
+export type Trigger = "click" | "hover" | "focus";
+
+export interface UsePopoverOptions {
+  show?: Ref<boolean>;
+  trigger?: MaybeRefOrGetter<Trigger>;
+  keepAliveOnHover?: MaybeRefOrGetter<boolean>;
+  delay?: MaybeRefOrGetter<number>;
+  duration?: MaybeRefOrGetter<number>;
 }
 
-export const focusedElement = ref<HTMLElement>();
+// const triggerEventMap = {
+//   click: ["click"],
+//   hover: ["mouseenter", "mouseleave"],
+//   focus: ["focus", "blur"],
+// } as const;
 
-let active = false;
-let listeners = 0;
+// interface TriggerEventHandlers {
+//   click: (e: MouseEvent) => void;
+//   mouseenter: (e: MouseEvent) => void;
+//   mouseleave: (e: MouseEvent) => void;
+//   focus: (e: MouseEvent) => void;
+//   blur: (e: MouseEvent) => void;
+// }
 
-export function usePopup(options: UsePopupOptions) {
-  const focus = ref(false);
+export function usePopover(referenceRef: MaybeRefOrGetter<HTMLElement | undefined>, floatingRef: MaybeRefOrGetter<HTMLElement | undefined>, options?: UsePopoverOptions) {
+  const { show = ref(false), trigger = "click", keepAliveOnHover = true, delay, duration } = options || {};
 
-  if (inBrowser) {
-    if (!active) {
-      activateFocusTracking();
-    }
+  // TODO
+  // 1 click
+  // 1.1 click reference -> toggle show
+  // 1.2 click outside reference -> show = false
+  // 1.2.1 click floatingRef && keepAliveOnHover -> skip
+  // 1.2.2 click floatingRef && !keepAliveOnHover show = false
 
-    listeners++;
+  // 2 hover
+  // 1.1 mouseenter reference show = true
+  // 1.2 mouseleave reference show = false
+  // 1.2.1 mouseenter floating && keepAliveOnHover -> show = true
+  // 1.2.2 mouseleave floating && !keepAliveOnHover -> show = false
 
-    const unwatch = watch(focusedElement, (el) => {
-      if (el === options.el.value || options.el.value?.contains(el!)) {
-        focus.value = true;
-        options.onFocus?.();
-      } else {
-        focus.value = false;
-        options.onBlur?.();
-      }
-    });
+  // 3 hover
+  // 1.1 focus reference show = true
+  // 1.2 blur reference show = false
+  // 1.2.1 focus floating && keepAliveOnHover -> show = true
+  // 1.2.1 blur floating && !keepAliveOnHover -> show = true
 
-    onUnmounted(() => {
-      unwatch();
-
-      listeners--;
-
-      if (!listeners) {
-        deactivateFocusTracking();
-      }
-    });
-  }
-
-  return readonly(focus);
-}
-
-function activateFocusTracking() {
-  document.addEventListener("focusin", handleFocusIn);
-  active = true;
-  focusedElement.value = document.activeElement as HTMLElement;
-}
-
-function deactivateFocusTracking() {
-  document.removeEventListener("focusin", handleFocusIn);
-}
-
-function handleFocusIn() {
-  focusedElement.value = document.activeElement as HTMLElement;
+  return {
+    show,
+  };
 }
