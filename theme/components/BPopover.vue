@@ -1,23 +1,28 @@
 <script lang="ts" setup>
 import { autoUpdate, flip as flipMw, offset as offsetMw, shift as shiftMw, useFloating } from "@floating-ui/vue";
-import { isDefined, useMouseInElement } from "@vueuse/core";
-import { computed, ref, watchEffect } from "vue";
+import { isDefined } from "@vueuse/core";
+import { computed, ref } from "vue";
 import type { Middleware } from "@floating-ui/vue";
 import type { StyleValue, TeleportProps } from "vue";
 import { useMergedState } from "../composables/useMergedState";
-import { type Trigger, usePopover } from "../composables/usePopup";
+import { refDebouncedShow, type Trigger, usePopover } from "../composables/usePopover";
 
-const { keepAliveOnHover = true, to = "body", offset = 10, flip, shift, trigger = "focus", rawPopupStyle = false, popupClass, popupStyle } = defineProps<{
+const { keepAliveOnHover = true, to = "body", offset = 10, flip, shift, trigger = "click", delay = 100, duration = 100, rawPopupStyle = false, popupClass, popupStyle } = defineProps<{
   keepAliveOnHover?: boolean;
   trigger?: Trigger;
   to?: TeleportProps["to"];
   offset?: number;
   flip?: boolean;
   shift?: boolean;
+  delay?: number;
+  duration?: number;
   rawPopupStyle?: boolean;
   popupClass?: any;
   popupStyle?: StyleValue;
 }>();
+
+const referenceRef = ref<HTMLDivElement>();
+const floatingRef = ref<HTMLDivElement>();
 
 const _show = defineModel({
   default: false,
@@ -38,24 +43,20 @@ const middleware = computed(() => {
   }
   return _middleware;
 });
-
-const referenceRef = ref<HTMLDivElement>();
-const floatingRef = ref<HTMLDivElement>();
-
-const { floatingStyles, update, isPositioned } = useFloating(referenceRef, floatingRef, {
+const { floatingStyles } = useFloating(referenceRef, floatingRef, {
   whileElementsMounted: autoUpdate,
   middleware,
-  open: show,
+  transform: false,
 });
 
 usePopover(referenceRef, floatingRef, {
+  trigger,
   show,
+  keepAliveOnHover,
 });
+const debouncedShow = refDebouncedShow(show, { delay, duration });
 
 const customPopupClass = computed(() => rawPopupStyle ? [] : ["bg-card b-1 b-solid b-border shadow rounded-lg p-2"]);
-
-const beforeElTop = computed(() => isDefined(offset) ? `-${offset + 2}px` : "0");
-const beforeElHeight = computed(() => isDefined(offset) ? `${offset + 2}px` : "0");
 </script>
 
 <template>
@@ -63,7 +64,7 @@ const beforeElHeight = computed(() => isDefined(offset) ? `${offset + 2}px` : "0
     <slot name="reference"></slot>
   </div>
   <Transition name="fade">
-    <Teleport v-if="show" :to>
+    <Teleport v-if="debouncedShow" :to>
       <div ref="floatingRef" class="z-[var(--b-popup-z-index)]" :style="[floatingStyles, popupStyle]" :class="[...customPopupClass, popupClass]">
         <slot></slot>
       </div>
@@ -72,17 +73,11 @@ const beforeElHeight = computed(() => isDefined(offset) ? `${offset + 2}px` : "0
 </template>
 
 <style scoped>
-.b-floating-offset {
-  position: absolute;
-  top: v-bind(beforeElTop);
-  left: 0;
-  height: v-bind(beforeElHeight);
-  width: 100%;
-}
-
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity var(--b-transition-duration) var(--b-transition-timing-function);
+  transition:
+    opacity var(--b-transition-duration) var(--b-transition-timing-function),
+    transform var(--b-transition-duration) var(--b-transition-timing-function);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -94,6 +89,7 @@ const beforeElHeight = computed(() => isDefined(offset) ? `${offset + 2}px` : "0
 
 .fade-enter-from,
 .fade-leave-to {
+  transform: translateY(10px);
   opacity: 0;
 }
 </style>

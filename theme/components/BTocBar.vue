@@ -7,7 +7,7 @@ import BPopover from "./BPopover.vue";
   <div class="sticky top-0 z-[var(--b-toc-bar-z-index)] b-0 b-b-1 b-border bg-card bg-opacity-70 backdrop-blur-8 backdrop-saturate-50 md:top-[var(--b-nav-height)]">
     <div class="mx-auto max-w-[var(--b-max-width)] flex items-center justify-between p-sm">
       <div>
-        <BPopover trigger="hover">
+        <BPopover>
           <template #reference>
             <BButton>testing</BButton>
           </template>
