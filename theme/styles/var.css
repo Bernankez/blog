@@ -23,6 +23,8 @@
 /** transition */
 :root {
   --b-transition-duration: 250ms;
+  --b-transition-duration-slow: 500ms;
+  --b-transition-duration-fast: 100ms;
   --b-transition-animation: ease;
 }
 

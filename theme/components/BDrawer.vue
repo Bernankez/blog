@@ -17,7 +17,7 @@ const { vIf, vShow } = useDisplayDirective(displayDirective, show);
 </script>
 
 <template>
-  <BMask v-model="show" duration="0.5s" @click="closeOnMask && (show = false)" />
+  <BMask v-model="show" duration="var(--b-transition-duration-slow)" @click="closeOnMask && (show = false)" />
   <Transition name="slide-fade">
     <aside v-if="vIf" v-show="vShow" class="reduce:top-1 fixed bottom-0 left-0 top-0 z-[var(--b-aside-z-index)] max-w-100vw w-[var(--b-drawer-width)] overflow-auto bg-background">
       <div :class="twMerge('relative box-border p-sm', $attrs.class as string)" v-bind="$attrs">
@@ -35,7 +35,7 @@ const { vIf, vShow } = useDisplayDirective(displayDirective, show);
 .slide-fade-leave-active {
   transition:
     opacity var(--b-transition-duration) var(--b-transition-animation),
-    transform 0.5s var(--b-animation-ease);
+    transform var(--b-transition-duration-slow) var(--b-animation-ease);
 }
 
 @media (prefers-reduced-motion: reduce) {

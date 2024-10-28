@@ -5,13 +5,20 @@ import type { Placement } from "@floating-ui/vue";
 export type Trigger = "click" | "hover" | "focus" | "manual";
 
 export interface UsePopoverOptions {
+  disabled?: MaybeRefOrGetter<boolean>;
   show?: Ref<boolean>;
   trigger?: MaybeRefOrGetter<Trigger>;
   keepAliveOnHover?: MaybeRefOrGetter<boolean>;
 }
 
 export function usePopover(referenceRef: MaybeRefOrGetter<HTMLElement | ComponentPublicInstance | undefined>, floatingRef: MaybeRefOrGetter<HTMLElement | ComponentPublicInstance | undefined>, options?: UsePopoverOptions) {
-  const { show = ref(false), trigger = "click", keepAliveOnHover = true } = options || {};
+  const { disabled, show = ref(false), trigger = "click", keepAliveOnHover = true } = options || {};
+
+  if (disabled) {
+    return {
+      show,
+    };
+  }
 
   const referenceEl = computed(() => {
     const el = toValue(referenceRef);
@@ -112,8 +119,10 @@ export function usePopoverTransition(placement?: MaybeRefOrGetter<Placement>, of
   return computed(() => {
     const _placement = toValue(placement);
     let _offset = toValue(offset);
-    if (!Number.isNaN(_offset.toString())) {
-      _offset = `${Number(_offset)}px`;
+    if (typeof _offset === "number") {
+      _offset = `${_offset}px`;
+    } else if (!Number.isNaN(Number(_offset))) {
+      _offset = `${_offset}px`;
     }
 
     const placementMap: Record<Placement | "", string> = {

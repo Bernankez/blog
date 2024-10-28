@@ -3,7 +3,8 @@ import { cva } from "cva";
 import { twMerge } from "tailwind-merge";
 import type { VariantProps } from "cva";
 
-const { variant = "primary", size = "md" } = defineProps<{
+const { variant = "primary", size = "md", disabled } = defineProps<{
+  disabled?: boolean;
   variant?: ButtonVariants["variant"];
   size?: ButtonVariants["size"];
 }>();
@@ -18,7 +19,12 @@ const buttonVariants = cva("transition motion-reduce:transition-none hover:bg-op
       primary: "bg-primary text-primary-foreground",
       secondary: "bg-secondary text-secondary-foreground",
       outline: "bg-background b-1 b-solid hover:bg-accent",
+      text: "bg-transparent opacity-70 hover:opacity-100",
       ghost: "bg-transparent hover:bg-accent",
+      disabled: "bg-muted text-muted-foreground",
+    },
+    disabled: {
+      true: "bg-muted text-muted-foreground cursor-not-allowed",
     },
     size: {
       sm: "text-sm py-1 px-2 rounded-lg",
@@ -30,10 +36,16 @@ const buttonVariants = cva("transition motion-reduce:transition-none hover:bg-op
 });
 
 type ButtonVariants = VariantProps<typeof buttonVariants>;
+
+function onClick(e: MouseEvent) {
+  if (!disabled) {
+    emit("click", e);
+  }
+}
 </script>
 
 <template>
-  <button :class="twMerge(buttonVariants({ variant, size }))" @click="e => emit('click', e)">
+  <button :class="twMerge(buttonVariants({ variant, size, disabled }))" @click="onClick">
     <slot></slot>
   </button>
 </template>

@@ -22,9 +22,9 @@ const showDrawer = ref(false);
 
 <template>
   <header class="z-[var(--b-nav-z-index)] b-0 b-b-1 b-border b-solid bg-card bg-opacity-70 backdrop-blur-8 backdrop-saturate-50 md:sticky md:top-0">
-    <div class="b-nav grid grid-cols-3 mx-auto box-border max-w-[var(--b-max-width)] px-sm">
+    <div class="b-nav grid grid-cols-3 mx-auto box-border max-w-[var(--b-max-width)]">
       <section class="flex items-center">
-        <BIcon icon="i-line-md-menu" class="pl-0" @click="showDrawer = true" />
+        <BIcon icon="i-line-md-menu" @click="showDrawer = true" />
       </section>
       <section class="flex items-center justify-center">
         <BLink href="/" class="flex shrink-0 items-center gap-sm">
@@ -35,7 +35,7 @@ const showDrawer = ref(false);
       <section class="flex items-center justify-end">
         <BIcon :icon=" isDark ? 'i-line-md-sunny-outline-to-moon-alt-loop-transition' : 'i-line-md-moon-alt-to-sunny-outline-loop-transition'" @click="isDark = !isDark" />
         <BLink v-for="link in socialLinks" :key="link.link" :href="link.link" target="_blank" :aria-label="link.ariaLabel">
-          <BIcon :icon="getIcon(link.icon)" class="pr-0" />
+          <BIcon :icon="getIcon(link.icon)" />
         </BLink>
       </section>
     </div>

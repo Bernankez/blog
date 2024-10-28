@@ -5,6 +5,7 @@ export interface ThemeConfig {
   socialLinks?: SocialLink[];
   nav?: NavItem[];
   sidebar?: Sidebar;
+  toc?: TocOutline | TocOutline["level"] | false;
 }
 
 export type Layout = "home" | "doc" | "page" | false;
@@ -124,3 +125,31 @@ export interface SidebarItem {
   rel?: string;
   target?: string;
 };
+
+// table of content -----------------------------------------------
+export interface TocOutline {
+  /**
+   * toc 中要显示的标题级别。
+   * 单个数字表示只显示该级别的标题。
+   * 如果传递的是一个元组，第一个数字是最小级别，第二个数字是最大级别。
+   * `'deep'` 与 `[2, 6]` 相同，将显示从 `<h2>` 到 `<h6>` 的所有标题。
+   *
+   * @default 2
+   */
+  level?: number | [number, number] | "deep";
+
+  /**
+   * 显示在 toc 上的标题。
+   *
+   * @default 'Table of content'
+   */
+  label?: string;
+}
+
+export interface TocItem {
+  element: HTMLHeadElement;
+  title: string;
+  link: string;
+  level: number;
+  children?: TocItem[];
+}

@@ -2,18 +2,20 @@
 import { autoUpdate, flip as flipMw, offset as offsetMw, shift as shiftMw, useFloating } from "@floating-ui/vue";
 import { isDefined } from "@vueuse/core";
 import { computed, ref } from "vue";
-import type { Middleware, Placement } from "@floating-ui/vue";
+import type { Middleware, Placement, Strategy } from "@floating-ui/vue";
 import type { ComponentPublicInstance, StyleValue, TeleportProps } from "vue";
 import { useMergedState } from "../composables/useMergedState";
 import { refDebouncedShow, type Trigger, usePopover, usePopoverTransition } from "../composables/usePopover";
 import { BSlot } from "./BSlot";
 
-const { placement, keepAliveOnHover = true, to = "body", offset = 10, flip, shift, trigger = "click", delay = 100, duration = 100, rawPopupStyle = false, popupClass, popupStyle } = defineProps<{
+const { strategy, placement, disabled, keepAliveOnHover = true, to = "body", offset = 10, flip, shift, trigger = "click", delay = 100, duration = 100, rawPopupStyle = false, popupClass, popupStyle } = defineProps<{
+  strategy?: Strategy;
+  disabled?: boolean;
   placement?: Placement;
   keepAliveOnHover?: boolean;
   trigger?: Trigger;
   to?: TeleportProps["to"];
-  offset?: number;
+  offset?: number ;
   flip?: boolean;
   shift?: boolean;
   delay?: number;
@@ -46,6 +48,7 @@ const middleware = computed(() => {
   return _middleware;
 });
 const { floatingStyles } = useFloating(referenceRef, floatingRef, {
+  strategy,
   whileElementsMounted: autoUpdate,
   middleware,
   placement,
@@ -53,6 +56,7 @@ const { floatingStyles } = useFloating(referenceRef, floatingRef, {
 });
 
 usePopover(referenceRef, floatingRef, {
+  disabled,
   trigger,
   show,
   keepAliveOnHover,
@@ -61,7 +65,7 @@ const debouncedShow = refDebouncedShow(show, { delay, duration });
 
 const customPopupClass = computed(() => rawPopupStyle ? [] : ["bg-card b-1 b-solid b-border shadow rounded-lg p-2"]);
 
-const popoverTransition = usePopoverTransition(placement, offset);
+const popoverTransition = usePopoverTransition(placement, 10);
 </script>
 
 <template>
@@ -81,9 +85,9 @@ const popoverTransition = usePopoverTransition(placement, offset);
 .fade-enter-active,
 .fade-leave-active {
   transition:
-    opacity var(--b-transition-duration) var(--b-transition-animation),
-    transform 0.5s var(--b-animation-ease),
-    scale 0.5s var(--b-animation-ease);
+    opacity var(--b-transition-duration-fast) var(--b-transition-animation),
+    transform var(--b-transition-duration) var(--b-animation-ease),
+    scale var(--b-transition-duration) var(--b-animation-ease);
 }
 
 @media (prefers-reduced-motion: reduce) {

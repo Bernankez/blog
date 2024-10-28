@@ -62,6 +62,7 @@ export default async () => {
           items: [
             { text: "小技巧", link: "/blog/tricks" },
             { text: "TS重载类型推断", link: "/blog/front-end/ts-inferring-type" },
+            { text: "Search", link: "/blog/search" },
           ],
         },
         {

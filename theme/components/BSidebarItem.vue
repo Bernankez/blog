@@ -39,7 +39,30 @@ const hasActive = computed(() => hasDirectActiveLink(path, isParentNode.value ? 
   <a
     v-else class="b-sidebar-item relative block cursor-pointer rounded-lg py-1.5 text-sm transition hover:text-primary motion-reduce:transition-none" :href="item.link" :rel="item.rel" :target="item.target" :class="[hasActive ? 'text-base' : 'text-muted-foreground', active && 'text-primary']"
   >
-    <div v-if="active" class="absolute top-50% box-border h-70% w-2px bg-primary -left-17px -translate-y-50%"></div>
+    <Transition name="fade">
+      <div v-if="active" class="absolute top-50% box-border h-70% w-2px bg-primary -left-17px -translate-y-50%"></div>
+    </Transition>
     {{ item.text }}
   </a>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition-timing-function: var(--b-transition-animation);
+  transition-duration: var(--b-transition-duration);
+  transition-property: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: none;
+  }
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
