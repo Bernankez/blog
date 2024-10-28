@@ -12,7 +12,7 @@ export default defineConfig({
     },
     animation: {
       timingFns: {
-        DEFAULT: "var(--b-transition-timing-function)",
+        DEFAULT: "var(--b-transition-animation)",
       },
     },
   },

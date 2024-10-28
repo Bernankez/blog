@@ -67,7 +67,7 @@ function onCollapse() {
 <style scoped>
 .b-collapse {
   transition-duration: var(--b-transition-duration);
-  transition-timing-function: var(--b-transition-timing-function);
+  transition-timing-function: var(--b-transition-animation);
   transition-property: grid-template-rows;
 }
 

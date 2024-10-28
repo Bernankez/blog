@@ -1,3 +1,4 @@
+import vueJsx from "@vitejs/plugin-vue-jsx";
 import UnoCSS from "unocss/vite";
 import DevTools from "vite-plugin-vue-devtools";
 import { defineConfigWithTheme } from "vitepress";
@@ -119,7 +120,7 @@ export default async () => {
       ],
     },
     vite: {
-      plugins: [UnoCSS(), DevTools()],
+      plugins: [vueJsx(), UnoCSS(), DevTools()],
     },
   });
 };

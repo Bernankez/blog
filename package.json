@@ -30,6 +30,7 @@
     "@unocss/preset-mini": "^0.63.6",
     "@unocss/reset": "^0.63.6",
     "@vitejs/plugin-vue": "^5.1.4",
+    "@vitejs/plugin-vue-jsx": "^4.0.1",
     "eslint": "^9.13.0",
     "eslint-formatter-mo": "^1.2.0",
     "eslint-plugin-format": "^0.1.2",

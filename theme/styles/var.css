@@ -23,7 +23,11 @@
 /** transition */
 :root {
   --b-transition-duration: 250ms;
-  --b-transition-timing-function: ease;
+  --b-transition-animation: ease;
+}
+
+:root {
+  --b-animation-ease: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {

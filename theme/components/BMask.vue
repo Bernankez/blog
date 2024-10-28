@@ -43,7 +43,7 @@ watch(show, (show) => {
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition-timing-function: var(--b-transition-timing-function);
+  transition-timing-function: var(--b-transition-animation);
   transition-duration: v-bind(duration);
   transition-property: opacity;
 }

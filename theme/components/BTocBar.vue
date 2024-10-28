@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BButton from "./BButton.vue";
 import BPopover from "./BPopover.vue";
 </script>
 
@@ -7,9 +6,11 @@ import BPopover from "./BPopover.vue";
   <div class="sticky top-0 z-[var(--b-toc-bar-z-index)] b-0 b-b-1 b-border bg-card bg-opacity-70 backdrop-blur-8 backdrop-saturate-50 md:top-[var(--b-nav-height)]">
     <div class="mx-auto max-w-[var(--b-max-width)] flex items-center justify-between p-sm">
       <div>
-        <BPopover>
+        <BPopover placement="top">
           <template #reference>
-            <BButton>testing</BButton>
+            <!-- <BButton>testing</BButton> -->
+            <div>asd</div>
+            <!-- asdf -->
           </template>
           testing
         </BPopover>

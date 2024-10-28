@@ -1,5 +1,6 @@
 import { useDebounceFn, useEventListener } from "@vueuse/core";
-import { computed, type MaybeRefOrGetter, onMounted, type Ref, ref, toValue, watch } from "vue";
+import { type ComponentPublicInstance, computed, type MaybeRefOrGetter, onMounted, type Ref, ref, toValue, watch } from "vue";
+import type { Placement } from "@floating-ui/vue";
 
 export type Trigger = "click" | "hover" | "focus" | "manual";
 
@@ -9,8 +10,24 @@ export interface UsePopoverOptions {
   keepAliveOnHover?: MaybeRefOrGetter<boolean>;
 }
 
-export function usePopover(referenceRef: MaybeRefOrGetter<HTMLElement | undefined>, floatingRef: MaybeRefOrGetter<HTMLElement | undefined>, options?: UsePopoverOptions) {
+export function usePopover(referenceRef: MaybeRefOrGetter<HTMLElement | ComponentPublicInstance | undefined>, floatingRef: MaybeRefOrGetter<HTMLElement | ComponentPublicInstance | undefined>, options?: UsePopoverOptions) {
   const { show = ref(false), trigger = "click", keepAliveOnHover = true } = options || {};
+
+  const referenceEl = computed(() => {
+    const el = toValue(referenceRef);
+    if (!el || el instanceof HTMLElement) {
+      return el;
+    }
+    return el.$el;
+  });
+
+  const floatingEl = computed(() => {
+    const el = toValue(floatingRef);
+    if (!el || el instanceof HTMLElement) {
+      return el;
+    }
+    return el.$el;
+  });
 
   const stopHandlers = ref<(() => void)[]>([]);
 
@@ -29,15 +46,15 @@ export function usePopover(referenceRef: MaybeRefOrGetter<HTMLElement | undefine
         break;
       }
       case "hover": {
-        stopHandlers.value.push(useEventListener(referenceRef, "mouseenter", handleMouseEnter));
-        stopHandlers.value.push(useEventListener(referenceRef, "mouseleave", handleMouseLeave));
-        stopHandlers.value.push(useEventListener(floatingRef, "mouseenter", handleMouseEnter));
-        stopHandlers.value.push(useEventListener(floatingRef, "mouseleave", handleMouseLeave));
+        stopHandlers.value.push(useEventListener(referenceEl, "mouseenter", handleMouseEnter));
+        stopHandlers.value.push(useEventListener(referenceEl, "mouseleave", handleMouseLeave));
+        stopHandlers.value.push(useEventListener(floatingEl, "mouseenter", handleMouseEnter));
+        stopHandlers.value.push(useEventListener(floatingEl, "mouseleave", handleMouseLeave));
         break;
       }
       case "focus": {
-        stopHandlers.value.push(useEventListener(referenceRef, "focusin", handleFocus));
-        stopHandlers.value.push(useEventListener(referenceRef, "focusout", handleBlur));
+        stopHandlers.value.push(useEventListener(referenceEl, "focusin", handleFocus));
+        stopHandlers.value.push(useEventListener(referenceEl, "focusout", handleBlur));
         break;
       }
     }
@@ -45,12 +62,12 @@ export function usePopover(referenceRef: MaybeRefOrGetter<HTMLElement | undefine
 
   function handleClick(e: MouseEvent) {
     const target = e.target as HTMLElement;
-    if (toValue(referenceRef)?.contains(target)) {
+    if (toValue(referenceEl)?.contains(target)) {
       // click reference
       show.value = !show.value;
       return;
     }
-    if (toValue(floatingRef)?.contains(target)) {
+    if (toValue(floatingEl)?.contains(target)) {
       // click floating
       if (toValue(keepAliveOnHover)) {
         return;
@@ -61,12 +78,12 @@ export function usePopover(referenceRef: MaybeRefOrGetter<HTMLElement | undefine
 
   function handleMouseEnter(e: MouseEvent) {
     const target = e.target as HTMLElement;
-    if (toValue(referenceRef)?.contains(target)) {
-    // mouseenter reference
+    if (toValue(referenceEl)?.contains(target)) {
+      // mouseenter reference
       show.value = true;
       return;
     }
-    if (toValue(floatingRef)?.contains(target)) {
+    if (toValue(floatingEl)?.contains(target)) {
       // mouseenter floating
       if (toValue(keepAliveOnHover)) {
         show.value = true;
@@ -89,6 +106,34 @@ export function usePopover(referenceRef: MaybeRefOrGetter<HTMLElement | undefine
   return {
     show,
   };
+}
+
+export function usePopoverTransition(placement?: MaybeRefOrGetter<Placement>, offset: MaybeRefOrGetter<string | number> = "10px") {
+  return computed(() => {
+    const _placement = toValue(placement);
+    let _offset = toValue(offset);
+    if (!Number.isNaN(_offset.toString())) {
+      _offset = `${Number(_offset)}px`;
+    }
+
+    const placementMap: Record<Placement | "", string> = {
+      "": `translateY(-${_offset})`,
+      "top": `translateY(${_offset})`,
+      "top-start": `translateY(${_offset}) translateX(-${_offset})`,
+      "top-end": `translateY(${_offset}) translateX(${_offset})`,
+      "bottom": `translateY(-${_offset})`,
+      "bottom-start": `translateY(-${_offset}) translateX(-${_offset})`,
+      "bottom-end": `translateY(-${_offset}) translateX(${_offset})`,
+      "left": `translateX(${_offset})`,
+      "left-start": `translateX(${_offset}) translateY(-${_offset})`,
+      "left-end": `translateX(${_offset}) translateY(${_offset})`,
+      "right": `translateX(-${_offset})`,
+      "right-start": `translateX(-${_offset}) translateY(-${_offset})`,
+      "right-end": `translateX(-${_offset}) translateY(${_offset})`,
+    };
+
+    return placementMap[_placement || ""];
+  });
 }
 
 export function refDebouncedShow(_show?: Ref<boolean>, options?: {

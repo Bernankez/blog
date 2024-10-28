@@ -34,8 +34,8 @@ const { vIf, vShow } = useDisplayDirective(displayDirective, show);
 .slide-fade-enter-active,
 .slide-fade-leave-active {
   transition:
-    opacity var(--b-transition-duration) var(--b-transition-timing-function),
-    transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    opacity var(--b-transition-duration) var(--b-transition-animation),
+    transform 0.5s var(--b-animation-ease);
 }
 
 @media (prefers-reduced-motion: reduce) {

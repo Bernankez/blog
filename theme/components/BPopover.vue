@@ -2,12 +2,14 @@
 import { autoUpdate, flip as flipMw, offset as offsetMw, shift as shiftMw, useFloating } from "@floating-ui/vue";
 import { isDefined } from "@vueuse/core";
 import { computed, ref } from "vue";
-import type { Middleware } from "@floating-ui/vue";
-import type { StyleValue, TeleportProps } from "vue";
+import type { Middleware, Placement } from "@floating-ui/vue";
+import type { ComponentPublicInstance, StyleValue, TeleportProps } from "vue";
 import { useMergedState } from "../composables/useMergedState";
-import { refDebouncedShow, type Trigger, usePopover } from "../composables/usePopover";
+import { refDebouncedShow, type Trigger, usePopover, usePopoverTransition } from "../composables/usePopover";
+import { BSlot } from "./BSlot";
 
-const { keepAliveOnHover = true, to = "body", offset = 10, flip, shift, trigger = "click", delay = 100, duration = 100, rawPopupStyle = false, popupClass, popupStyle } = defineProps<{
+const { placement, keepAliveOnHover = true, to = "body", offset = 10, flip, shift, trigger = "click", delay = 100, duration = 100, rawPopupStyle = false, popupClass, popupStyle } = defineProps<{
+  placement?: Placement;
   keepAliveOnHover?: boolean;
   trigger?: Trigger;
   to?: TeleportProps["to"];
@@ -21,8 +23,8 @@ const { keepAliveOnHover = true, to = "body", offset = 10, flip, shift, trigger 
   popupStyle?: StyleValue;
 }>();
 
-const referenceRef = ref<HTMLDivElement>();
-const floatingRef = ref<HTMLDivElement>();
+const referenceRef = ref<ComponentPublicInstance>();
+const floatingRef = ref<ComponentPublicInstance>();
 
 const _show = defineModel({
   default: false,
@@ -46,6 +48,7 @@ const middleware = computed(() => {
 const { floatingStyles } = useFloating(referenceRef, floatingRef, {
   whileElementsMounted: autoUpdate,
   middleware,
+  placement,
   transform: false,
 });
 
@@ -57,17 +60,19 @@ usePopover(referenceRef, floatingRef, {
 const debouncedShow = refDebouncedShow(show, { delay, duration });
 
 const customPopupClass = computed(() => rawPopupStyle ? [] : ["bg-card b-1 b-solid b-border shadow rounded-lg p-2"]);
+
+const popoverTransition = usePopoverTransition(placement, offset);
 </script>
 
 <template>
-  <div ref="referenceRef" v-bind="$attrs">
+  <BSlot ref="referenceRef" v-bind="$attrs">
     <slot name="reference"></slot>
-  </div>
+  </BSlot>
   <Transition name="fade">
     <Teleport v-if="debouncedShow" :to>
-      <div ref="floatingRef" class="z-[var(--b-popup-z-index)]" :style="[floatingStyles, popupStyle]" :class="[...customPopupClass, popupClass]">
+      <BSlot ref="floatingRef" class="z-[var(--b-popup-z-index)]" :style="[floatingStyles, popupStyle]" :class="[...customPopupClass, popupClass]">
         <slot></slot>
-      </div>
+      </BSlot>
     </Teleport>
   </Transition>
 </template>
@@ -76,8 +81,9 @@ const customPopupClass = computed(() => rawPopupStyle ? [] : ["bg-card b-1 b-sol
 .fade-enter-active,
 .fade-leave-active {
   transition:
-    opacity var(--b-transition-duration) var(--b-transition-timing-function),
-    transform var(--b-transition-duration) var(--b-transition-timing-function);
+    opacity var(--b-transition-duration) var(--b-transition-animation),
+    transform 0.5s var(--b-animation-ease),
+    scale 0.5s var(--b-animation-ease);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -89,7 +95,8 @@ const customPopupClass = computed(() => rawPopupStyle ? [] : ["bg-card b-1 b-sol
 
 .fade-enter-from,
 .fade-leave-to {
-  transform: translateY(10px);
+  scale: 0.7;
+  transform: v-bind(popoverTransition);
   opacity: 0;
 }
 </style>
