@@ -10,7 +10,8 @@
     "build": "vue-tsc -b && vitepress build",
     "preview": "vitepress preview",
     "lint": "eslint . -f mo",
-    "fix": "eslint . -f mo --fix"
+    "fix": "eslint . -f mo --fix",
+    "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
     "@floating-ui/vue": "^1.1.5",

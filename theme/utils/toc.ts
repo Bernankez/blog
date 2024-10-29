@@ -3,12 +3,9 @@
 // import type { DefaultTheme } from "vitepress/theme";
 // import { throttleAndDebounce } from ".";
 
-import type { ThemeConfig, TocItem } from "../types";
+import type { ThemeConfig, TocItem, TocOutline } from "../types";
 
-// // cached list of anchor elements from resolveHeaders
-const resolvedHeaders: Pick<TocItem, "element" | "link">[] = [];
-
-export function getHeaders(range: ThemeConfig["toc"]): TocItem[] {
+export function getHeaders(range: TocOutline | TocOutline["level"] | false): TocItem[] {
   const headers = [
     ...document.querySelectorAll(".b-doc :where(h1,h2,h3,h4,h5,h6)"),
   ]
@@ -45,7 +42,7 @@ function serializeHeader(h: Element): string {
   return ret.trim();
 }
 
-function resolveHeaders(headers: TocItem[], range?: ThemeConfig["toc"]) {
+function resolveHeaders(headers: TocItem[], range?: TocOutline | TocOutline["level"] | false) {
   if (range === false) {
     return [];
   }
@@ -63,134 +60,33 @@ function resolveHeaders(headers: TocItem[], range?: ThemeConfig["toc"]) {
   return buildTree(headers, high, low);
 }
 
-// export function resolveTitle(theme: DefaultTheme.Config): string {
-//   return (
-//     (typeof theme.outline === "object"
-//       && !Array.isArray(theme.outline)
-//       && theme.outline.label)
-//       || theme.outlineTitle
-//       || "On this page"
-//   );
-// }
+export function resolveTitle(theme: ThemeConfig): string {
+  return (
+    (typeof theme.toc?.outline === "object"
+      && !Array.isArray(theme.toc.outline)
+      && theme.toc.outline.label)
+      || theme.toc?.title
+      || "Table of content"
+  );
+}
 
-// export function useActiveAnchor(
-//   container: Ref<HTMLElement>,
-//   marker: Ref<HTMLElement>,
-// ): void {
-//   // const { isAsideEnabled } = useAside();
-//   const isAsideEnabled = ref(true);
-
-//   const onScroll = throttleAndDebounce(setActiveLink, 100);
-
-//   let prevActiveLink: HTMLAnchorElement | null = null;
-
-//   onMounted(() => {
-//     requestAnimationFrame(setActiveLink);
-//     window.addEventListener("scroll", onScroll);
-//   });
-
-//   onUpdated(() => {
-//     // sidebar update means a route change
-//     activateLink(location.hash);
-//   });
-
-//   onUnmounted(() => {
-//     window.removeEventListener("scroll", onScroll);
-//   });
-
-//   function setActiveLink() {
-//     if (!isAsideEnabled.value) {
-//       return;
-//     }
-
-//     const scrollY = window.scrollY;
-//     const innerHeight = window.innerHeight;
-//     const offsetHeight = document.body.offsetHeight;
-//     const isBottom = Math.abs(scrollY + innerHeight - offsetHeight) < 1;
-
-//     // resolvedHeaders may be repositioned, hidden or fix positioned
-//     const headers = resolvedHeaders
-//       .map(({ element, link }) => ({
-//         link,
-//         top: getAbsoluteTop(element),
-//       }))
-//       .filter(({ top }) => !Number.isNaN(top))
-//       .sort((a, b) => a.top - b.top);
-
-//     // no headers available for active link
-//     if (!headers.length) {
-//       activateLink(null);
-//       return;
-//     }
-
-//     // page top
-//     if (scrollY < 1) {
-//       activateLink(null);
-//       return;
-//     }
-
-//     // page bottom - highlight last link
-//     if (isBottom) {
-//       activateLink(headers[headers.length - 1].link);
-//       return;
-//     }
-
-//     // find the last header above the top of viewport
-//     let activeLink: string | null = null;
-//     for (const { link, top } of headers) {
-//       if (top > scrollY + getScrollOffset() + 4) {
-//         break;
-//       }
-//       activeLink = link;
-//     }
-//     activateLink(activeLink);
-//   }
-
-//   function activateLink(hash: string | null) {
-//     if (prevActiveLink) {
-//       prevActiveLink.classList.remove("active");
-//     }
-
-//     if (hash == null) {
-//       prevActiveLink = null;
-//     } else {
-//       prevActiveLink = container.value.querySelector(
-//         `a[href="${decodeURIComponent(hash)}"]`,
-//       );
-//     }
-
-//     const activeLink = prevActiveLink;
-
-//     if (activeLink) {
-//       activeLink.classList.add("active");
-//       marker.value.style.top = `${activeLink.offsetTop + 39}px`;
-//       marker.value.style.opacity = "1";
-//     } else {
-//       marker.value.style.top = "33px";
-//       marker.value.style.opacity = "0";
-//     }
-//   }
-// }
-
-// function getAbsoluteTop(element: HTMLElement): number {
-//   let offsetTop = 0;
-//   while (element !== document.body) {
-//     if (element === null) {
-//       // child element is:
-//       // - not attached to the DOM (display: none)
-//       // - set to fixed position (not scrollable)
-//       // - body or html element (null offsetParent)
-//       return Number.NaN;
-//     }
-//     offsetTop += element.offsetTop;
-//     element = element.offsetParent as HTMLElement;
-//   }
-//   return offsetTop;
-// }
+export function getAbsoluteTop(element: HTMLElement): number {
+  let offsetTop = 0;
+  while (element !== document.body) {
+    if (element === null) {
+      // child element is:
+      // - not attached to the DOM (display: none)
+      // - set to fixed position (not scrollable)
+      // - body or html element (null offsetParent)
+      return Number.NaN;
+    }
+    offsetTop += element.offsetTop;
+    element = element.offsetParent as HTMLElement;
+  }
+  return offsetTop;
+}
 
 function buildTree(data: TocItem[], min: number, max: number): TocItem[] {
-  resolvedHeaders.length = 0;
-
   const result: TocItem[] = [];
   const stack: (TocItem | { level: number; shouldIgnore: true })[] = [];
 
@@ -214,7 +110,6 @@ function buildTree(data: TocItem[], min: number, max: number): TocItem[] {
     if (node.level > max || node.level < min) {
       return;
     }
-    resolvedHeaders.push({ element: node.element, link: node.link });
 
     if (parent) {
       parent.children!.push(node);

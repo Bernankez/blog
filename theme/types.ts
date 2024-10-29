@@ -5,7 +5,12 @@ export interface ThemeConfig {
   socialLinks?: SocialLink[];
   nav?: NavItem[];
   sidebar?: Sidebar;
-  toc?: TocOutline | TocOutline["level"] | false;
+  toc?: {
+    title?: string;
+    /** Defaults to true */
+    hideInactive?: boolean;
+    outline?: TocOutline | TocOutline["level"] | false;
+  };
 }
 
 export type Layout = "home" | "doc" | "page" | false;

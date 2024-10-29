@@ -63,6 +63,7 @@ export default async () => {
             { text: "小技巧", link: "/blog/tricks" },
             { text: "TS重载类型推断", link: "/blog/front-end/ts-inferring-type" },
             { text: "Search", link: "/blog/search" },
+            { text: "JS/TS中的AST节点类型示例", link: "/blog/front-end/ts-node" },
           ],
         },
         {
@@ -115,6 +116,9 @@ export default async () => {
           ],
         },
       ],
+      toc: {
+        title: "页面导航",
+      },
 
       socialLinks: [
         { icon: "github", link: "https://github.com/Bernankez/blog", ariaLabel: "GitHub" },

@@ -1,21 +1,55 @@
 <script setup lang="ts">
-import BLink from "./BLink.vue";
-import type { TocItem } from "../types";
+import { useData } from "vitepress";
+import { computed } from "vue";
+import { useToc } from "../composables/useToc";
+import { resolveTitle } from "../utils/toc";
+import BTocItem from "./BTocItem.vue";
+import type { ThemeConfig, TocItem } from "../types";
 
-defineProps<{
-  headers?: TocItem[];
+const { showTitle, showIndicator, hideInactive } = defineProps<{
+  hideInactive?: boolean;
+  showTitle?: boolean;
+  showIndicator?: boolean;
 }>();
+
+const emit = defineEmits<{
+  click: [e: MouseEvent, item?: TocItem];
+}>();
+
+const { theme } = useData<ThemeConfig>();
+
+const { headers, activeLink, activeIndex } = useToc();
+
+const top = computed(() => (activeIndex.value + (showTitle ? 1 : 0)) * 32);
 </script>
 
 <template>
-  <div v-for="header in headers" :key="header.link">
-    <div class="flex">
-      <BLink :href="header.link" class="transition hover:text-primary motion-reduce:transition-none">
-        {{ header.title }}
-      </BLink>
+  <div class="group" :class="[showIndicator && 'relative b-0 b-l-2 b-border b-solid pl-sm']">
+    <Transition name="fade">
+      <div v-if="showIndicator && activeIndex > -1" :style="{ top: `${top}px` }" class="absolute my-5px h-22px w-2px bg-primary transition-top -left-1px"></div>
+    </Transition>
+    <div v-if="showTitle" class="cursor-default py-1.5 text-sm">
+      {{ resolveTitle(theme) }}
     </div>
-    <div class="pl-sm">
-      <BToc :headers="header.children" />
-    </div>
+    <BTocItem v-for="header in headers" :key="header.link" :hide-inactive :active-link :item="header" @click="(e, item) => emit('click', e, item)" />
   </div>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity var(--b-transition-duration) var(--b-transition-animation);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: none;
+  }
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

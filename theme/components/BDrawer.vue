@@ -3,9 +3,14 @@ import { twMerge } from "tailwind-merge";
 import { useDisplayDirective } from "../composables/useDisplayDirective";
 import BIcon from "./BIcon.vue";
 import BMask from "./BMask.vue";
+import type { DisplayDirective } from "../composables/useDisplayDirective";
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 const { closeOnMask = true, displayDirective = "if" } = defineProps<{
-  displayDirective?: "show" | "if";
+  displayDirective?: DisplayDirective;
   closeOnMask?: boolean;
 }>();
 

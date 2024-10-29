@@ -3,12 +3,15 @@ import { autoUpdate, flip as flipMw, offset as offsetMw, shift as shiftMw, useFl
 import { isDefined } from "@vueuse/core";
 import { computed, ref } from "vue";
 import type { Middleware, Placement, Strategy } from "@floating-ui/vue";
-import type { ComponentPublicInstance, StyleValue, TeleportProps } from "vue";
+import type { ComponentPublicInstance, TeleportProps } from "vue";
+import { type DisplayDirective, useDisplayDirective } from "../composables/useDisplayDirective";
 import { useMergedState } from "../composables/useMergedState";
 import { refDebouncedShow, type Trigger, usePopover, usePopoverTransition } from "../composables/usePopover";
+import BMask from "./BMask.vue";
 import { BSlot } from "./BSlot";
 
-const { strategy, placement, disabled, keepAliveOnHover = true, to = "body", offset = 10, flip, shift, trigger = "click", delay = 100, duration = 100, rawPopupStyle = false, popupClass, popupStyle } = defineProps<{
+const { displayDirective = "if", strategy, placement, disabled, lockScroll, keepAliveOnHover = true, to = "body", offset = 10, flip, shift, trigger = "click", delay = 100, duration = 100, rawPopupStyle = false } = defineProps<{
+  displayDirective?: DisplayDirective;
   strategy?: Strategy;
   disabled?: boolean;
   placement?: Placement;
@@ -20,9 +23,8 @@ const { strategy, placement, disabled, keepAliveOnHover = true, to = "body", off
   shift?: boolean;
   delay?: number;
   duration?: number;
+  lockScroll?: boolean;
   rawPopupStyle?: boolean;
-  popupClass?: any;
-  popupStyle?: StyleValue;
 }>();
 
 const referenceRef = ref<ComponentPublicInstance>();
@@ -62,19 +64,31 @@ usePopover(referenceRef, floatingRef, {
   keepAliveOnHover,
 });
 const debouncedShow = refDebouncedShow(show, { delay, duration });
+const { vIf, vShow } = useDisplayDirective(displayDirective, debouncedShow);
 
 const customPopupClass = computed(() => rawPopupStyle ? [] : ["bg-card b-1 b-solid b-border shadow rounded-lg p-2"]);
 
 const popoverTransition = usePopoverTransition(placement, 10);
+
+defineExpose({
+  toggle: (_show?: boolean) => {
+    if (isDefined(_show)) {
+      show.value = _show;
+    } else {
+      show.value = !show.value;
+    }
+  },
+});
 </script>
 
 <template>
   <BSlot ref="referenceRef" v-bind="$attrs">
     <slot name="reference"></slot>
   </BSlot>
+  <BMask v-if="lockScroll" v-model="debouncedShow" class="opacity-0" :lock-scroll />
   <Transition name="fade">
-    <Teleport v-if="debouncedShow" :to>
-      <BSlot ref="floatingRef" class="z-[var(--b-popup-z-index)]" :style="[floatingStyles, popupStyle]" :class="[...customPopupClass, popupClass]">
+    <Teleport :to>
+      <BSlot v-if="vIf" v-show="vShow" ref="floatingRef" class="z-[var(--b-popup-z-index)]" :style="[floatingStyles]" :class="[...customPopupClass]">
         <slot></slot>
       </BSlot>
     </Teleport>
@@ -85,9 +99,8 @@ const popoverTransition = usePopoverTransition(placement, 10);
 .fade-enter-active,
 .fade-leave-active {
   transition:
-    opacity var(--b-transition-duration-fast) var(--b-transition-animation),
-    transform var(--b-transition-duration) var(--b-animation-ease),
-    scale var(--b-transition-duration) var(--b-animation-ease);
+    opacity var(--b-transition-duration) var(--b-transition-animation),
+    transform var(--b-transition-duration-slow) var(--b-animation-ease);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -99,7 +112,6 @@ const popoverTransition = usePopoverTransition(placement, 10);
 
 .fade-enter-from,
 .fade-leave-to {
-  scale: 0.7;
   transform: v-bind(popoverTransition);
   opacity: 0;
 }

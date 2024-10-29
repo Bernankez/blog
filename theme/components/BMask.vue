@@ -3,7 +3,11 @@ import { computed, watch } from "vue";
 import type { TeleportProps } from "vue";
 import { useLockHtmlScroll } from "../composables/useLockHtmlScroll";
 
-const { duration = "var(--b-transition-duration)", lockScroll = true, transition = true, to } = defineProps<{
+defineOptions({
+  inheritAttrs: false,
+});
+
+const { duration = "var(--b-transition-duration)", lockScroll = true, transition = true, to = "body" } = defineProps<{
   to?: TeleportProps["to"];
   lockScroll?: boolean;
   transition?: boolean;
@@ -35,9 +39,11 @@ watch(show, (show) => {
 </script>
 
 <template>
-  <Transition :to name="fade" @after-leave="unlock?.()">
-    <div v-if="show" class="b-mask fixed bottom-0 left-0 right-0 top-0 z-[var(--b-mask-z-index)] bg-foreground bg-opacity-60" @click="e => emit('click', e)"></div>
-  </Transition>
+  <Teleport :to>
+    <Transition name="fade" @after-leave="unlock?.()">
+      <div v-if="show" class="b-mask fixed bottom-0 left-0 right-0 top-0 z-[var(--b-mask-z-index)] bg-foreground bg-opacity-60" v-bind="$attrs" @click="e => emit('click', e)"></div>
+    </Transition>
+  </Teleport>
 </template>
 
 <style scoped>

@@ -128,17 +128,17 @@ export function usePopoverTransition(placement?: MaybeRefOrGetter<Placement>, of
     const placementMap: Record<Placement | "", string> = {
       "": `translateY(-${_offset})`,
       "top": `translateY(${_offset})`,
-      "top-start": `translateY(${_offset}) translateX(-${_offset})`,
-      "top-end": `translateY(${_offset}) translateX(${_offset})`,
+      "top-start": `translateY(${_offset})`,
+      "top-end": `translateY(${_offset})`,
       "bottom": `translateY(-${_offset})`,
-      "bottom-start": `translateY(-${_offset}) translateX(-${_offset})`,
-      "bottom-end": `translateY(-${_offset}) translateX(${_offset})`,
+      "bottom-start": `translateY(-${_offset})`,
+      "bottom-end": `translateY(-${_offset})`,
       "left": `translateX(${_offset})`,
-      "left-start": `translateX(${_offset}) translateY(-${_offset})`,
-      "left-end": `translateX(${_offset}) translateY(${_offset})`,
+      "left-start": `translateX(${_offset})`,
+      "left-end": `translateX(${_offset})`,
       "right": `translateX(-${_offset})`,
-      "right-start": `translateX(-${_offset}) translateY(-${_offset})`,
-      "right-end": `translateX(-${_offset}) translateY(${_offset})`,
+      "right-start": `translateX(-${_offset})`,
+      "right-end": `translateX(-${_offset})`,
     };
 
     return placementMap[_placement || ""];
