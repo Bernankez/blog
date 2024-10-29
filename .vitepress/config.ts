@@ -122,6 +122,7 @@ export default async () => {
 
       socialLinks: [
         { icon: "github", link: "https://github.com/Bernankez/blog", ariaLabel: "GitHub" },
+        { icon: "home", link: "https://keke.cc", ariaLabel: "Homepage" },
       ],
     },
     vite: {

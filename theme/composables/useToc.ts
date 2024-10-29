@@ -1,5 +1,5 @@
-import { useEventListener } from "@vueuse/core";
-import { getScrollOffset, useData } from "vitepress";
+import { useEventListener, useMounted } from "@vueuse/core";
+import { getScrollOffset, useData, useRoute } from "vitepress";
 import { computed, onMounted, ref, toRefs } from "vue";
 import { throttleAndDebounce } from "../utils";
 import { getAbsoluteTop, getHeaders } from "../utils/toc";
@@ -8,8 +8,18 @@ import type { ThemeConfig, TocItem } from "../types";
 export function useToc() {
   const { theme, frontmatter } = useData<ThemeConfig>();
   const { toc } = toRefs(theme.value);
+  const route = useRoute();
 
-  const headers = computed(() => getHeaders(frontmatter.value.toc ?? toc?.value?.outline));
+  const mounted = useMounted();
+
+  const headers = computed(() => {
+    // trigger re-evaluate
+    // eslint-disable-next-line ts/no-unused-expressions
+    route.data.relativePath;
+    // eslint-disable-next-line ts/no-unused-expressions
+    mounted.value;
+    return getHeaders(frontmatter.value.toc ?? toc?.value?.outline);
+  });
   const flattedHeaders = computed(() => flatHeaders(headers.value));
 
   function flatHeaders(headers: TocItem[], result: TocItem[] = []) {
@@ -78,7 +88,9 @@ export function useToc() {
 
   return {
     headers,
+    flattedHeaders,
     activeLink,
     activeIndex,
+    updateActiveLink,
   };
 }

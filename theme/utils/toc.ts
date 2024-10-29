@@ -1,8 +1,3 @@
-// import { getScrollOffset, type Header } from "vitepress";
-// import { onMounted, onUnmounted, onUpdated, ref, type Ref } from "vue";
-// import type { DefaultTheme } from "vitepress/theme";
-// import { throttleAndDebounce } from ".";
-
 import type { ThemeConfig, TocItem, TocOutline } from "../types";
 
 export function getHeaders(range: TocOutline | TocOutline["level"] | false): TocItem[] {
