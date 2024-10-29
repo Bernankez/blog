@@ -12,14 +12,14 @@ const { size = "md" } = defineProps<{
 const { theme, site } = useData<ThemeConfig>();
 const { siteTitle } = toRefs(theme.value);
 
-const logoRef = ref<HTMLImageElement | null>(null);
-const isHover = useElementHover(logoRef);
+const logoRef = ref<InstanceType<typeof BLink> | null>(null);
+const isHover = useElementHover(() => logoRef.value?.$el);
 const imgSrc = computed(() => isHover.value ? theme.value.logoOnHover : theme.value.logo);
 </script>
 
 <template>
-  <BLink href="/" class="b-logo flex shrink-0 items-center gap-sm" :class="[size]">
-    <img ref="logoRef" :src="imgSrc" class="b-logo-img" />
+  <BLink ref="logoRef" href="/" class="b-logo flex shrink-0 items-center gap-sm" :class="[size]">
+    <img :src="imgSrc" class="b-logo-img" />
     <span v-if="siteTitle !== false" class="b-logo-title font-semibold">{{ siteTitle ?? site.title }}</span>
   </BLink>
 </template>
