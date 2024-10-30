@@ -19,6 +19,7 @@ export interface SocialLink {
   icon: SocialLinkIcon;
   link: string;
   ariaLabel?: string;
+  title?: string;
 }
 
 export type SocialLinkIcon = "github"

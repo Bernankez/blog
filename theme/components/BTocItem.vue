@@ -15,7 +15,7 @@ const emit = defineEmits<{
 
 <template>
   <div class="flex transition duration-[var(--b-transition-duration-slow)] group-hover:opacity-100 motion-reduce:transition-none" :class="[hideInactive && activeLink !== item?.link && 'opacity-0']">
-    <BLink :href="item?.link" :class="[activeLink === item?.link && 'text-primary']" class="w-full rounded-lg py-1.5 text-sm text-muted-foreground transition hover:text-primary motion-reduce:transition-none" @click="e => emit('click', e, item)">
+    <BLink :href="item?.link" :class="[activeLink === item?.link && 'text-primary']" class="w-full rounded-lg py-1.5 text-sm opacity-70 transition hover:text-primary hover:opacity-100 motion-reduce:transition-none" @click="e => emit('click', e, item)">
       {{ item?.title }}
     </BLink>
   </div>

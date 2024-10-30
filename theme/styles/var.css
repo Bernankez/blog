@@ -18,7 +18,7 @@
   --b-nav-z-index: 30;
   --b-mask-z-index: 40;
   --b-aside-z-index: 50;
-  --b-popup-z-index: 90;
+  --b-popover-z-index: 90;
 }
 
 /** transition */

@@ -18,7 +18,7 @@ const buttonVariants = cva("transition motion-reduce:transition-none hover:bg-op
     variant: {
       primary: "bg-primary text-primary-foreground",
       secondary: "bg-secondary text-secondary-foreground",
-      outline: "bg-background b-1 b-solid hover:b-primary",
+      outline: "bg-background b-1 b-border b-solid hover:b-primary",
       text: "bg-transparent opacity-70 hover:opacity-100",
       ghost: "bg-transparent hover:bg-accent",
       disabled: "bg-muted text-muted-foreground",

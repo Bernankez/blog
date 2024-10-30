@@ -1,5 +1,6 @@
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import UnoCSS from "unocss/vite";
+import Icons from "unplugin-icons/vite";
 import DevTools from "vite-plugin-vue-devtools";
 import { defineConfigWithTheme } from "vitepress";
 import type { ThemeConfig } from "../theme/types";
@@ -121,12 +122,14 @@ export default async () => {
       },
 
       socialLinks: [
-        { icon: "github", link: "https://github.com/Bernankez/blog", ariaLabel: "GitHub" },
-        { icon: "home", link: "https://keke.cc", ariaLabel: "Homepage" },
+        { icon: "github", link: "https://github.com/Bernankez/blog", ariaLabel: "GitHub", title: "GitHub" },
+        { icon: "home", link: "https://keke.cc", ariaLabel: "Homepage", title: "keke.cc" },
       ],
     },
     vite: {
-      plugins: [vueJsx(), UnoCSS(), DevTools()],
+      plugins: [vueJsx(), UnoCSS(), Icons({
+        scale: 1.2,
+      }), DevTools()],
     },
   });
 };

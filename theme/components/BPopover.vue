@@ -3,14 +3,14 @@ import { autoUpdate, flip as flipMw, offset as offsetMw, shift as shiftMw, useFl
 import { isDefined } from "@vueuse/core";
 import { computed, ref } from "vue";
 import type { Middleware, Placement, Strategy } from "@floating-ui/vue";
-import type { ComponentPublicInstance, TeleportProps } from "vue";
+import type { ComponentPublicInstance, StyleValue, TeleportProps } from "vue";
 import { type DisplayDirective, useDisplayDirective } from "../composables/useDisplayDirective";
 import { useMergedState } from "../composables/useMergedState";
 import { refDebouncedShow, type Trigger, usePopover, usePopoverTransition } from "../composables/usePopover";
 import BMask from "./BMask.vue";
 import { BSlot } from "./BSlot";
 
-const { displayDirective = "if", strategy, placement, disabled, lockScroll, keepAliveOnHover = true, to = "body", offset = 10, flip, shift, trigger = "click", delay = 100, duration = 100, rawPopupStyle = false } = defineProps<{
+const { displayDirective = "if", strategy, placement, disabled, lockScroll, keepAliveOnHover = true, to = "body", offset = 10, flip, shift, trigger = "click", delay = 100, duration = 100, rawPopupStyle = false, maskStyle, maskClass } = defineProps<{
   displayDirective?: DisplayDirective;
   strategy?: Strategy;
   disabled?: boolean;
@@ -25,6 +25,8 @@ const { displayDirective = "if", strategy, placement, disabled, lockScroll, keep
   duration?: number;
   lockScroll?: boolean;
   rawPopupStyle?: boolean;
+  maskClass?: any;
+  maskStyle?: StyleValue;
 }>();
 
 const referenceRef = ref<ComponentPublicInstance>();
@@ -85,10 +87,10 @@ defineExpose({
   <BSlot ref="referenceRef" v-bind="$attrs">
     <slot name="reference"></slot>
   </BSlot>
-  <BMask v-if="lockScroll" v-model="debouncedShow" class="opacity-0" :lock-scroll />
+  <BMask v-if="lockScroll" v-model="debouncedShow" :class="maskClass" :style="maskStyle" :visible="false" :lock-scroll />
   <Transition name="fade">
     <Teleport :to>
-      <BSlot v-if="vIf" v-show="vShow" ref="floatingRef" class="z-[var(--b-popup-z-index)]" :style="[floatingStyles]" :class="[...customPopupClass]">
+      <BSlot v-if="vIf" v-show="vShow" ref="floatingRef" class="z-[var(--b-popover-z-index)]" :style="[floatingStyles]" :class="[...customPopupClass]">
         <slot></slot>
       </BSlot>
     </Teleport>
