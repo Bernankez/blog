@@ -5,3 +5,7 @@
 :root.dark {
   color-scheme: dark;
 }
+
+::selection {
+  background-color: hsl(var(--primary));
+}
