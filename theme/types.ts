@@ -155,6 +155,7 @@ export interface TocOutline {
 
 export interface TocItem {
   element: HTMLHeadElement;
+  tocElement?: HTMLDivElement;
   title: string;
   link: string;
   level: number;

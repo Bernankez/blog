@@ -17,6 +17,10 @@ import BSidebar from "./BSidebar.vue";
 import BToc from "./BToc.vue";
 import type { SidebarItem, ThemeConfig } from "../types";
 
+defineOptions({
+  inheritAttrs: false,
+});
+
 const { theme } = useData<ThemeConfig>();
 const { headers } = useToc();
 
@@ -47,10 +51,10 @@ function onClickSidebar(_: MouseEvent, item: SidebarItem) {
 </script>
 
 <template>
-  <div class="sticky top-0 z-[var(--b-toc-bar-z-index)] h-[var(--b-toc-bar-height)] b-0 b-b-1 b-border bg-card bg-opacity-70 backdrop-blur-8 backdrop-saturate-50 md:top-[var(--b-nav-height)]">
+  <div v-bind="$attrs" class="sticky left-0 right-0 top-0 z-[var(--b-toc-bar-z-index)] h-[var(--b-toc-bar-height)] b-0 b-b-1 b-border bg-card bg-opacity-70 backdrop-blur-8 backdrop-saturate-50 md:top-[var(--b-nav-height)]">
     <div class="grid grid-cols-3 mx-auto h-full max-w-[var(--b-max-width)]">
       <section class="flex items-center">
-        <BButton variant="text" class="flex shrink-0 items-center gap-1 px-xs" size="sm" @click="showSidebar = true">
+        <BButton variant="text" class="flex shrink-0 items-center gap-1 px-xs md:hidden" size="sm" @click="showSidebar = true">
           <LineMdMenu v-if="showSidebar === undefined" />
           <LineMdMenuToClose v-else-if="showSidebar === true" />
           <LineMdCloseToMenu v-else-if="showSidebar === false" />
@@ -70,7 +74,7 @@ function onClickSidebar(_: MouseEvent, item: SidebarItem) {
               <div class="i-line-md-chevron-small-right transition motion-reduce:transition-none" :class="[showToc && 'rotate-90']"></div>
             </BButton>
           </template>
-          <div class="overflow-hidden b-1 b-border rounded-lg b-solid bg-background shadow left-sm! right-sm!">
+          <div class="overflow-hidden b-1 b-border rounded-lg b-solid bg-background shadow left-sm! right-sm! md:left-[calc(var(--b-sidebar-width)_+_0.875rem)]!">
             <div class="max-h-70vh overflow-y-auto px-2xl py-1.5">
               <BToc @click="() => popoverRef?.toggle(false)" />
             </div>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { withBase } from "vitepress";
 
-const { target = "_blank" } = defineProps<{
+defineProps<{
   href?: string;
   target?: string;
   ariaLabel?: string;

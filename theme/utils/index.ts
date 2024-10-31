@@ -1,20 +1,20 @@
-export function throttleAndDebounce(fn: () => void, delay: number): () => void {
+export function throttleAndDebounce<T extends any[]>(fn: (...args: T) => void, delay: number): (...args: T) => void {
   let timeoutId: NodeJS.Timeout;
   let called = false;
 
-  return () => {
+  return (...args) => {
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
 
     if (!called) {
-      fn();
+      fn(...args);
       called = true;
       setTimeout(() => {
         called = false;
       }, delay);
     } else {
-      timeoutId = setTimeout(fn, delay);
+      timeoutId = setTimeout(() => fn(...args), delay);
     }
   };
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useData } from "vitepress";
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import { useToc } from "../composables/useToc";
 import { resolveTitle } from "../utils/toc";
 import BTocItem from "./BTocItem.vue";
@@ -14,11 +14,16 @@ const { showTitle, showIndicator, hideInactive } = defineProps<{
 
 const emit = defineEmits<{
   click: [e: MouseEvent, item?: TocItem];
+  active: [index: number, item?: TocItem];
 }>();
 
 const { theme } = useData<ThemeConfig>();
 
-const { headers, activeLink, activeIndex } = useToc();
+const { headers, flattedHeaders, activeLink, activeIndex } = useToc();
+
+watch(activeIndex, (index) => {
+  emit("active", index, flattedHeaders.value[index]);
+}, { immediate: true });
 
 const top = computed(() => (activeIndex.value + (showTitle ? 1 : 0)) * 32);
 </script>
