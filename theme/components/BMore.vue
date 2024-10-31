@@ -29,7 +29,7 @@ const showDrawer = ref(false);
   </BDrawer>
   <BPopover trigger="hover" :offset="0">
     <template #reference>
-      <BIcon icon="i-lucide-more-horizontal" class="hidden md:block xl:hidden" />
+      <BIcon icon="i-lucide-more-horizontal" class="hidden md:block lg:hidden" />
     </template>
     <div class="w-50 left-unset! right-sm!">
       <BLink v-for="link in socialLinks" :key="link.link" class="flex items-center rounded-lg transition hover:bg-secondary motion-reduce:transition-none hover:text-secondary-foreground!" :href="link.link" target="_blank" :aria-label="link.ariaLabel">
@@ -38,7 +38,7 @@ const showDrawer = ref(false);
       </BLink>
     </div>
   </BPopover>
-  <div class="hidden items-center xl:flex">
+  <div class="hidden items-center lg:flex">
     <BLink v-for="link in socialLinks" :key="link.link" :title="link.title" :href="link.link" target="_blank" :aria-label="link.ariaLabel">
       <BIcon :icon="getIcon(link.icon)" />
     </BLink>

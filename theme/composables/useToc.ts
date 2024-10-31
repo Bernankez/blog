@@ -13,7 +13,7 @@ export function useToc() {
   const mounted = useMounted();
 
   const headers = ref<TocItem[]>([]);
-  watch([() => route.data.relativePath, mounted], (_, _mounted) => {
+  watch([() => route.data.relativePath, mounted], ([_, _mounted]) => {
     if (_mounted) {
       headers.value = getHeaders(frontmatter.value.toc ?? toc?.value?.outline);
     } else {

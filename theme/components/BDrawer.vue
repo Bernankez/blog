@@ -12,7 +12,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-const { to = "body", showMask = true, lockScroll = true, showClose = true, placement = "left", closeOnMask = true, maskClass, maskStyle, displayDirective = "if", maskVisible = true } = defineProps<{
+const { to, showMask = true, lockScroll = true, showClose = true, placement = "left", closeOnMask = true, maskClass, maskStyle, displayDirective = "if", maskVisible = true } = defineProps<{
   to?: TeleportProps["to"];
   lockScroll?: boolean;
   showMask?: boolean;
@@ -62,7 +62,7 @@ const { vIf, vShow } = useDisplayDirective(displayDirective, show);
 <template>
   <BMask :to :model-value="showMask && show" :visible="maskVisible" :lock-scroll="lockScroll" :class="[maskClass]" :style="[maskStyle]" duration="var(--b-transition-duration-slow)" @update:model-value="value => show = value" @click="closeOnMask && (show = false)" />
   <Transition name="slide-fade">
-    <Teleport :to>
+    <Teleport :to="to ?? 'body'">
       <aside v-if="vIf" v-show="vShow" v-bind="$attrs" :class="[drawerVariants({ placement })]" class="z-[var(--b-aside-z-index)] box-border overflow-auto bg-background p-sm">
         <div v-if="showClose" class="flex justify-end">
           <BIcon icon="i-line-md-close-small" class="p-sm pr-0" @click="show = false" />

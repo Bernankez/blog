@@ -10,7 +10,7 @@ import { refDebouncedShow, type Trigger, usePopover, usePopoverTransition } from
 import BMask from "./BMask.vue";
 import { BSlot } from "./BSlot";
 
-const { displayDirective = "if", strategy, placement, disabled, lockScroll, keepAliveOnHover = true, to = "body", offset = 10, flip, shift, trigger = "click", delay = 100, duration = 100, rawPopupStyle = false, maskStyle, maskClass } = defineProps<{
+const { displayDirective = "if", strategy, placement, disabled, lockScroll, keepAliveOnHover = true, to, offset = 10, flip, shift, trigger = "click", delay = 100, duration = 100, rawPopupStyle = false, maskStyle, maskClass } = defineProps<{
   displayDirective?: DisplayDirective;
   strategy?: Strategy;
   disabled?: boolean;
@@ -89,7 +89,7 @@ defineExpose({
   </BSlot>
   <BMask v-if="lockScroll" v-model="debouncedShow" :class="maskClass" :style="maskStyle" :visible="false" :lock-scroll />
   <Transition name="fade">
-    <Teleport :to>
+    <Teleport :to="to ?? 'body'">
       <BSlot v-if="vIf" v-show="vShow" ref="floatingRef" class="z-[var(--b-popover-z-index)]" :style="[floatingStyles]" :class="[...customPopupClass]">
         <slot></slot>
       </BSlot>
