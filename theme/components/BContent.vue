@@ -78,7 +78,7 @@ function onActive(index: number, item?: TocItem) {
     <div class="mx-auto max-w-[var(--b-max-width)] flex">
       <div :class="sidebarWrapperClass">
         <div class="h-full w-[var(--b-sidebar-expand-width)] flex flex-col">
-          <div class="box-border overflow-y-auto p-sm transition motion-reduce:transition-none" :class="[expandSidebar ? '' : 'opacity-0 pointer-events-none']">
+          <div class="box-border h-full overflow-y-auto p-sm transition motion-reduce:transition-none" :class="[expandSidebar ? '' : 'opacity-0 pointer-events-none']">
             <BSidebar />
           </div>
           <div class="px-sm py-1.5" :class="[expandSidebar ? 'b-0 b-t-1 b-border b-solid' : '']">
@@ -95,7 +95,7 @@ function onActive(index: number, item?: TocItem) {
         </div>
         <BFooter class="b-footer" />
       </div>
-      <div ref="tocWrapperRef" class="sticky top-[var(--b-nav-height)] z-[var(--b-toc-bar-z-index)] box-border hidden h-[calc(100vh_-_var(--b-nav-height))] w-[var(--b-toc-width)] overflow-y-auto px-lg py-4xl lg:block">
+      <div ref="tocWrapperRef" classs="sticky top-[var(--b-nav-height)] z-[var(--b-toc-bar-z-index)] box-border hidden h-[calc(100vh_-_var(--b-nav-height))] w-[var(--b-toc-width)] overflow-y-auto px-lg py-4xl lg:block">
         <BToc show-indicator show-title hide-inactive @active="onActive" />
       </div>
     </div>
