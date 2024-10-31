@@ -3,6 +3,7 @@ import UnoCSS from "unocss/vite";
 import Icons from "unplugin-icons/vite";
 import DevTools from "vite-plugin-vue-devtools";
 import { defineConfigWithTheme } from "vitepress";
+import { RssPlugin } from "vitepress-plugin-rss";
 import type { ThemeConfig } from "../theme/types";
 
 // https://vitepress.dev/reference/site-config
@@ -122,6 +123,7 @@ export default async () => {
       },
 
       socialLinks: [
+        { icon: "rss", link: "/feed.xml", ariaLabel: "rss", title: "RSS" },
         { icon: "github", link: "https://github.com/Bernankez/blog", ariaLabel: "GitHub", title: "GitHub" },
         { icon: "home", link: "https://keke.cc", ariaLabel: "Homepage", title: "keke.cc" },
       ],
@@ -129,6 +131,20 @@ export default async () => {
     vite: {
       plugins: [vueJsx(), UnoCSS(), Icons({
         scale: 1.2,
+      }), RssPlugin({
+        title: "科科Cole",
+        baseUrl: "https://blog.keke.cc",
+        copyright: "Copyright ©️ 2023-PRESENT 科科Cole",
+        icon: false,
+        language: "zh-CN",
+        author: {
+          name: "科科Cole",
+          email: "bernankeic@gmail.com",
+          link: "https://blog.keke.cc",
+        },
+        filename: "feed.xml",
+        ignoreHome: true,
+        ignorePublish: false,
       }), DevTools()],
     },
   });
