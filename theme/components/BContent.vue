@@ -96,7 +96,7 @@ function onActive(index: number, item?: TocItem) {
         </div>
         <BFooter class="b-footer" />
       </div>
-      <div ref="tocWrapperRef" classs="sticky top-[var(--b-nav-height)] z-[var(--b-toc-bar-z-index)] box-border hidden h-[calc(100vh_-_var(--b-nav-height))] w-[var(--b-toc-width)] overflow-y-auto px-lg py-4xl lg:block">
+      <div ref="tocWrapperRef" class="sticky top-[var(--b-nav-height)] z-[var(--b-toc-bar-z-index)] box-border hidden h-[calc(100vh_-_var(--b-nav-height))] w-[var(--b-toc-width)] overflow-y-auto px-lg py-4xl lg:block">
         <BToc show-indicator show-title hide-inactive @active="onActive" />
       </div>
     </div>
