@@ -123,7 +123,7 @@ export default async () => {
       },
 
       socialLinks: [
-        { icon: "rss", link: "/feed.xml", ariaLabel: "rss", title: "RSS" },
+        { icon: "rss", link: "/feed.xml", ariaLabel: "rss", title: "RSS", target: "_self" },
         { icon: "github", link: "https://github.com/Bernankez/blog", ariaLabel: "GitHub", title: "GitHub" },
         { icon: "home", link: "https://keke.cc", ariaLabel: "Homepage", title: "keke.cc" },
       ],

@@ -22,7 +22,7 @@ const showDrawer = ref(false);
       divider<br />
       其他链接
       socialLinks<br />
-      <BLink v-for="link in socialLinks" :key="link.link" :href="link.link" target="_blank" :aria-label="link.ariaLabel">
+      <BLink v-for="link in socialLinks" :key="link.link" :href="link.link" :target="link.target" :aria-label="link.ariaLabel">
         <BIcon :icon="getIcon(link.icon)" />
       </BLink>
     </div>
@@ -32,14 +32,14 @@ const showDrawer = ref(false);
       <BIcon icon="i-lucide-more-horizontal" class="hidden md:block lg:hidden" />
     </template>
     <div class="w-50 left-unset! right-sm!">
-      <BLink v-for="link in socialLinks" :key="link.link" class="flex items-center rounded-lg transition hover:bg-secondary motion-reduce:transition-none hover:text-secondary-foreground!" :href="link.link" target="_blank" :aria-label="link.ariaLabel">
+      <BLink v-for="link in socialLinks" :key="link.link" class="flex items-center rounded-lg transition hover:bg-secondary motion-reduce:transition-none hover:text-secondary-foreground!" :href="link.link" :target="link.target" :aria-label="link.ariaLabel">
         <BIcon :icon="getIcon(link.icon)" />
         <span class="text-sm opacity-70">{{ link.title }}</span>
       </BLink>
     </div>
   </BPopover>
   <div class="hidden items-center lg:flex">
-    <BLink v-for="link in socialLinks" :key="link.link" :title="link.title" :href="link.link" target="_blank" :aria-label="link.ariaLabel">
+    <BLink v-for="link in socialLinks" :key="link.link" :title="link.title" :href="link.link" :target="link.target" :aria-label="link.ariaLabel">
       <BIcon :icon="getIcon(link.icon)" />
     </BLink>
   </div>

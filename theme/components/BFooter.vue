@@ -13,7 +13,7 @@ const { socialLinks } = toRefs(theme.value);
 <template>
   <footer class="b-footer box-border b-0 b-t-1 b-border b-solid">
     <div class="mx-auto h-full max-w-[var(--b-max-width)] flex items-center justify-center gap-sm">
-      <BLink v-for="link in socialLinks" :key="link.link" :aria-label="link.ariaLabel" :href="link.link" target="_blank">
+      <BLink v-for="link in socialLinks" :key="link.link" :aria-label="link.ariaLabel" :href="link.link" :target="link.target">
         <BIcon :icon="getIcon(link.icon)" />
       </BLink>
     </div>

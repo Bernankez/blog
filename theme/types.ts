@@ -20,6 +20,7 @@ export interface SocialLink {
   link: string;
   ariaLabel?: string;
   title?: string;
+  target?: "_blank" | "_parent" | "_self" | "_top" | string;
 }
 
 export type SocialLinkIcon = "github"
