@@ -38,6 +38,9 @@ export function usePopover(referenceRef: MaybeRefOrGetter<HTMLElement | Componen
 
   const stopHandlers = ref<(() => void)[]>([]);
 
+  // TODO 当子Popover的floating element未消失时，自身floating element不应消失
+  // TODO 当子Popover的floating element消失时，应向父Popover发出通知，父Popover执行自身消失逻辑
+
   watch(() => toValue(trigger), () => {
     stopHandlers.value.forEach(fn => fn());
     stopHandlers.value = [];
