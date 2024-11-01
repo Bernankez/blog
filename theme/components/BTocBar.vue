@@ -67,7 +67,7 @@ function onClickSidebar(_: MouseEvent, item: SidebarItem) {
         </Transition>
       </section>
       <section class="flex items-center justify-end">
-        <BPopover v-if="headers.length" ref="popoverRef" v-model="showToc" raw-popup-style lock-scroll placement="bottom-start" :offset="10">
+        <BPopover v-if="headers.length" ref="popoverRef" v-model="showToc" raw-popup-style placement="bottom-start" :offset="10">
           <template #reference>
             <BButton variant="text" size="sm" class="flex shrink-0 items-center gap-1 px-xs">
               {{ resolveTitle(theme) }}
