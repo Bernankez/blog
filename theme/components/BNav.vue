@@ -5,6 +5,7 @@ import { useData } from "vitepress";
 import BIcon from "./BIcon.vue";
 import BLogo from "./BLogo.vue";
 import BMore from "./BMore.vue";
+import BNavDropdown from "./BNavDropdown.vue";
 import BSearch from "./BSearch.vue";
 import type { ThemeConfig } from "../types";
 
@@ -17,9 +18,9 @@ const { isDark } = useData<ThemeConfig>();
       <section class="flex items-center">
         <BLogo class="px-xs" />
       </section>
-      <section class="flex items-center justify-center">
-        <div class="hidden md:block">
-          nav items
+      <section class="z-1 flex items-center justify-center">
+        <div class="hidden shrink-0 md:block">
+          <BNavDropdown />
         </div>
       </section>
       <section class="flex items-center justify-end">

@@ -55,7 +55,36 @@ export default async () => {
       // externalLinkIcon: true,
       nav: [
         { text: "Blog", link: "/blog/tricks", activeMatch: "/blog/" },
-        { text: "八股文", link: "/stereotyped-writing", activeMatch: "/stereotyped-writing/" },
+        { text: "八股文", link: "/stereotyped-writing", activeMatch: "/stereotyped-writing" },
+        {
+          text: "指南",
+          link: "/zh/guide/what-is-vitepress",
+          activeMatch: "/zh/guide/",
+        },
+        {
+          text: "参考",
+          link: "/zh/reference/site-config",
+          activeMatch: "/zh/reference/",
+        },
+        {
+          text: "v1.0.1",
+          items: [
+            {
+              text: "更新日志",
+              items: [
+                {
+                  text: "参考",
+                  link: "/zh/reference/site-config",
+                  activeMatch: "/zh/reference/",
+                },
+              ],
+            },
+            {
+              text: "参与贡献",
+              link: "https://github.com/vuejs/vitepress/blob/main/.github/contributing.md",
+            },
+          ],
+        },
       ],
 
       sidebar: [

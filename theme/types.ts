@@ -34,12 +34,7 @@ export type SocialLinkIcon = "github"
 
 // nav -----------------------------------------------------------------------
 
-export type NavItem = NavItemComponent | NavItemWithLink | NavItemWithChildren;
-
-export interface NavItemComponent {
-  component: string;
-  props?: Record<string, any>;
-}
+export type NavItem = NavItemWithLink | NavItemWithChildren;
 
 export interface NavItemWithLink {
   text: string;
@@ -53,7 +48,6 @@ export interface NavItemWithLink {
   activeMatch?: string;
   rel?: string;
   target?: string;
-  noIcon?: boolean;
 }
 
 export interface NavItemChildren {
@@ -63,7 +57,7 @@ export interface NavItemChildren {
 
 export interface NavItemWithChildren {
   text?: string;
-  items: (NavItemComponent | NavItemChildren | NavItemWithLink)[];
+  items: (NavItemChildren | NavItemWithLink)[];
 
   /**
    * `activeMatch` is expected to be a regex string. We can't use actual
