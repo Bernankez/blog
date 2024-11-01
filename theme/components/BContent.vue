@@ -2,12 +2,15 @@
 import { useDebounceFn, useElementHover, useElementVisibility, useMounted } from "@vueuse/core";
 import { twMerge } from "tailwind-merge";
 import { computed, ref, watchEffect } from "vue";
+import { useToc } from "../composables/useToc";
 import BButton from "./BButton.vue";
 import BFooter from "./BFooter.vue";
 import BSidebar from "./BSidebar.vue";
 import BToc from "./BToc.vue";
 import BTocBar from "./BTocBar.vue";
 import type { TocItem } from "../types";
+
+const { headers } = useToc();
 
 const expandSidebar = ref(true);
 const mounted = useMounted();
@@ -96,7 +99,7 @@ function onActive(index: number, item?: TocItem) {
         </div>
         <BFooter class="b-footer" />
       </div>
-      <div ref="tocWrapperRef" class="sticky top-[var(--b-nav-height)] z-[var(--b-toc-bar-z-index)] box-border hidden h-[calc(100vh_-_var(--b-nav-height))] w-[var(--b-toc-width)] overflow-y-auto px-lg py-4xl lg:block">
+      <div v-if="headers.length" ref="tocWrapperRef" class="sticky top-[var(--b-nav-height)] z-[var(--b-toc-bar-z-index)] box-border hidden h-[calc(100vh_-_var(--b-nav-height))] w-[var(--b-toc-width)] overflow-y-auto px-lg py-4xl lg:block">
         <BToc show-indicator show-title hide-inactive @active="onActive" />
       </div>
     </div>
