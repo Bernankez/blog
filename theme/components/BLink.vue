@@ -5,6 +5,7 @@ defineProps<{
   href?: string;
   target?: string;
   ariaLabel?: string;
+  rel?: string;
 }>();
 
 const emit = defineEmits<{
@@ -13,7 +14,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <a :href="href ? withBase(href) : undefined" :target :aria-label @click="e => emit('click', e)">
+  <a :rel :href="href ? withBase(href) : undefined" :target :aria-label @click="e => emit('click', e)">
     <slot></slot>
   </a>
 </template>
