@@ -36,7 +36,7 @@ const top = computed(() => (activeIndex.value + (showTitle ? 1 : 0)) * 32);
     <div v-if="showTitle" class="cursor-default py-1.5 text-sm">
       {{ resolveTitle(theme) }}
     </div>
-    <BTocItem v-for="header in headers" :key="header.link" :hide-inactive :active-link :item="header" @click="(e, item) => emit('click', e, item)" />
+    <BTocItem v-for="header in headers" :key="header.link" :truncate="showIndicator" :hide-inactive :active-link :item="header" @click="(e, item) => emit('click', e, item)" />
   </div>
 </template>
 

@@ -3,7 +3,8 @@ import { computed, ref, watchEffect } from "vue";
 import BLink from "./BLink.vue";
 import type { TocItem } from "../types";
 
-const { activeLink, item } = defineProps<{
+const { truncate, activeLink, item } = defineProps<{
+  truncate?: boolean;
   hideInactive?: boolean;
   activeLink?: string;
   item?: TocItem;
@@ -26,7 +27,7 @@ watchEffect(() => {
 
 <template>
   <div ref="divRef" class="flex transition duration-[var(--b-transition-duration-slow)] group-hover:opacity-100 motion-reduce:transition-none" :class="[hideInactive && !isSelfActive && 'opacity-0']">
-    <BLink :href="item?.link" :class="[isSelfActive && 'text-primary opacity-100!']" class="w-full rounded-lg py-1.5 text-sm opacity-70 transition hover:text-primary hover:opacity-100 motion-reduce:transition-none" @click="e => emit('click', e, item)">
+    <BLink :href="item?.link" :title="truncate ? item?.title : undefined" :class="[isSelfActive && 'text-primary opacity-100!', truncate && 'truncate']" class="w-full rounded-lg py-1.5 text-sm opacity-70 transition hover:text-primary hover:opacity-100 motion-reduce:transition-none" @click="e => emit('click', e, item)">
       {{ item?.title }}
     </BLink>
   </div>
