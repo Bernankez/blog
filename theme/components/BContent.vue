@@ -86,7 +86,7 @@ function onActive(index: number, item?: TocItem) {
           </div>
           <div class="flex px-sm py-1.5" :class="[expandSidebar ? 'b-0 b-t-1 b-border b-solid' : '']">
             <div class="transition-width motion-reduce:transition-none" :class="[expandSidebar ? 'w-full' : 'w-0']"></div>
-            <BButton :title="expandSidebar ? '收起' : '展开'" variant="ghost" size="icon" @click="expandSidebar = !expandSidebar">
+            <BButton class="shrink-0" :title="expandSidebar ? '收起' : '展开'" variant="ghost" size="icon" @click="expandSidebar = !expandSidebar">
               <div :class="[expandSidebar ? 'i-lucide-panel-left-close' : 'i-lucide-panel-left-open']"></div>
             </BButton>
           </div>

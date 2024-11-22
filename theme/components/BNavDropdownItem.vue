@@ -1,39 +1,16 @@
 <script setup lang="ts">
-import { twMerge } from "tailwind-merge";
-import { useData } from "vitepress";
-import { computed } from "vue";
-import { isActive } from "../utils/sidebar";
-import BPopover from "./BPopover.vue";
-import type { NavItem, ThemeConfig } from "../types";
+import { ref } from "vue";
+import type { NavItemWithLink } from "../types";
 
 const { item } = defineProps<{
-  item: NavItem;
+  item: NavItemWithLink;
 }>();
 
-const { page } = useData<ThemeConfig>();
-
-const active = computed(() => isActive(page.value.relativePath, item.activeMatch, true));
-
-const base = computed(() => twMerge(
-  ["rounded-xl bg-opacity-40 px-sm py-2 transition hover:bg-secondary hover:bg-opacity-70 motion-reduce:transition-none"],
-  [active.value && "bg-secondary hover:bg-opacity-50! shadow-inset shadow"],
-));
+const base = ref("flex items-center rounded-lg p-2 text-sm transition hover:bg-secondary motion-reduce:transition-none hover:text-secondary-foreground! outline-none");
 </script>
 
 <template>
-  <BPopover :disabled="!item.items" trigger="hover">
-    <template #reference>
-      <a v-if="!item.items" :class="[base]" :href="item.link" :rel="item.rel" :target="item.target">
-        <span :class="[active && 'text-primary']">
-          {{ item.text }}
-        </span>
-      </a>
-      <div v-else class="inline-block cursor-pointer" :class="[active && 'text-primary', base]">
-        {{ item.text }}
-      </div>
-    </template>
-    <div>
-      test
-    </div>
-  </BPopover>
+  <a v-if="!item.items" :class="base" :href="item.link" :rel="item.rel" :target="item.target">
+    {{ item.text }}
+  </a>
 </template>

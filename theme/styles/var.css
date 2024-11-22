@@ -8,7 +8,7 @@
 
 /** width */
 :root {
-  --b-max-width: 1280px;
+  --b-max-width: 1400px;
   --b-drawer-width: 320px;
   --b-sidebar-width: 280px;
   --b-sidebar-expand-width: 280px;

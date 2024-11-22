@@ -2,6 +2,7 @@
 import LineMdMoonToSunny from "~icons/line-md/moon-alt-to-sunny-outline-loop-transition";
 import LineMdSunnyToMoon from "~icons/line-md/sunny-outline-to-moon-alt-loop-transition";
 import { useData } from "vitepress";
+import { toRefs } from "vue";
 import BIcon from "./BIcon.vue";
 import BLogo from "./BLogo.vue";
 import BMore from "./BMore.vue";
@@ -9,7 +10,9 @@ import BNavDropdown from "./BNavDropdown.vue";
 import BSearch from "./BSearch.vue";
 import type { ThemeConfig } from "../types";
 
-const { isDark } = useData<ThemeConfig>();
+const { isDark, theme } = useData<ThemeConfig>();
+
+const { nav } = toRefs(theme.value);
 </script>
 
 <template>
@@ -19,8 +22,8 @@ const { isDark } = useData<ThemeConfig>();
         <BLogo class="px-xs" />
       </section>
       <section class="z-1 flex items-center justify-center">
-        <div class="hidden shrink-0 md:block">
-          <BNavDropdown />
+        <div class="hidden shrink-0 md:flex">
+          <BNavDropdown v-for="(item, i) in nav" :key="i" :item="item" />
         </div>
       </section>
       <section class="flex items-center justify-end">
