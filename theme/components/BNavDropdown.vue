@@ -23,10 +23,11 @@ const base = computed(() => twMerge(
 </script>
 
 <template>
-  <a v-if="!item.items" :class="[base]" class="select-none" :href="item.link" :rel="item.rel" :target="item.target">
+  <a v-if="!item.items" :class="[base]" class="flex select-none items-center gap-1" :href="item.link" :rel="item.rel" :target="item.target">
     <span :class="[active && 'text-primary']">
       {{ item.text }}
     </span>
+    <div v-if="item.target === '_blank'" class="i-lucide-arrow-up-right text-xs text-muted-foreground"></div>
   </a>
   <BPopover v-else trigger="hover" :offset="0" :auto-close="false" raw-popup-style>
     <template #reference>
@@ -42,9 +43,7 @@ const base = computed(() => twMerge(
           </div>
           <BNavDropdownItem v-for="(subItem, index) in group.items" :key="index" :item="subItem" />
         </template>
-        <template v-else>
-          <BNavDropdownItem :item="group" />
-        </template>
+        <BNavDropdownItem v-else :item="group" />
       </div>
     </div>
   </BPopover>

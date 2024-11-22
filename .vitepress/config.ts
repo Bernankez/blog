@@ -63,6 +63,7 @@ export default async () => {
         },
         {
           text: "参考",
+          target: "_blank",
           link: "/zh/reference/site-config",
           activeMatch: "/zh/reference/",
         },
@@ -81,6 +82,7 @@ export default async () => {
             },
             {
               text: "参与贡献",
+              target: "_blank",
               link: "https://github.com/vuejs/vitepress/blob/main/.github/contributing.md",
             },
           ],
@@ -152,9 +154,9 @@ export default async () => {
       },
 
       socialLinks: [
-        { icon: "rss", link: "/feed.xml", ariaLabel: "rss", title: "RSS", target: "_self" },
+        { icon: "rss", link: "/feed.xml", ariaLabel: "RSS", title: "RSS", target: "_self" },
         { icon: "github", link: "https://github.com/Bernankez/blog", ariaLabel: "GitHub", title: "GitHub" },
-        { icon: "home", link: "https://keke.cc", ariaLabel: "Homepage", title: "keke.cc" },
+        { icon: "home", link: "https://keke.cc", ariaLabel: "Home", title: "Home" },
       ],
     },
     vite: {

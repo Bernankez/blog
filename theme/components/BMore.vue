@@ -5,11 +5,12 @@ import { getIcon } from "../utils/icon";
 import BDrawer from "./BDrawer.vue";
 import BIcon from "./BIcon.vue";
 import BLink from "./BLink.vue";
+import BMoreSidebar from "./BMoreSidebar.vue";
 import BPopover from "./BPopover.vue";
 import type { ThemeConfig } from "../types";
 
 const { theme } = useData<ThemeConfig>();
-const { socialLinks } = toRefs(theme.value);
+const { socialLinks, nav } = toRefs(theme.value);
 
 const showDrawer = ref(false);
 </script>
@@ -18,13 +19,12 @@ const showDrawer = ref(false);
   <BIcon icon="i-lucide-grip" class="md:hidden" title="更多" @click="showDrawer = !showDrawer" />
   <BDrawer v-model="showDrawer" to="body" placement="right" class="max-w-100vw w-[var(--b-drawer-width)]">
     <div class="px-sm">
-      TODO NavItem<br />
-      divider<br />
-      其他链接
-      socialLinks<br />
-      <BLink v-for="link in socialLinks" :key="link.link" :href="link.link" :target="link.target ?? '_target'" :aria-label="link.ariaLabel">
-        <BIcon :icon="getIcon(link.icon)" />
-      </BLink>
+      <BMoreSidebar v-for="(item, i) in nav" :key="i" :item />
+      <div class="flex items-center justify-center">
+        <BLink v-for="link in socialLinks" :key="link.link" :title="link.title" :href="link.link" :target="link.target ?? '_target'" :aria-label="link.ariaLabel">
+          <BIcon :icon="getIcon(link.icon)" />
+        </BLink>
+      </div>
     </div>
   </BDrawer>
   <BPopover trigger="hover" :offset="0">
