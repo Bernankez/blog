@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useElementVisibility } from "@vueuse/core";
+import { breakpointsTailwind, useBreakpoints, useElementVisibility } from "@vueuse/core";
 import LineMdCloseToMenu from "~icons/line-md/close-to-menu-alt-transition";
 import LineMdMenu from "~icons/line-md/menu";
 import LineMdMenuToClose from "~icons/line-md/menu-to-close-alt-transition";
 import { useData } from "vitepress";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import { useSidebar } from "../composables/useSidebar";
 import { useToc } from "../composables/useToc";
 import { isActive } from "../utils/sidebar";
@@ -24,11 +24,23 @@ defineOptions({
 const { theme } = useData<ThemeConfig>();
 const { headers } = useToc();
 
+const { md, lg } = useBreakpoints(breakpointsTailwind);
+
 const popoverRef = ref<InstanceType<typeof BPopover>>();
 
 const showSidebar = ref<boolean>();
+watchEffect(() => {
+  if (md.value) {
+    showSidebar.value = false;
+  }
+});
 
 const showToc = ref(false);
+watchEffect(() => {
+  if (lg.value) {
+    showToc.value = false;
+  }
+});
 
 const headerEl = ref<HTMLDivElement>();
 onMounted(() => {
@@ -67,7 +79,7 @@ function onClickSidebar(_: MouseEvent, item: SidebarItem) {
         </Transition>
       </section>
       <section class="flex items-center justify-end">
-        <BPopover v-if="headers.length" ref="popoverRef" v-model="showToc" raw-popup-style placement="bottom-start" :offset="10">
+        <BPopover v-if="headers.length && !lg" ref="popoverRef" v-model="showToc" raw-popup-style placement="bottom-start" :offset="10">
           <template #reference>
             <BButton variant="text" size="sm" class="flex shrink-0 items-center gap-1 px-xs">
               {{ resolveTitle(theme) }}

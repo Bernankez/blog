@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { useData } from "vitepress";
-import { ref, toRefs } from "vue";
+import { ref, toRefs, watchEffect } from "vue";
 import { getIcon } from "../utils/icon";
 import BDrawer from "./BDrawer.vue";
 import BIcon from "./BIcon.vue";
@@ -12,7 +13,14 @@ import type { ThemeConfig } from "../types";
 const { theme } = useData<ThemeConfig>();
 const { socialLinks, nav } = toRefs(theme.value);
 
+const { md } = useBreakpoints(breakpointsTailwind);
+
 const showDrawer = ref(false);
+watchEffect(() => {
+  if (md.value) {
+    showDrawer.value = false;
+  }
+});
 </script>
 
 <template>
