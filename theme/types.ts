@@ -13,7 +13,8 @@ export interface ThemeConfig {
   };
 }
 
-export type Layout = "home" | "doc" | "page" | false;
+export type Layout = "home" | "doc" | "page" | string | false;
+export type PageClass = any;
 
 export interface SocialLink {
   icon: SocialLinkIcon;
