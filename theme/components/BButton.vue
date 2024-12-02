@@ -3,10 +3,11 @@ import { cva } from "cva";
 import { twMerge } from "tailwind-merge";
 import type { VariantProps } from "cva";
 
-const { variant = "primary", size = "md", disabled } = defineProps<{
+const { variant = "primary", size = "md", disabled, class: classVal } = defineProps<{
   disabled?: boolean;
   variant?: ButtonVariants["variant"];
   size?: ButtonVariants["size"];
+  class?: any;
 }>();
 
 const emit = defineEmits<{
@@ -45,7 +46,7 @@ function onClick(e: MouseEvent) {
 </script>
 
 <template>
-  <button :class="twMerge(buttonVariants({ variant, size, disabled }))" @click="onClick">
+  <button :class="twMerge([buttonVariants({ variant, size, disabled }), classVal])" @click="onClick">
     <slot></slot>
   </button>
 </template>
