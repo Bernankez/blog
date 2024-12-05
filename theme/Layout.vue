@@ -18,11 +18,15 @@ const pageClass = computed<PageClass>(() => frontmatter.value.pageClass || undef
   <div v-if="layout !== false" :class="pageClass">
     <BNav />
     <template v-if="page.isNotFound">
-      <BNotFound />
+      <div class="min-h-[calc(100vh_-_var(--b-nav-height)_-_var(--b-footer-height))]">
+        <BNotFound />
+      </div>
       <BFooter />
     </template>
     <template v-else-if="layout === 'home'">
-      <BHome />
+      <div class="min-h-[calc(100vh_-_var(--b-nav-height)_-_var(--b-footer-height))]">
+        <BHome />
+      </div>
       <BFooter />
     </template>
     <template v-else-if="layout === 'page'">

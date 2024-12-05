@@ -16,8 +16,8 @@ const { nav } = toRefs(theme.value);
 </script>
 
 <template>
-  <header class="z-[var(--b-nav-z-index)] b-0 b-b-1 b-border b-solid bg-card bg-opacity-70 backdrop-blur-8 backdrop-saturate-50 md:sticky md:top-0">
-    <div class="b-nav grid grid-cols-3 mx-auto box-border max-w-[var(--b-max-width)]">
+  <header class="b-nav z-[var(--b-nav-z-index)] b-0 b-b-1 b-border b-solid bg-card bg-opacity-70 backdrop-blur-8 backdrop-saturate-50 md:sticky md:top-0">
+    <div class="grid grid-cols-3 mx-auto box-border h-full max-w-[var(--b-max-width)]">
       <section class="flex items-center">
         <BLogo class="px-xs" />
       </section>
