@@ -9,6 +9,7 @@ import BSidebar from "./BSidebar.vue";
 import BToc from "./BToc.vue";
 import BTocBar from "./BTocBar.vue";
 import type { TocItem } from "../types";
+import "../styles/components/b-content.css";
 
 const { headers } = useToc();
 
@@ -94,7 +95,7 @@ function onActive(index: number, item?: TocItem) {
       </div>
       <div class="w-0 flex-1">
         <BTocBar class="lg:hidden" />
-        <div class="box-border p-sm">
+        <div class="box-border p-2xl md:px-4xl">
           <Content class="b-doc" />
         </div>
         <BFooter class="b-footer" />

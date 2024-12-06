@@ -37,6 +37,43 @@
   --b-animation-ease: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
+/** b-content */
+:root {
+  --b-header-anchor-symbol: "#";
+}
+
+/** b-content code */
+:root {
+  --b-code-font-size: 0.875em;
+  --b-code-line-height: 1.7;
+  --b-code-color: hsl(var(--foreground));
+  --b-code-bg: hsl(var(--muted));
+  --b-code-link-color: hsl(var(--primary) / 0.9);
+  --b-code-link-hover-color: hsl(var(--primary));
+  --b-code-block-bg: hsl(var(--muted) / 0.3);
+  --b-code-block-color: hsl(var(--foreground));
+  --b-code-line-highlight-color: hsl(var(--muted));
+  --b-code-line-error-color: hsl(var(--error) / 0.2);
+  --b-code-line-warning-color: hsl(var(--warning) / 0.2);
+  --b-code-line-diff-remove-color: hsl(var(--error) / 0.2);
+  --b-code-line-diff-remove-symbol-color: hsl(var(--error));
+  --b-code-line-diff-add-color: hsl(var(--success) / 0.2);
+  --b-code-line-diff-add-symbol-color: hsl(var(--success));
+  --b-code-block-divider-color: hsl(var(--border));
+  --b-font-family-base: "Punctuation SC", "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --b-font-family-mono: ui-monospace, "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;
+  --b-code-line-number-color: hsl(var(--muted-foreground));
+  --b-code-copy-code-border-color: hsl(var(--border));
+  --b-code-copy-code-hover-border-color: hsl(var(--border));
+  --b-code-copy-code-bg: hsl(var(--muted) / 0.3);
+  --b-code-copy-code-hover-bg: hsl(var(--muted));
+  --b-icon-copy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='rgba(128,128,128,1)' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'%3E%3Crect width='8' height='4' x='8' y='2' rx='1' ry='1'/%3E%3Cpath d='M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2'/%3E%3C/svg%3E");
+  --b-icon-copied: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='rgba(128,128,128,1)' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'%3E%3Crect width='8' height='4' x='8' y='2' rx='1' ry='1'/%3E%3Cpath d='M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2'/%3E%3Cpath d='m9 14 2 2 4-4'/%3E%3C/svg%3E");
+  /* --b-code-copy-code-active-text:; */
+  /* --b-code-copy-copied-text-content: ; */
+}
+
 @media (prefers-reduced-motion: reduce) {
   :root {
     --b-transition-duration: 0;
