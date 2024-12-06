@@ -16,7 +16,7 @@ export default async () => {
     head: [
       ["link", { rel: "icon", href: "/favicon.ico" }],
     ],
-    srcDir: "src",
+    srcDir: "content",
     cleanUrls: true,
     lastUpdated: true,
     // TODO
