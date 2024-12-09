@@ -4,4 +4,5 @@ export default bernankez({
   formatters: true,
   unocss: true,
   vue: true,
+  markdown: false,
 });
