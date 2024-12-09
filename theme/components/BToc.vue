@@ -31,7 +31,7 @@ const top = computed(() => (activeIndex.value + (showTitle ? 1 : 0)) * 32);
 <template>
   <div class="group" :class="[showIndicator && 'relative b-0 b-l-2 b-border b-solid pl-sm']">
     <Transition name="fade">
-      <div v-if="showIndicator && activeIndex > -1" :style="{ top: `${top}px` }" class="absolute my-5px h-22px w-2px bg-primary transition-top -left-1px"></div>
+      <div v-if="showIndicator && activeIndex > -1" :style="{ top: `${top}px` }" class="absolute my-5px h-22px w-2px bg-primary transition-top -left-2px"></div>
     </Transition>
     <div v-if="showTitle" class="cursor-default py-1.5 text-sm">
       {{ resolveTitle(theme) }}
