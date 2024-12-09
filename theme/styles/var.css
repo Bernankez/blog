@@ -1,3 +1,9 @@
+/** colors */
+:root {
+  --violet: 258 90% 66%;
+  --violet-foreground: 0 0% 100%;
+}
+
 /** height */
 :root {
   --b-nav-height: 70px;
@@ -37,6 +43,12 @@
   --b-animation-ease: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --b-transition-duration: 0;
+  }
+}
+
 /** b-content */
 :root {
   --b-header-anchor-symbol: "#";
@@ -47,7 +59,7 @@
   --b-code-font-size: 0.875em;
   --b-code-line-height: 1.7;
   --b-code-color: hsl(var(--foreground));
-  --b-code-bg: hsl(var(--muted));
+  --b-code-bg: hsl(var(--muted) / 0.7);
   --b-code-link-color: hsl(var(--primary) / 0.9);
   --b-code-link-hover-color: hsl(var(--primary));
   --b-code-block-bg: hsl(var(--muted) / 0.3);
@@ -70,12 +82,64 @@
   --b-code-copy-code-hover-bg: hsl(var(--muted));
   --b-icon-copy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='rgba(128,128,128,1)' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'%3E%3Crect width='8' height='4' x='8' y='2' rx='1' ry='1'/%3E%3Cpath d='M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2'/%3E%3C/svg%3E");
   --b-icon-copied: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='rgba(128,128,128,1)' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'%3E%3Crect width='8' height='4' x='8' y='2' rx='1' ry='1'/%3E%3Cpath d='M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2'/%3E%3Cpath d='m9 14 2 2 4-4'/%3E%3C/svg%3E");
-  /* --b-code-copy-code-active-text:; */
-  /* --b-code-copy-copied-text-content: ; */
+  /** Align with b-icon-copy */
+  --b-code-copy-code-active-text: rgba(128, 128, 128, 1);
+  --b-code-copy-copied-text-content: "Copied";
+  --b-code-lang-color: hsl(var(--muted-foreground) / 0.9);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --b-transition-duration: 0;
-  }
+/** custom-block */
+:root {
+  --b-custom-block-font-size: 14px;
+  --b-custom-block-code-font-size: 14px;
+
+  --b-custom-block-info-border: hsl(var(--muted));
+  --b-custom-block-info-text: hsl(var(--foreground));
+  --b-custom-block-info-bg: hsl(var(--muted) / 0.3);
+  --b-custom-block-info-code-bg: hsl(var(--muted) / 0.1);
+
+  --b-custom-block-note-border: hsl(var(--muted));
+  --b-custom-block-note-text: hsl(var(--foreground));
+  --b-custom-block-note-bg: hsl(var(--muted) / 0.3);
+  --b-custom-block-note-code-bg: hsl(var(--muted) / 0.1);
+
+  --b-custom-block-tip-border: hsl(var(--info));
+  --b-custom-block-tip-text: hsl(var(--info));
+  --b-custom-block-tip-bg: hsl(var(--info) / 0.1);
+  --b-custom-block-tip-code-bg: hsl(var(--info) / 0.1);
+
+  --b-custom-block-important-border: hsl(var(--violet));
+  --b-custom-block-important-text: hsl(var(--violet));
+  --b-custom-block-important-bg: hsl(var(--violet) / 0.1);
+  --b-custom-block-important-code-bg: hsl(var(--violet) / 0.1);
+
+  --b-custom-block-warning-border: hsl(var(--warning));
+  --b-custom-block-warning-text: hsl(var(--warning));
+  --b-custom-block-warning-bg: hsl(var(--warning) / 0.1);
+  --b-custom-block-warning-code-bg: hsl(var(--warning) / 0.1);
+
+  --b-custom-block-danger-border: hsl(var(--error));
+  --b-custom-block-danger-text: hsl(var(--error));
+  --b-custom-block-danger-bg: hsl(var(--error) / 0.1);
+  --b-custom-block-danger-code-bg: hsl(var(--error) / 0.1);
+
+  --b-custom-block-caution-border: hsl(var(--error));
+  --b-custom-block-caution-text: hsl(var(--error));
+  --b-custom-block-caution-bg: hsl(var(--error) / 0.1);
+  --b-custom-block-caution-code-bg: hsl(var(--error) / 0.1);
+
+  --b-custom-block-details-border: hsl(var(--muted));
+  --b-custom-block-details-text: hsl(var(--foreground));
+  --b-custom-block-details-bg: hsl(var(--muted) / 0.3);
+  --b-custom-block-details-code-bg: hsl(var(--muted) / 0.1);
+}
+
+/** vp-code-group */
+:root {
+  --b-code-tab-bg: hsl(var(--muted) / 0.3);
+  --b-code-tab-divider: hsl(var(--border));
+  --b-code-tab-text-color: hsl(var(--muted-foreground));
+  --b-code-tab-hover-text-color: hsl(var(--foreground));
+  --b-code-tab-active-text-color: hsl(var(--foreground));
+  --b-code-tab-active-bar-color: hsl(var(--primary));
 }

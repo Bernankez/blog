@@ -158,6 +158,14 @@ This is a details block.
 
 ::: info
 This is an info box.
+
+`some thing`
+
+```js
+console.log("some thing");
+```
+
+[some thing](https://www.baidu.com)
 :::
 
 ::: tip
@@ -498,13 +506,13 @@ export default {
 
 ```js
 export default {
-  data () {
+  data() {
     return {
-      msg: 'Removed' // [!code --]
-      msg: 'Added' // [!code ++]
-    }
+      msg: "Removed", // [!code --]
+      msg: "Added", // [!code ++]
+    };
   }
-}
+};
 ```
 
 ## 高亮“错误”和“警告” {#errors-and-warnings-in-code-blocks}
@@ -724,6 +732,10 @@ const config: UserConfig = {
 };
 
 export default config;
+```
+
+```sh [npm]
+npm install vitepress-plugin-group-icons
 ```
 
 :::
