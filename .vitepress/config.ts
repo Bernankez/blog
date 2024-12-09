@@ -3,6 +3,7 @@ import UnoCSS from "unocss/vite";
 import Icons from "unplugin-icons/vite";
 import DevTools from "vite-plugin-vue-devtools";
 import { defineConfigWithTheme } from "vitepress";
+import { groupIconMdPlugin, groupIconVitePlugin } from "vitepress-plugin-group-icons";
 import { RssPlugin } from "vitepress-plugin-rss";
 import type { ThemeConfig } from "../theme/types";
 
@@ -159,24 +160,36 @@ export default async () => {
         { icon: "home", link: "https://keke.cc", ariaLabel: "Home", title: "Home" },
       ],
     },
+    markdown: {
+      config(md) {
+        md.use(groupIconMdPlugin);
+      },
+    },
     vite: {
-      plugins: [vueJsx(), UnoCSS(), Icons({
-        scale: 1.2,
-      }), RssPlugin({
-        title: "科科Cole",
-        baseUrl: "https://blog.keke.cc",
-        copyright: "Copyright ©️ 2023-PRESENT 科科Cole",
-        icon: false,
-        language: "zh-CN",
-        author: {
-          name: "科科Cole",
-          email: "bernankeic@gmail.com",
-          link: "https://blog.keke.cc",
-        },
-        filename: "feed.xml",
-        ignoreHome: true,
-        ignorePublish: false,
-      }), DevTools()],
+      plugins: [
+        vueJsx(),
+        UnoCSS(),
+        Icons({
+          scale: 1.2,
+        }),
+        groupIconVitePlugin(),
+        RssPlugin({
+          title: "科科Cole",
+          baseUrl: "https://blog.keke.cc",
+          copyright: "Copyright ©️ 2023-PRESENT 科科Cole",
+          icon: false,
+          language: "zh-CN",
+          author: {
+            name: "科科Cole",
+            email: "bernankeic@gmail.com",
+            link: "https://blog.keke.cc",
+          },
+          filename: "feed.xml",
+          ignoreHome: true,
+          ignorePublish: false,
+        }),
+        DevTools(),
+      ],
     },
   });
 };
