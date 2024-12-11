@@ -35,6 +35,9 @@ export default async () => {
           admin: ["Bernankez"],
         },
       },
+      notFound: {
+        homeButton: "返回首页",
+      },
       // editLink: {
       //   text: "在GitHub上编辑",
       //   pattern: "https://github.com/bernankez/blog/edit/master/src/:path",

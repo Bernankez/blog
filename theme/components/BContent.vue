@@ -5,6 +5,7 @@ import { useData } from "vitepress";
 import { computed, ref, watchEffect } from "vue";
 import { useToc } from "../composables/useToc";
 import BButton from "./BButton.vue";
+import BDocFooter from "./BDocFooter.vue";
 import BFooter from "./BFooter.vue";
 import BGitalk from "./BGitalk.vue";
 import BSidebar from "./BSidebar.vue";
@@ -102,6 +103,7 @@ function onActive(index: number, item?: TocItem) {
         <div class="box-border p-2xl md:px-4xl">
           <Content class="b-doc" />
         </div>
+        <BDocFooter />
         <BGitalk v-if="theme.comment?.gitalk" v-bind="theme.comment.gitalk" />
         <BFooter class="b-footer" />
       </div>

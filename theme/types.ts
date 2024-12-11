@@ -27,6 +27,10 @@ export interface ThemeConfig {
   comment?: {
     gitalk?: GitalkOptions;
   };
+  docFooter?: {
+    prev?: string | false;
+    next?: string | false;
+  };
 }
 
 export type Layout = "home" | "doc" | "page" | string | false;
