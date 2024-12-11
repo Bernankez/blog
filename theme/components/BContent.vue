@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import { useDebounceFn, useElementHover, useElementVisibility, useMounted } from "@vueuse/core";
 import { twMerge } from "tailwind-merge";
+import { useData } from "vitepress";
 import { computed, ref, watchEffect } from "vue";
 import { useToc } from "../composables/useToc";
 import BButton from "./BButton.vue";
 import BFooter from "./BFooter.vue";
+import BGitalk from "./BGitalk.vue";
 import BSidebar from "./BSidebar.vue";
 import BToc from "./BToc.vue";
 import BTocBar from "./BTocBar.vue";
-import type { TocItem } from "../types";
+import type { ThemeConfig, TocItem } from "../types";
 import "../styles/components/b-content.css";
+
+const { theme } = useData<ThemeConfig>();
 
 const { headers } = useToc();
 
@@ -98,6 +102,7 @@ function onActive(index: number, item?: TocItem) {
         <div class="box-border p-2xl md:px-4xl">
           <Content class="b-doc" />
         </div>
+        <BGitalk v-if="theme.comment?.gitalk" v-bind="theme.comment.gitalk" />
         <BFooter class="b-footer" />
       </div>
       <div v-if="headers.length" ref="tocWrapperRef" class="sticky top-[var(--b-nav-height)] z-[var(--b-toc-bar-z-index)] box-border hidden h-[calc(100vh_-_var(--b-nav-height))] w-[var(--b-toc-width)] overflow-y-auto px-lg py-4xl lg:block">

@@ -1,3 +1,5 @@
+import type { GitalkOptions } from "./components/BGitalk.vue";
+
 export interface ThemeConfig {
   logo?: string;
   logoOnHover?: string;
@@ -21,6 +23,9 @@ export interface ThemeConfig {
       nextStep?: string;
       reset?: string;
     };
+  };
+  comment?: {
+    gitalk?: GitalkOptions;
   };
 }
 

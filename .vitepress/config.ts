@@ -26,6 +26,15 @@ export default async () => {
       // https://vitepress.dev/reference/default-theme-config
       logo: "/logo.webp",
       logoOnHover: "/logo-wink.webp",
+      comment: {
+        gitalk: {
+          clientID: "40827213be1939c08aba",
+          clientSecret: "40da0008fb88ccd7c81fb004c1292543e66998c9",
+          repo: "blog-comment",
+          owner: "Bernankez",
+          admin: ["Bernankez"],
+        },
+      },
       // editLink: {
       //   text: "在GitHub上编辑",
       //   pattern: "https://github.com/bernankez/blog/edit/master/src/:path",
