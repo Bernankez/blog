@@ -11,6 +11,17 @@ export interface ThemeConfig {
     hideInactive?: boolean;
     outline?: TocOutline | TocOutline["level"] | false;
   };
+  notFound?: {
+    title?: string;
+    homeButton?: string;
+    lifeGame?: {
+      play?: string;
+      pause?: string;
+      prevStep?: string;
+      nextStep?: string;
+      reset?: string;
+    };
+  };
 }
 
 export type Layout = "home" | "doc" | "page" | string | false;
