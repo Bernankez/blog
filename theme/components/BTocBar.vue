@@ -63,7 +63,7 @@ function onClickSidebar(_: MouseEvent, item: SidebarItem) {
 </script>
 
 <template>
-  <div v-bind="$attrs" class="sticky left-0 right-0 top-0 z-[var(--b-toc-bar-z-index)] h-[var(--b-toc-bar-height)] b-0 b-b-1 b-border bg-card bg-opacity-70 backdrop-blur-8 backdrop-saturate-50 md:top-[var(--b-nav-height)]">
+  <div v-if="headers.length || !md" v-bind="$attrs" class="sticky left-0 right-0 top-0 z-[var(--b-toc-bar-z-index)] h-[var(--b-toc-bar-height)] b-0 b-b-1 b-border bg-card bg-opacity-70 backdrop-blur-8 backdrop-saturate-50 md:top-[var(--b-nav-height)]">
     <div class="grid grid-cols-3 mx-auto h-full max-w-[var(--b-max-width)]">
       <section class="flex items-center">
         <BButton variant="text" class="flex shrink-0 items-center gap-1 px-xs md:hidden" size="sm" @click="showSidebar = true">
