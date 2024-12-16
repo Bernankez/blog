@@ -3,7 +3,7 @@ title: 小技巧
 icon: mingcute:magic-1-fill
 ---
 
-# 小技巧
+# 小技巧 <Badge text="new" />
 
 文中部分css会用UnoCSS去写。
 
@@ -47,7 +47,7 @@ father
 Reference: [Designing Websites for iPhone X](https://webkit.org/blog/7929/designing-websites-for-iphone-x/)
 ::
 
-## CSS边框合并
+## CSS边框合并 <Badge text="v0.1" type="info" />
 
 使用`<table>`标签时可以通过设置`border-collapse: collapse`合并表格边框。对于非表格布局，可以对单元格使用`margin-right`, `margin-bottom`
 
