@@ -16,8 +16,8 @@
 :root {
   --b-max-width: 1400px;
   --b-drawer-width: 320px;
-  --b-sidebar-width: 280px;
-  --b-sidebar-expand-width: 280px;
+  --b-sidebar-width: 270px;
+  --b-sidebar-expand-width: 270px;
   --b-sidebar-fold-width: 54px;
   --b-toc-width: 260px;
 }
