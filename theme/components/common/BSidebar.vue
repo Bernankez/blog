@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useSidebar } from "../composables/useSidebar";
+import { useSidebar } from "../../composables/useSidebar";
 import BSidebarItem from "./BSidebarItem.vue";
-import type { SidebarItem } from "../types";
+import type { SidebarItem } from "../../types";
 
 const emit = defineEmits<{
   click: [e: MouseEvent, item: SidebarItem];

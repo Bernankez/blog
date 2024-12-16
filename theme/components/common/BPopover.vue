@@ -4,9 +4,9 @@ import { isDefined } from "@vueuse/core";
 import { computed, ref } from "vue";
 import type { Middleware, Placement, Strategy } from "@floating-ui/vue";
 import type { ComponentPublicInstance, StyleValue, TeleportProps } from "vue";
-import { type DisplayDirective, useDisplayDirective } from "../composables/useDisplayDirective";
-import { useMergedState } from "../composables/useMergedState";
-import { refDebouncedShow, type Trigger, usePopover, usePopoverTransition } from "../composables/usePopover";
+import { type DisplayDirective, useDisplayDirective } from "../../composables/useDisplayDirective";
+import { useMergedState } from "../../composables/useMergedState";
+import { refDebouncedShow, type Trigger, usePopover, usePopoverTransition } from "../../composables/usePopover";
 import BMask from "./BMask.vue";
 import { BSlot } from "./BSlot";
 

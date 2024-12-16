@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, watch } from "vue";
 import type { StyleValue, TeleportProps } from "vue";
-import { useLockHtmlScroll } from "../composables/useLockHtmlScroll";
+import { useLockHtmlScroll } from "../../composables/useLockHtmlScroll";
 
 defineOptions({
   inheritAttrs: false,

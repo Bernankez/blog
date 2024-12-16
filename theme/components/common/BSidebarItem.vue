@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { hasDirectActiveLink, isActive } from "../utils/sidebar";
+import { hasDirectActiveLink, isActive } from "../../utils/sidebar";
 import BCollapse from "./BCollapse.vue";
-import type { SidebarItem } from "../types";
+import type { SidebarItem } from "../../types";
 
 const { item, keepNodeStyle, level = 0, indentFromLevel = 1, path, parent } = defineProps<{
   parent?: SidebarItem;

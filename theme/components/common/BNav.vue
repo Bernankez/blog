@@ -8,7 +8,7 @@ import BLogo from "./BLogo.vue";
 import BMore from "./BMore.vue";
 import BNavDropdown from "./BNavDropdown.vue";
 import BSearch from "./BSearch.vue";
-import type { ThemeConfig } from "../types";
+import type { ThemeConfig } from "../../types";
 
 const { isDark, theme } = useData<ThemeConfig>();
 

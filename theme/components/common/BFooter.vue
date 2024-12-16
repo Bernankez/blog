@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useData } from "vitepress";
 import { toRefs } from "vue";
-import { getIcon } from "../utils/icon";
+import { getIcon } from "../../utils/icon";
 import BIcon from "./BIcon.vue";
 import BLink from "./BLink.vue";
-import type { ThemeConfig } from "../types";
+import type { ThemeConfig } from "../../types";
 
 const { theme } = useData<ThemeConfig>();
 const { socialLinks } = toRefs(theme.value);

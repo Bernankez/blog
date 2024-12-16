@@ -2,8 +2,8 @@
 import { twMerge } from "tailwind-merge";
 import { useData } from "vitepress";
 import { computed } from "vue";
-import { isActive } from "../utils/sidebar";
-import type { NavItemWithLink, ThemeConfig } from "../types";
+import { isActive } from "../../utils/sidebar";
+import type { NavItemWithLink, ThemeConfig } from "../../types";
 
 const { item } = defineProps<{
   item: NavItemWithLink;

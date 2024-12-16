@@ -20,7 +20,7 @@ export default async () => {
     srcDir: "content",
     cleanUrls: true,
     lastUpdated: true,
-    // TODO lastUpdated search backToTop
+    // TODO search backToTop homepage-BCow assets path
     ignoreDeadLinks: true,
     themeConfig: {
       // https://vitepress.dev/reference/default-theme-config

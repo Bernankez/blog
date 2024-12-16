@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useData } from "vitepress";
 import { computed } from "vue";
-import BContent from "./components/BContent.vue";
-import BFooter from "./components/BFooter.vue";
-import BHome from "./components/BHome.vue";
-import BNav from "./components/BNav.vue";
-import BNotFound from "./components/BNotFound.vue";
+import BContent from "./components/common/BContent.vue";
+import BFooter from "./components/common/BFooter.vue";
+import BHome from "./components/common/BHome.vue";
+import BNav from "./components/common/BNav.vue";
+import BNotFound from "./components/common/BNotFound.vue";
 import type { Layout, PageClass, ThemeConfig } from "./types";
 
 const { frontmatter, page } = useData<ThemeConfig>();

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useData } from "vitepress";
-import { usePrevNext } from "../composables/usePrevNext";
-import type { ThemeConfig } from "../types";
+import { usePrevNext } from "../../composables/usePrevNext";
+import type { ThemeConfig } from "../../types";
 
 const { theme } = useData<ThemeConfig>();
 

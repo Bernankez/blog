@@ -6,7 +6,7 @@ import BButton from "./BButton.vue";
 import BLifeGame from "./BLifeGame.vue";
 
 import BLink from "./BLink.vue";
-import type { ThemeConfig } from "../types";
+import type { ThemeConfig } from "../../types";
 
 const { isDark, theme } = useData<ThemeConfig>();
 

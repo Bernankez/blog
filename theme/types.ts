@@ -1,5 +1,5 @@
 import type { PageData } from "vitepress";
-import type { GitalkOptions } from "./components/BGitalk.vue";
+import type { GitalkOptions } from "./components/common/BGitalk.vue";
 
 export interface ThemeConfig {
   logo?: string;

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useData } from "vitepress";
 import { computed, watch } from "vue";
-import { useToc } from "../composables/useToc";
-import { resolveTitle } from "../utils/toc";
+import { useToc } from "../../composables/useToc";
+import { resolveTitle } from "../../utils/toc";
 import BTocItem from "./BTocItem.vue";
-import type { ThemeConfig, TocItem } from "../types";
+import type { ThemeConfig, TocItem } from "../../types";
 
 const { showTitle, showIndicator, hideInactive } = defineProps<{
   hideInactive?: boolean;

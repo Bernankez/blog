@@ -2,9 +2,9 @@
 import Gitalk from "gitalk";
 import { useData, useRoute } from "vitepress";
 import { computed, onMounted, ref } from "vue";
-import type { ThemeConfig } from "../types";
+import type { ThemeConfig } from "../../types";
 import "gitalk/dist/gitalk.css";
-import "../styles/components/b-gitalk.css";
+import "../../styles/components/b-gitalk.css";
 
 export interface GitalkOptions {
   clientID: string;

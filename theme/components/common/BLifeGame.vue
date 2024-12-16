@@ -4,7 +4,7 @@ import { useData } from "vitepress";
 import { computed, onMounted, ref, watch } from "vue";
 import BButton from "./BButton.vue";
 import BPopover from "./BPopover.vue";
-import type { ThemeConfig } from "../types";
+import type { ThemeConfig } from "../../types";
 
 // Props 定义和默认值
 const {

@@ -5,17 +5,17 @@ import LineMdMenu from "~icons/line-md/menu";
 import LineMdMenuToClose from "~icons/line-md/menu-to-close-alt-transition";
 import { useData } from "vitepress";
 import { onMounted, ref, watchEffect } from "vue";
-import { useSidebar } from "../composables/useSidebar";
-import { useToc } from "../composables/useToc";
-import { isActive } from "../utils/sidebar";
-import { resolveTitle } from "../utils/toc";
+import { useSidebar } from "../../composables/useSidebar";
+import { useToc } from "../../composables/useToc";
+import { isActive } from "../../utils/sidebar";
+import { resolveTitle } from "../../utils/toc";
 import BButton from "./BButton.vue";
 import BDrawer from "./BDrawer.vue";
 import BLogo from "./BLogo.vue";
 import BPopover from "./BPopover.vue";
 import BSidebar from "./BSidebar.vue";
 import BToc from "./BToc.vue";
-import type { SidebarItem, ThemeConfig } from "../types";
+import type { SidebarItem, ThemeConfig } from "../../types";
 
 defineOptions({
   inheritAttrs: false,

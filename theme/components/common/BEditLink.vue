@@ -2,7 +2,7 @@
 import { useData } from "vitepress";
 import { computed } from "vue";
 import BLink from "./BLink.vue";
-import type { ThemeConfig } from "../types";
+import type { ThemeConfig } from "../../types";
 
 const { page, theme } = useData<ThemeConfig>();
 const pattern = computed(() => {

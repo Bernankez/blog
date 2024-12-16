@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect } from "vue";
 import BLink from "./BLink.vue";
-import type { TocItem } from "../types";
+import type { TocItem } from "../../types";
 
 const { truncate, activeLink, item } = defineProps<{
   truncate?: boolean;

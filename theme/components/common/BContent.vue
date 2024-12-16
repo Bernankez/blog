@@ -3,7 +3,7 @@ import { useDebounceFn, useElementHover, useElementVisibility, useMounted } from
 import { twMerge } from "tailwind-merge";
 import { useData } from "vitepress";
 import { computed, ref, watchEffect } from "vue";
-import { useToc } from "../composables/useToc";
+import { useToc } from "../../composables/useToc";
 import BButton from "./BButton.vue";
 import BDocFooter from "./BDocFooter.vue";
 import BEditLink from "./BEditLink.vue";
@@ -13,8 +13,8 @@ import BLastUpdated from "./BLastUpdated.vue";
 import BSidebar from "./BSidebar.vue";
 import BToc from "./BToc.vue";
 import BTocBar from "./BTocBar.vue";
-import type { ThemeConfig, TocItem } from "../types";
-import "../styles/components/b-content.css";
+import type { ThemeConfig, TocItem } from "../../types";
+import "../../styles/components/b-content.css";
 
 const { theme } = useData<ThemeConfig>();
 

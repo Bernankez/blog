@@ -4,7 +4,7 @@ import { useData } from "vitepress";
 import { onMounted, ref, watch, watchEffect } from "vue";
 import BButton from "./BButton.vue";
 import BCow from "./BCow.vue";
-import type { ThemeConfig } from "../types";
+import type { ThemeConfig } from "../../types";
 
 const { frontmatter } = useData<ThemeConfig>();
 // TODO custom with frontmatter

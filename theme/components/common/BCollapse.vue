@@ -3,7 +3,7 @@ import { cva } from "cva";
 import { twMerge } from "tailwind-merge";
 import { ref } from "vue";
 import type { VariantProps } from "cva";
-import { useMergedState } from "../composables/useMergedState";
+import { useMergedState } from "../../composables/useMergedState";
 
 const { disabled, headerClass, titleClass, title, readonly, defaultCollapsed = false } = defineProps<{
   disabled?: boolean;

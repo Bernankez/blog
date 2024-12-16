@@ -2,13 +2,13 @@
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { useData } from "vitepress";
 import { ref, toRefs, watchEffect } from "vue";
-import { getIcon } from "../utils/icon";
+import { getIcon } from "../../utils/icon";
 import BDrawer from "./BDrawer.vue";
 import BIcon from "./BIcon.vue";
 import BLink from "./BLink.vue";
 import BMoreSidebar from "./BMoreSidebar.vue";
 import BPopover from "./BPopover.vue";
-import type { ThemeConfig } from "../types";
+import type { ThemeConfig } from "../../types";
 
 const { theme } = useData<ThemeConfig>();
 const { socialLinks, nav } = toRefs(theme.value);

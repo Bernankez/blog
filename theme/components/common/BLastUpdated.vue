@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useData } from "vitepress";
 import { computed, onMounted, ref, watchEffect } from "vue";
-import type { ThemeConfig } from "../types";
+import type { ThemeConfig } from "../../types";
 
 const { theme, page, lang } = useData<ThemeConfig>();
 
