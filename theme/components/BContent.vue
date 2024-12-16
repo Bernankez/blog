@@ -6,6 +6,7 @@ import { computed, ref, watchEffect } from "vue";
 import { useToc } from "../composables/useToc";
 import BButton from "./BButton.vue";
 import BDocFooter from "./BDocFooter.vue";
+import BEditLink from "./BEditLink.vue";
 import BFooter from "./BFooter.vue";
 import BGitalk from "./BGitalk.vue";
 import BSidebar from "./BSidebar.vue";
@@ -102,9 +103,12 @@ function onActive(index: number, item?: TocItem) {
         <BTocBar class="lg:hidden" />
         <div class="box-border p-2xl md:px-4xl">
           <Content class="b-doc" />
+          <div class="my-sm">
+            <BEditLink />
+          </div>
+          <BDocFooter />
+          <BGitalk v-if="theme.comment?.gitalk" v-bind="theme.comment.gitalk" />
         </div>
-        <BDocFooter />
-        <BGitalk v-if="theme.comment?.gitalk" v-bind="theme.comment.gitalk" />
         <BFooter class="b-footer" />
       </div>
       <div v-if="headers.length" ref="tocWrapperRef" class="sticky top-[var(--b-nav-height)] z-[var(--b-toc-bar-z-index)] box-border hidden h-[calc(100vh_-_var(--b-nav-height))] w-[var(--b-toc-width)] overflow-y-auto px-lg py-4xl lg:block">

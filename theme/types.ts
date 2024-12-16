@@ -1,3 +1,4 @@
+import type { PageData } from "vitepress";
 import type { GitalkOptions } from "./components/BGitalk.vue";
 
 export interface ThemeConfig {
@@ -30,6 +31,10 @@ export interface ThemeConfig {
   docFooter?: {
     prev?: string | false;
     next?: string | false;
+  };
+  editLink?: {
+    text?: string;
+    pattern: string | ((page: PageData) => string);
   };
 }
 

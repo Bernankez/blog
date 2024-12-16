@@ -9,7 +9,7 @@ const control = usePrevNext();
 </script>
 
 <template>
-  <nav class="b-doc-footer grid grid-cols-1 gap-sm px-2xl sm:grid-cols-2 md:px-4xl">
+  <nav class="b-doc-footer grid grid-cols-1 gap-sm sm:grid-cols-2">
     <div>
       <a v-if="control.prev?.link" :href="control.prev.link" class="b-doc-footer-item">
         <div class="text-sm text-foreground/70">

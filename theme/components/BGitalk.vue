@@ -46,7 +46,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="commentRef" class="b-doc-comment box-border p-2xl pt-0 md:px-4xl">
+  <div ref="commentRef" class="b-doc-comment">
     <div class="w-full flex justify-center">
       评论加载中 (ง •̀ω•́)ง
     </div>

@@ -20,7 +20,7 @@ export default async () => {
     srcDir: "content",
     cleanUrls: true,
     lastUpdated: true,
-    // TODO
+    // TODO lastUpdated search backToTop
     ignoreDeadLinks: true,
     themeConfig: {
       // https://vitepress.dev/reference/default-theme-config
@@ -38,10 +38,10 @@ export default async () => {
       notFound: {
         homeButton: "返回首页",
       },
-      // editLink: {
-      //   text: "在GitHub上编辑",
-      //   pattern: "https://github.com/bernankez/blog/edit/master/src/:path",
-      // },
+      editLink: {
+        text: "在GitHub上编辑",
+        pattern: "https://github.com/bernankez/blog/edit/master/content/:path",
+      },
       // lastUpdated: {
       //   text: "上次更新于",
       //   formatOptions: {
