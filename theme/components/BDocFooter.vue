@@ -13,7 +13,7 @@ const control = usePrevNext();
     <div>
       <a v-if="control.prev?.link" :href="control.prev.link" class="b-doc-footer-item">
         <div class="text-sm text-foreground/70">
-          {{ theme.docFooter?.prev || '上一页' }}
+          {{ theme.docFooter?.prev || 'Previous page' }}
         </div>
         <div class="text-primary">
           {{ control.prev.text }}
@@ -23,7 +23,7 @@ const control = usePrevNext();
     <div>
       <a v-if="control.next?.link" :href="control.next.link" class="b-doc-footer-item items-end">
         <div class="text-sm text-foreground/70">
-          {{ theme.docFooter?.next || '下一页' }}
+          {{ theme.docFooter?.next || 'Next page' }}
         </div>
         <div class="text-primary">
           {{ control.next.text }}

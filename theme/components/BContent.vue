@@ -9,6 +9,7 @@ import BDocFooter from "./BDocFooter.vue";
 import BEditLink from "./BEditLink.vue";
 import BFooter from "./BFooter.vue";
 import BGitalk from "./BGitalk.vue";
+import BLastUpdated from "./BLastUpdated.vue";
 import BSidebar from "./BSidebar.vue";
 import BToc from "./BToc.vue";
 import BTocBar from "./BTocBar.vue";
@@ -103,8 +104,9 @@ function onActive(index: number, item?: TocItem) {
         <BTocBar class="lg:hidden" />
         <div class="box-border p-2xl md:px-4xl">
           <Content class="b-doc" />
-          <div class="my-sm">
+          <div class="my-sm flex flex-col items-center justify-between gap-sm sm:flex-row">
             <BEditLink />
+            <BLastUpdated />
           </div>
           <BDocFooter />
           <BGitalk v-if="theme.comment?.gitalk" v-bind="theme.comment.gitalk" />

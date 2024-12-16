@@ -26,46 +26,11 @@ export default async () => {
       // https://vitepress.dev/reference/default-theme-config
       logo: "/logo.webp",
       logoOnHover: "/logo-wink.webp",
-      comment: {
-        gitalk: {
-          clientID: "40827213be1939c08aba",
-          clientSecret: "40da0008fb88ccd7c81fb004c1292543e66998c9",
-          repo: "blog-comment",
-          owner: "Bernankez",
-          admin: ["Bernankez"],
-        },
-      },
-      notFound: {
-        homeButton: "返回首页",
-      },
-      editLink: {
-        text: "在GitHub上编辑",
-        pattern: "https://github.com/bernankez/blog/edit/master/content/:path",
-      },
-      // lastUpdated: {
-      //   text: "上次更新于",
-      //   formatOptions: {
-      //     dateStyle: "full",
-      //     timeStyle: "medium",
-      //   },
-      // },
-      // search: {
-      //   provider: "algolia",
-      //   options: {
-      //     apiKey: "f3c4b78009a6ed7d455512effbadf33a",
-      //     appId: "4U4R8B36SX",
-      //     indexName: "keke",
-      //   },
-      // },
-      // docFooter: {
-      //   prev: "上一页",
-      //   next: "下一页",
-      // },
-      // darkModeSwitchLabel: "外观",
-      // darkModeSwitchTitle: "切换到深色模式",
-      // lightModeSwitchTitle: "切换到浅色模式",
-      // returnToTopLabel: "回到顶部",
-      // externalLinkIcon: true,
+      socialLinks: [
+        { icon: "rss", link: "/feed.xml", ariaLabel: "RSS", title: "RSS", target: "_self" },
+        { icon: "github", link: "https://github.com/Bernankez/blog", ariaLabel: "GitHub", title: "GitHub" },
+        { icon: "home", link: "https://keke.cc", ariaLabel: "Home", title: "Home" },
+      ],
       nav: [
         { text: "Blog", link: "/blog/tricks", activeMatch: "/blog/" },
         { text: "八股文", link: "/stereotyped-writing", activeMatch: "/stereotyped-writing" },
@@ -101,7 +66,6 @@ export default async () => {
           ],
         },
       ],
-
       sidebar: [
         {
           text: "Blog",
@@ -165,12 +129,57 @@ export default async () => {
       toc: {
         title: "页面导航",
       },
-
-      socialLinks: [
-        { icon: "rss", link: "/feed.xml", ariaLabel: "RSS", title: "RSS", target: "_self" },
-        { icon: "github", link: "https://github.com/Bernankez/blog", ariaLabel: "GitHub", title: "GitHub" },
-        { icon: "home", link: "https://keke.cc", ariaLabel: "Home", title: "Home" },
-      ],
+      notFound: {
+        homeButton: "返回首页",
+        lifeGame: {
+          play: "播放",
+          pause: "暂停",
+          prevStep: "上一步",
+          nextStep: "下一步",
+          reset: "重置",
+        },
+      },
+      comment: {
+        gitalk: {
+          clientID: "40827213be1939c08aba",
+          clientSecret: "40da0008fb88ccd7c81fb004c1292543e66998c9",
+          repo: "blog-comment",
+          owner: "Bernankez",
+          admin: ["Bernankez"],
+        },
+      },
+      docFooter: {
+        prev: "上一页",
+        next: "下一页",
+      },
+      editLink: {
+        text: "在GitHub上编辑",
+        pattern: "https://github.com/bernankez/blog/edit/master/content/:path",
+      },
+      lastUpdated: {
+        text: "上次更新于",
+        formatOptions: {
+          dateStyle: "full",
+          timeStyle: "medium",
+        },
+      },
+      // search: {
+      //   provider: "algolia",
+      //   options: {
+      //     apiKey: "f3c4b78009a6ed7d455512effbadf33a",
+      //     appId: "4U4R8B36SX",
+      //     indexName: "keke",
+      //   },
+      // },
+      // docFooter: {
+      //   prev: "上一页",
+      //   next: "下一页",
+      // },
+      // darkModeSwitchLabel: "外观",
+      // darkModeSwitchTitle: "切换到深色模式",
+      // lightModeSwitchTitle: "切换到浅色模式",
+      // returnToTopLabel: "回到顶部",
+      // externalLinkIcon: true,
     },
     markdown: {
       config(md) {

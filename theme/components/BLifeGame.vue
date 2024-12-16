@@ -252,7 +252,7 @@ watch([() => rows, () => cols, () => initialSeed, () => speed], () => {
             <div class="i-lucide-chevron-left"></div>
           </BButton>
         </template>
-        {{ lifeGame?.prevStep || '上一步' }}
+        {{ lifeGame?.prevStep || 'Previous step' }}
       </BPopover>
       <BPopover trigger="hover" :delay="500">
         <template #reference>
@@ -260,7 +260,7 @@ watch([() => rows, () => cols, () => initialSeed, () => speed], () => {
             <div :class="[isPlaying ? 'i-lucide-pause' : 'i-lucide-play']"></div>
           </BButton>
         </template>
-        {{ isPlaying ? lifeGame?.pause || '暂停' : lifeGame?.play || '播放' }}
+        {{ isPlaying ? lifeGame?.pause || 'Pause' : lifeGame?.play || 'Play' }}
       </BPopover>
       <BPopover trigger="hover" :delay="500">
         <template #reference>
@@ -268,7 +268,7 @@ watch([() => rows, () => cols, () => initialSeed, () => speed], () => {
             <div class="i-lucide-chevron-right"></div>
           </BButton>
         </template>
-        {{ lifeGame?.nextStep || '下一步' }}
+        {{ lifeGame?.nextStep || 'Next step' }}
       </BPopover>
       <BPopover trigger="hover" :delay="500">
         <template #reference>
@@ -276,7 +276,7 @@ watch([() => rows, () => cols, () => initialSeed, () => speed], () => {
             <div class="i-lucide-refresh-cw"></div>
           </BButton>
         </template>
-        {{ lifeGame?.reset || '重置' }}
+        {{ lifeGame?.reset || 'Reset' }}
       </BPopover>
     </div>
   </div>

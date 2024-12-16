@@ -12,7 +12,13 @@ export interface GitalkOptions {
   repo: string;
   owner: string;
   admin: string[];
+  /**
+   * @default ['comment']
+   */
   labels?: string[];
+  /**
+   * @default 'last'
+   */
   pagerDirection?: "last" | "first";
 };
 

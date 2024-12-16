@@ -4,24 +4,53 @@ import type { GitalkOptions } from "./components/BGitalk.vue";
 export interface ThemeConfig {
   logo?: string;
   logoOnHover?: string;
+  /**
+   * @default site.title
+   */
   siteTitle?: string | false;
   socialLinks?: SocialLink[];
   nav?: NavItem[];
   sidebar?: Sidebar;
   toc?: {
+    /**
+     * @default 'Table of content'
+     */
     title?: string;
-    /** Defaults to true */
+    /**
+     * @default true
+     */
     hideInactive?: boolean;
     outline?: TocOutline | TocOutline["level"] | false;
   };
   notFound?: {
+    /**
+     * @default 'PAGE NOT FOUND'
+     */
     title?: string;
+    /**
+     * @default 'Take Me Home'
+     */
     homeButton?: string;
     lifeGame?: {
+      /**
+       * @default 'Play'
+       */
       play?: string;
+      /**
+       * @default 'Pause'
+       */
       pause?: string;
+      /**
+       * @default 'Previous step'
+       */
       prevStep?: string;
+      /**
+       * @default 'Next step'
+       */
       nextStep?: string;
+      /**
+       * @default 'Reset'
+       */
       reset?: string;
     };
   };
@@ -29,12 +58,32 @@ export interface ThemeConfig {
     gitalk?: GitalkOptions;
   };
   docFooter?: {
+    /**
+     * @default 'Previous page'
+     */
     prev?: string | false;
+    /**
+     * @default 'Next page'
+     */
     next?: string | false;
   };
   editLink?: {
+    /**
+     * @default 'Edit this page on GitHub'
+     */
     text?: string;
     pattern: string | ((page: PageData) => string);
+  };
+  lastUpdated?: {
+    /**
+     * @default 'Last updated'
+     */
+    text?: string;
+    /**
+     * @default
+     * { dateStyle: 'short', timeStyle: 'short' }
+     */
+    formatOptions?: Intl.DateTimeFormatOptions & { forceLocale?: boolean };
   };
 }
 
