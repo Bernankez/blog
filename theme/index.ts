@@ -1,6 +1,6 @@
 import type { Theme } from "vitepress";
 import BBadge from "./components/global/BBadge.vue";
-import BCodeGroup from "./components/global/BCodeGroup.vue";
+import BCodePreview from "./components/global/BCodePreview.vue";
 import Layout from "./Layout.vue";
 import "virtual:uno.css";
 import "@unocss/reset/tailwind-compat.css";
@@ -14,6 +14,6 @@ export default {
   Layout,
   enhanceApp: ({ app }) => {
     app.component("Badge", BBadge);
-    app.component("CodeGroup", BCodeGroup);
+    app.component("CodePreview", BCodePreview);
   },
 } satisfies Theme;
