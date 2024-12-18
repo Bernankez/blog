@@ -101,7 +101,7 @@
 }
 
 .gt-container .gt-ico-github svg {
-  fill: hsl(var(--primary));
+  fill: hsl(var(--foreground)) !important;
 }
 
 .gt-no-init {
