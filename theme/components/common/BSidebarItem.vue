@@ -4,14 +4,13 @@ import { hasDirectActiveLink, isActive } from "../../utils/sidebar";
 import BCollapse from "./BCollapse.vue";
 import type { SidebarItem } from "../../types";
 
-const { item, keepNodeStyle, level = 0, indentFromLevel = 1, path, parent } = defineProps<{
+const { item, keepNodeStyle, level = 0, path, parent } = defineProps<{
   parent?: SidebarItem;
   item: SidebarItem;
   /** Whether to keep current node style even if the length of items is zero */
   keepNodeStyle?: boolean;
   /** current level, defaults to 0 */
   level?: number;
-  indentFromLevel?: number;
   path: string;
 }>();
 
@@ -39,13 +38,13 @@ function onClick(e: MouseEvent, _item?: SidebarItem) {
           <div v-if="item.collapsed !== undefined" class="i-line-md-chevron-small-right transition motion-reduce:transition-none" :class="[!collapsed && 'rotate-90']"></div>
         </div>
       </template>
-      <div :class="[level >= indentFromLevel && item.text && 'pl-4 b-0 b-l-1 b-solid b-border']">
-        <BSidebarItem v-for="_item in item.items" :key="_item.link" :parent="item" :path :level="level + 1" :item="_item" :indent-from-level="_item.indentFromLevel" :collapsed="_item.collapsed" @click="onClick" />
+      <div :class="[level >= (item.indentFromLevel ?? 1) && item.text && 'pl-4 b-0 b-l-1 b-solid b-border']">
+        <BSidebarItem v-for="_item in item.items" :key="_item.link" :parent="item" :path :level="level + 1" :item="_item" :collapsed="_item.collapsed" @click="onClick" />
       </div>
     </BCollapse>
   </div>
   <a
-    v-else class="b-sidebar-item relative block cursor-pointer select-none rounded-lg py-1.5 text-sm transition hover:text-primary hover:opacity-100 motion-reduce:transition-none" :href="item.link" :rel="item.rel" :target="item.target" :class="[hasActive ? 'text-base' : 'opacity-70', active && 'text-primary']" @click="onClick"
+    v-else class="b-sidebar-item relative block cursor-pointer select-none rounded-lg py-1.5 text-sm transition hover:text-primary hover:opacity-100 motion-reduce:transition-none" :href="item.link" :rel="item.rel" :target="item.target" :class="[active ? 'text-primary' : 'opacity-70']" @click="onClick"
   >
     <Transition name="fade">
       <div v-if="active" class="absolute top-50% box-border h-70% w-2px bg-primary -left-17px -translate-y-50%"></div>

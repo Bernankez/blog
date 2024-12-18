@@ -15,5 +15,5 @@ function onClick(e: MouseEvent, item: SidebarItem) {
 </script>
 
 <template>
-  <BSidebarItem v-for="item in sidebar.items" :key="item.link" :collapsed="sidebar.collapsed" :path :indent-from-level="sidebar.indentFromLevel" :item @click="onClick" />
+  <BSidebarItem v-for="item in sidebar.items" :key="item.link" :collapsed="sidebar.collapsed" :path :item @click="onClick" />
 </template>
