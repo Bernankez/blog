@@ -15,7 +15,7 @@ const pattern = computed(() => {
 </script>
 
 <template>
-  <BLink v-if="theme.editLink" :href="pattern" class="w-fit flex items-center gap-1 text-sm text-muted-foreground font-medium transition hover:text-primary motion-reduce:transition-none">
+  <BLink v-if="theme.editLink" :href="pattern" class="w-fit flex items-center gap-1 text-sm text-foreground text-opacity-60 font-medium transition hover:text-primary motion-reduce:transition-none">
     <div class="i-lucide-edit"></div>
     {{ theme.editLink.text || "Edit this page on GitHub" }}
   </BLink>
