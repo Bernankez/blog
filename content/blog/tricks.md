@@ -22,24 +22,23 @@ main {
 }
 ```
 
-TODO
+<CodePreview>
+  <template #preview>
+    <main class="bg-yellow p-3">
+    father
+    <div class="bg-gray">child</div>
+    </main>
+  </template>
+  <template #code>
 
-::: code-group
-::: code-block{label="Preview" preview}
-
-<main class="bg-yellow p-3">
-father
-<div class="bg-gray">child</div>
-</main>
-:::
-
-```html [Code]
+```html
 <main class="min-h-full grid">
   <!-- child -->
 </main>
 ```
 
-:::
+  </template>
+</CodePreview>
 
 ## 全面屏iPhone的Safe Area
 
@@ -58,31 +57,32 @@ father
 }
 ```
 
-::code-group
-::code-block{label="Preview" preview}
+<CodePreview>
+  <template #preview>
+    <div class="grid grid-cols-3">
+      <div class="b-1 b-solid b-[#bfbfbf] -m-r-1px -m-b-1px">cell</div>
+      <div class="b-1 b-solid b-[#bfbfbf] -m-r-1px -m-b-1px">cell</div>
+      <div class="b-1 b-solid b-[#bfbfbf] -m-r-1px -m-b-1px">cell</div>
+      <div class="b-1 b-solid b-[#bfbfbf] -m-r-1px -m-b-1px">cell</div>
+      <div class="b-1 b-solid b-[#bfbfbf] -m-r-1px -m-b-1px">cell</div>
+      <div class="b-1 b-solid b-[#bfbfbf] -m-r-1px -m-b-1px">cell</div>
+    </div>
+  </template>
+  <template #code>
 
+```html
 <div class="grid grid-cols-3">
-<div class="b-1 b-solid b-[#bfbfbf] -m-r-1px -m-b-1px">cell</div>
-<div class="b-1 b-solid b-[#bfbfbf] -m-r-1px -m-b-1px">cell</div>
-<div class="b-1 b-solid b-[#bfbfbf] -m-r-1px -m-b-1px">cell</div>
-<div class="b-1 b-solid b-[#bfbfbf] -m-r-1px -m-b-1px">cell</div>
-<div class="b-1 b-solid b-[#bfbfbf] -m-r-1px -m-b-1px">cell</div>
-<div class="b-1 b-solid b-[#bfbfbf] -m-r-1px -m-b-1px">cell</div>
+  <div class="cell">cell</div>
+  <div class="cell">cell</div>
+  <div class="cell">cell</div>
+  <div class="cell">cell</div>
+  <div class="cell">cell</div>
+  <div class="cell">cell</div>
 </div>
-::
-
-```html [Code]
-  <div class="grid grid-cols-3">
-    <div class="cell">cell</div>
-    <div class="cell">cell</div>
-    <div class="cell">cell</div>
-    <div class="cell">cell</div>
-    <div class="cell">cell</div>
-    <div class="cell">cell</div>
-  </div>
 ```
 
-::
+  </template>
+</CodePreview>
 
 ## 获取隐藏元素样式
 
@@ -105,21 +105,18 @@ father
 
 ## 使用Cloudflare Workers实现域名代理
 
-::alert
-Reference: [使用 Cloudflare Workers 解决 OpenAI 和 ChatGPT 的 API 无法访问的问题](https://github.com/noobnooc/noobnooc/discussions/9)
-::
+> [!TIP]
+> Reference: [使用 Cloudflare Workers 解决 OpenAI 和 ChatGPT 的 API 无法访问的问题](https://github.com/noobnooc/noobnooc/discussions/9)
 
 ## 同时使用对象与数组解构
 
-::alert
-Reference: [解构...使用对象还是数组？](https://antfu.me/posts/destructuring-with-object-or-array)
-::
+> [!TIP]
+> Reference: [解构...使用对象还是数组？](https://antfu.me/posts/destructuring-with-object-or-array)
 
 ## 美化你的类型
 
-::alert
-Playground: [Prettier your type](https://www.typescriptlang.org/zh/play?#code/C4TwDgpgBAYg9nKBeKBvAsAKClUkBcUAzsAE4CWAdgOYDcWOlAhgLYSEkU32YC+WWPNABCTUsjQMoAYzgBXSsEKU5LAEYRSPfpkHhoAYTgsJ8RADIoorQMxCoABVIRgwcpoA8AFQB8EjNhQANoA0lBUUADWECBwAGZQXgC6hF6hSVg6epCJECQSTi5unkYsPkA)
-::
+> [!TIP]
+> Playground: [Prettier your type](https://www.typescriptlang.org/zh/play?#code/C4TwDgpgBAYg9nKBeKBvAsAKClUkBcUAzsAE4CWAdgOYDcWOlAhgLYSEkU32YC+WWPNABCTUsjQMoAYzgBXSsEKU5LAEYRSPfpkHhoAYTgsJ8RADIoorQMxCoABVIRgwcpoA8AFQB8EjNhQANoA0lBUUADWECBwAGZQXgC6hF6hSVg6epCJECQSTi5unkYsPkA)
 
 通过这个类型使你的类型提示显示完整的`{ type: string; name: string; count: number }`而不是`Foo & Bar`
 
@@ -128,28 +125,3 @@ type Prettier<T> = {
   [K in keyof T]: T[K]
 };
 ```
-
-::: code-group
-
-```js [config.js]
-/**
- * @type {import('vitepress').UserConfig}
- */
-const config = {
-  // ...
-}
-
-export default config
-```
-
-```ts [config.ts]
-import type { UserConfig } from 'vitepress'
-
-const config: UserConfig = {
-  // ...
-}
-
-export default config
-```
-
-:::
