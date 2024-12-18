@@ -1,17 +1,15 @@
 ---
 title: 小技巧
-icon: mingcute:magic-1-fill
 ---
 
-# 小技巧 <Badge text="new" />
+# 小技巧
 
 文中部分css会用UnoCSS去写。
 
 ## 网页撑满全屏
 
-::: warning
-目前已经有了新的css单位`dvh`、`lvh`、`svh`专门用来解决这个问题，但是目前兼容性还不太好
-:::
+> [!WARNING]
+> 目前已经有了新的css单位`dvh`、`lvh`、`svh`专门用来解决这个问题，但是目前兼容性还不太好
 
 不管子元素什么情况都能让网页撑满全屏。相比`100vh`的好处是，在高版本ios（即“safari浏览器的地址栏变到下面且浮动”的ios版本）上，也不会在内容未超出一屏时出现滚动条。
 
@@ -23,6 +21,8 @@ main {
   display: grid;
 }
 ```
+
+TODO
 
 ::: code-group
 ::: code-block{label="Preview" preview}
@@ -43,11 +43,10 @@ father
 
 ## 全面屏iPhone的Safe Area
 
-::alert
-Reference: [Designing Websites for iPhone X](https://webkit.org/blog/7929/designing-websites-for-iphone-x/)
-::
+> [!TIP]
+> Reference: [Designing Websites for iPhone X](https://webkit.org/blog/7929/designing-websites-for-iphone-x/)
 
-## CSS边框合并 <Badge text="v0.1" type="info" />
+## CSS边框合并
 
 使用`<table>`标签时可以通过设置`border-collapse: collapse`合并表格边框。对于非表格布局，可以对单元格使用`margin-right`, `margin-bottom`
 
@@ -73,14 +72,14 @@ Reference: [Designing Websites for iPhone X](https://webkit.org/blog/7929/design
 ::
 
 ```html [Code]
-<div class="grid grid-cols-3">
-  <div class="cell">cell</div>
-  <div class="cell">cell</div>
-  <div class="cell">cell</div>
-  <div class="cell">cell</div>
-  <div class="cell">cell</div>
-  <div class="cell">cell</div>
-</div>
+  <div class="grid grid-cols-3">
+    <div class="cell">cell</div>
+    <div class="cell">cell</div>
+    <div class="cell">cell</div>
+    <div class="cell">cell</div>
+    <div class="cell">cell</div>
+    <div class="cell">cell</div>
+  </div>
 ```
 
 ::
@@ -90,13 +89,15 @@ Reference: [Designing Websites for iPhone X](https://webkit.org/blog/7929/design
 众所周知，`display: none`的元素无法获取到它的实际`width`, `height`。对`display: none`的元素使用`getComputedStyle`时，会显示原始css值。比如
 
 ```html
-<div class="hidden">This is a hidden element.</div>
+<div class="hidden">
+  This is a hidden element.
+</div>
 
 <style>
-  .hidden {
-    display: none;
-    width: fit-content;
-  }
+.hidden {
+  display: none;
+  width: fit-content;
+}
 </style>
 ```
 
@@ -128,8 +129,27 @@ type Prettier<T> = {
 };
 ```
 
-| Tables        |      Are      |  Cool |
-| ------------- | :-----------: | ----: |
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      |   centered    |   $12 |
-| zebra stripes |   are neat    |    $1 |
+::: code-group
+
+```js [config.js]
+/**
+ * @type {import('vitepress').UserConfig}
+ */
+const config = {
+  // ...
+}
+
+export default config
+```
+
+```ts [config.ts]
+import type { UserConfig } from 'vitepress'
+
+const config: UserConfig = {
+  // ...
+}
+
+export default config
+```
+
+:::
