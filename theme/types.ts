@@ -230,3 +230,7 @@ export interface TocItem {
   level: number;
   children?: TocItem[];
 }
+
+export interface _DirConfig {
+  title: string;
+}

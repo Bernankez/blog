@@ -1,11 +1,16 @@
+import { readdirSync, readFileSync } from "node:fs";
+import { basename, parse, resolve } from "node:path";
+import process from "node:process";
 import vueJsx from "@vitejs/plugin-vue-jsx";
+import { parseYAML } from "confbox";
+import matter from "gray-matter";
 import UnoCSS from "unocss/vite";
 import Icons from "unplugin-icons/vite";
 import DevTools from "vite-plugin-vue-devtools";
 import { defineConfigWithTheme } from "vitepress";
 import { groupIconMdPlugin, groupIconVitePlugin } from "vitepress-plugin-group-icons";
 import { RssPlugin } from "vitepress-plugin-rss";
-import type { ThemeConfig } from "../theme/types";
+import type { _DirConfig, SidebarItem, ThemeConfig } from "../theme/types";
 
 // https://vitepress.dev/reference/site-config
 export default async () => {
@@ -32,98 +37,13 @@ export default async () => {
       ],
       nav: [
         { text: "Blog", link: "/blog/tricks", activeMatch: "/blog/" },
-        { text: "八股文", link: "/stereotyped-writing", activeMatch: "/stereotyped-writing" },
-        {
-          text: "指南",
-          link: "/zh/guide/what-is-vitepress",
-          activeMatch: "/zh/guide/",
-        },
-        {
-          text: "参考",
-          target: "_blank",
-          link: "/zh/reference/site-config",
-          activeMatch: "/zh/reference/",
-        },
-        {
-          text: "v1.0.1",
-          items: [
-            {
-              text: "更新日志",
-              items: [
-                {
-                  text: "参考",
-                  link: "/zh/reference/site-config",
-                  activeMatch: "/zh/reference/",
-                },
-              ],
-            },
-            {
-              text: "参与贡献",
-              target: "_blank",
-              link: "https://github.com/vuejs/vitepress/blob/main/.github/contributing.md",
-            },
-          ],
-        },
+        // { text: "八股文", link: "/stereotyped-writing", activeMatch: "/stereotyped-writing" },
       ],
       sidebar: [
-        {
-          text: "Blog",
-          items: [
-            { text: "小技巧", link: "/blog/tricks" },
-            { text: "TS重载类型推断", link: "/blog/front-end/ts-inferring-type" },
-            { text: "Search", link: "/blog/search" },
-            { text: "JS/TS中的AST节点类型示例", link: "/blog/front-end/ts-node" },
-          ],
-        },
-        {
-          text: "参考",
-          items: [
-            { text: "站点配置", link: "/site-config" },
-            { text: "frontmatter 配置", link: "/frontmatter-config" },
-            { text: "运行时 API", link: "/runtime-api" },
-            { text: "CLI", link: "/cli" },
-            {
-              text: "默认主题",
-              base: "/zh/reference/default-theme-",
-              items: [
-                { text: "概览", link: "config" },
-                { text: "导航栏", link: "nav" },
-                { text: "侧边栏", link: "sidebar" },
-                { text: "主页", link: "home-page" },
-                { text: "页脚", link: "footer" },
-                { text: "布局", link: "layout" },
-                { text: "徽章", link: "badge" },
-                { text: "团队页", link: "team-page" },
-                { text: "上下页链接", link: "prev-next-links" },
-                { text: "编辑链接", link: "edit-link" },
-                { text: "最后更新时间戳", link: "last-updated" },
-                { text: "搜索", link: "search" },
-                { items: [
-                  {
-                    text: "默认主题",
-                    base: "/zh/reference/default-theme-",
-                    collapsed: true,
-                    items: [
-                      { text: "概览", link: "config" },
-                      { text: "导航栏", link: "nav" },
-                      { text: "侧边栏", link: "sidebar" },
-                      { text: "主页", link: "home-page" },
-                      { text: "页脚", link: "footer" },
-                      { text: "布局", link: "layout" },
-                      { text: "徽章", link: "badge" },
-                      { text: "团队页", link: "team-page" },
-                      { text: "上下页链接", link: "prev-next-links" },
-                      { text: "编辑链接", link: "edit-link" },
-                      { text: "最后更新时间戳", link: "last-updated" },
-                      { text: "搜索", link: "search" },
-                      { text: "Carbon Ads", link: "carbon-ads" },
-                    ],
-                  },
-                ] },
-              ],
-            },
-          ],
-        },
+        ...generateSidebarItem(resolve(process.cwd(), "content", "blog"), {
+          indentFromLevel: 0,
+          collapsed: false,
+        }).items!,
       ],
       toc: {
         title: "页面导航",
@@ -181,6 +101,9 @@ export default async () => {
       // externalLinkIcon: true,
     },
     markdown: {
+      image: {
+        lazyLoading: true,
+      },
       config(md) {
         md.use(groupIconMdPlugin);
       },
@@ -214,4 +137,67 @@ export default async () => {
   });
 };
 
-// function generateRoutes() {}
+const _DIR_NAME = ["_dir.yaml", "_dir.yml"];
+
+interface GenerateSidebarItemOptions extends SidebarItem {
+  base?: string;
+}
+
+function generateSidebarItem(path: string, options?: GenerateSidebarItemOptions): SidebarItem {
+  const { base = "", ...restOptions } = options || {};
+  const files = readdirSync(path, { withFileTypes: true });
+  const sortedFiles = files
+    .filter((file) => {
+      if (file.isDirectory()) {
+        return true;
+      }
+      if (_DIR_NAME.includes(file.name)) {
+        return true;
+      }
+      const ext = parse(file.name).ext;
+      return ext === ".md";
+    })
+    .toSorted((a, b) => a.name.localeCompare(b.name));
+
+  const sidebarItem: SidebarItem = {
+    ...restOptions,
+  };
+
+  const directoryName = basename(path);
+  const _dir = files.find(file => file.name === "_dir.yml" || file.name === "_dir.yaml");
+  if (_dir?.isFile()) {
+    const _dirFile = readFileSync(resolve(path, _dir.name), "utf-8");
+    const config = parseYAML<_DirConfig>(_dirFile);
+    sidebarItem.text = config.title;
+  } else {
+    sidebarItem.text = pascalCase(directoryName);
+  }
+
+  sidebarItem.items = sortedFiles.map((file) => {
+    if (file.isDirectory()) {
+      return generateSidebarItem(resolve(path, file.name), {
+        base: `${base ? `${base}/${directoryName}` : `/${directoryName}`}`,
+        ...restOptions,
+      });
+    }
+    if (_DIR_NAME.includes(file.name)) {
+      return undefined;
+    }
+    const fileContent = readFileSync(resolve(path, file.name), "utf-8");
+    const { data = {} } = matter(fileContent);
+    return {
+      text: data.title || pascalCase(extractName(file.name)),
+      link: `${base ? `${base}/${directoryName}` : `/${directoryName}`}/${extractName(file.name)}`,
+    };
+  }).filter(item => item !== undefined);
+
+  return sidebarItem;
+}
+
+function extractName(filename: string) {
+  return parse(filename).name;
+}
+
+function pascalCase(str: string) {
+  return str.replace(/-/g, " ").replace(/\b\w/g, char => char.toUpperCase());
+}
