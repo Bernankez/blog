@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Gitalk from "gitalk";
 import { useData, useRoute } from "vitepress";
-import { computed, onMounted, ref } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import type { ThemeConfig } from "../../types";
 import "gitalk/dist/gitalk.css";
 import "../../styles/components/b-gitalk.css";
@@ -31,7 +31,10 @@ const documentPath = computed(() => route.path.split("/").pop() || route.path);
 
 const commentRef = ref<HTMLDivElement>();
 
-onMounted(() => {
+watchEffect(() => {
+  if (!commentRef.value) {
+    return;
+  }
   const gitalk = new Gitalk({
     ...props,
     labels: props.labels || ["comment"],
@@ -46,8 +49,9 @@ onMounted(() => {
       leaveAnimation: "fade",
     },
   });
-
-  gitalk.render(commentRef.value!);
+  // remove existing comments
+  commentRef.value.innerHTML = "";
+  gitalk.render(commentRef.value);
 });
 </script>
 
@@ -58,8 +62,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
-<style scoped>
-.b-doc-comment {
-}
-</style>

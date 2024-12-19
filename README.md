@@ -9,3 +9,4 @@
 - Back to top
 - Switch theme
 - Homepage Cow
+- Homepage look around
