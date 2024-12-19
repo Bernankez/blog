@@ -74,7 +74,7 @@ function onCollapse() {
         </div>
       </slot>
     </div>
-    <div class="flex flex-col-reverse overflow-hidden px-4 transition-all motion-reduce:transition-none" :class="[collapsed && 'opacity-0 py-0', !collapsed && 'py-4']">
+    <div class="flex flex-col-reverse overflow-hidden px-4 transition-all motion-reduce:transition-none" :class="[collapsed && 'opacity-0 pb-0', !collapsed && 'pb-4']">
       <div>
         <slot></slot>
       </div>
