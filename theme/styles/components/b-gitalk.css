@@ -67,12 +67,17 @@
   color: hsl(var(--primary));
 }
 
-.gt-container .gt-comment-content {
+.gt-comment-content {
   border-radius: 0.5rem;
+  background-color: hsl(var(--secondary) / 0.3) !important;
 }
 
-.gt-container .gt-comment-content:hover {
-  box-shadow: none;
+.gt-comment-content:hover {
+  box-shadow: none !important;
+}
+
+.gt-container .gt-comment-body {
+  color: hsl(var(--foreground)) !important;
 }
 
 .gt-container .gt-header-textarea {
@@ -85,6 +90,7 @@
 }
 
 .gt-container .gt-header-preview {
+  color: hsl(var(--foreground));
   background: hsl(var(--muted) / 0.3);
 }
 
@@ -109,4 +115,8 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-2);
+}
+
+.markdown-body blockquote {
+  border-left-color: hsl(var(--muted));
 }
