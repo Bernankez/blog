@@ -37,11 +37,17 @@ export default async () => {
       ],
       nav: [
         { text: "Blog", link: "/blog/tricks", activeMatch: "/blog/" },
-        { text: "八股文", link: "/stereotyped-writing", activeMatch: "/stereotyped-writing" },
+        { text: "八股文", link: "/stereotyped-writing/browser/browser-cache", activeMatch: "/stereotyped-writing/" },
       ],
       sidebar: {
         "/blog/": [
           ...generateSidebarItem(resolve(process.cwd(), "content", "blog"), {
+            indentFromLevel: 0,
+            collapsed: false,
+          }).items!,
+        ],
+        "/stereotyped-writing/": [
+          ...generateSidebarItem(resolve(process.cwd(), "content", "stereotyped-writing"), {
             indentFromLevel: 0,
             collapsed: false,
           }).items!,
