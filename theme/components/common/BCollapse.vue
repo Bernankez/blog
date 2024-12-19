@@ -14,7 +14,7 @@ const { disabled, headerClass, titleClass, title, readonly, defaultCollapsed = f
   defaultCollapsed?: boolean;
 }>();
 
-const collapseVariants = cva("cursor-pointer max-h-fit", {
+const collapseVariants = cva("max-h-fit", {
   variants: {
     disabled: {
       true: "cursor-not-allowed text-muted-foreground",
@@ -44,7 +44,7 @@ function onCollapse() {
 
 <template>
   <div class="b-collapse grid overflow-hidden" :class="[collapsed ? 'grid-rows-[min-content_0fr]' : 'grid-rows-[min-content_1fr]']">
-    <div v-if="title ?? $slots.header" :class="[twMerge(collapseVariants({ disabled, readonly }))]" @click="onCollapse">
+    <div v-if="title ?? $slots.header" :class="[twMerge('cursor-pointer', collapseVariants({ disabled, readonly }))]" @click="onCollapse">
       <slot name="header" :collapsed>
         <div :class="twMerge(headerClass)" class="flex items-center justify-between">
           <div :class="twMerge(titleClass)">

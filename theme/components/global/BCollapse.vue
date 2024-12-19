@@ -16,7 +16,7 @@ const { type = "tip", disabled, headerClass, titleClass, title, readonly, defaul
   defaultCollapsed?: boolean;
 }>();
 
-const collapseVariants = cva("cursor-pointer max-h-fit text-sm", {
+const collapseVariants = cva("max-h-fit text-sm", {
   variants: {
     type: {
       default: "bg-muted/30 text-foreground b-1 b-solid b-muted",
@@ -55,7 +55,7 @@ function onCollapse() {
 
 <template>
   <div class="b-collapse grid my overflow-hidden rounded-lg" :class="[collapsed ? 'grid-rows-[min-content_0fr]' : 'grid-rows-[min-content_1fr]', collapseVariants({ type })]">
-    <div v-if="title ?? $slots.header ?? $slots.title ?? $slots.desc" :class="[twMerge('p-4', collapseVariants({ disabled, readonly }))]" @click="onCollapse">
+    <div v-if="title ?? $slots.header ?? $slots.title ?? $slots.desc" :class="[twMerge('p-4 cursor-pointer', collapseVariants({ disabled, readonly }))]" @click="onCollapse">
       <slot name="header" :collapsed>
         <div :class="twMerge(headerClass)" class="flex items-center justify-between">
           <div :class="twMerge(titleClass)">
