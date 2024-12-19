@@ -27,7 +27,7 @@
 - [x] !Auto generate sidebar
 - [x] Migrate posts
 - [x] Handle assets path
-- [ ] !Search
+- [ ] !Search todo vars
 - [ ] Back to top floating button
 - [ ] Switch theme floating button
 - [ ] Homepage Cow

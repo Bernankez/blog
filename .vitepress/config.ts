@@ -37,7 +37,7 @@ export default async () => {
       ],
       nav: [
         { text: "Blog", link: "/blog/tricks", activeMatch: "/blog/" },
-        { text: "八股文", link: "/stereotyped-writing/browser/browser-cache", activeMatch: "/stereotyped-writing/" },
+        { text: "面试题", link: "/stereotyped-writing/browser/browser-cache", activeMatch: "/stereotyped-writing/" },
       ],
       sidebar: {
         "/blog/": [
@@ -89,6 +89,9 @@ export default async () => {
           dateStyle: "full",
           timeStyle: "medium",
         },
+      },
+      search: {
+        provider: "local",
       },
       // search: {
       //   provider: "algolia",

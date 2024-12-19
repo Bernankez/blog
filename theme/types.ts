@@ -1,5 +1,7 @@
+import type { Options, SearchOptions } from "minisearch";
 import type { PageData } from "vitepress";
 import type { GitalkOptions } from "./components/common/BGitalk.vue";
+import type { LocalSearchTranslations } from "./local-search";
 
 export interface ThemeConfig {
   logo?: string;
@@ -84,6 +86,10 @@ export interface ThemeConfig {
      * { dateStyle: 'short', timeStyle: 'short' }
      */
     formatOptions?: Intl.DateTimeFormatOptions & { forceLocale?: boolean };
+  };
+  search?: {
+    provider: "local";
+    options?: LocalSearchOptions;
   };
 }
 
@@ -233,4 +239,25 @@ export interface TocItem {
 
 export interface _DirConfig {
   title: string;
+}
+
+export interface LocalSearchOptions {
+  miniSearch?: {
+    options?: Pick<Options, "extractField" | "tokenize" | "processTerm">;
+    searchOptions?: SearchOptions;
+  };
+  translations?: LocalSearchTranslations;
+  /**
+   * If `true`, the detailed view will be enabled by default.
+   * If `false`, the detailed view will be disabled.
+   * If `'auto'`, the detailed view will be disabled by default, but can be enabled by the user.
+   *
+   * @default 'auto'
+   */
+  detailedView?: boolean | "auto";
+  /**
+   * @default false
+   */
+  disableQueryPersistence?: boolean;
+  locales?: Record<string, Partial<Omit<LocalSearchOptions, "locales">>>;
 }

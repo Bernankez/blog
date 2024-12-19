@@ -1,16 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import BSearchBox from "./BSearchBox.vue";
 import BSearchButton from "./BSearchButton.vue";
 
 const show = ref(false);
-
-function onClick() {
-  // eslint-disable-next-line no-alert
-  window.alert("搜索功能正在开发中...");
-}
 </script>
 
 <template>
-  <BSearchButton v-model="show" @click="onClick" />
-  <!-- <BSearchBox v-model="show" /> -->
+  <div id="local-search">
+    <BSearchButton v-model="show" @click="show = true" />
+  </div>
+  <BSearchBox v-if="show" @close="show = false" />
 </template>
