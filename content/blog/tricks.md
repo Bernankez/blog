@@ -37,7 +37,7 @@ main {
 </main>
 ```
 
-  </template>
+</template>
 </CodePreview>
 
 ## 全面屏iPhone的Safe Area
@@ -81,7 +81,7 @@ main {
 </div>
 ```
 
-  </template>
+</template>
 </CodePreview>
 
 ## 获取隐藏元素样式
