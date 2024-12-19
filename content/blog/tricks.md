@@ -4,16 +4,14 @@ title: 小技巧
 
 # 小技巧
 
-文中部分css会用UnoCSS去写。
-
 ## 网页撑满全屏
 
-> [!WARNING]
-> 目前已经有了新的css单位`dvh`、`lvh`、`svh`专门用来解决这个问题，但是目前兼容性还不太好
+> [!TIP]
+> 2022年之后发布的浏览器，基本上已经全面支持了[`dvh`、`lvh`、`svh`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/length#:~:text=dvb%2C%20dvh%2C%20dvi%2C%20dvmax%2C%20dvmin%2C%20dvw%20units)。这里提供的是一种替代方案。
 
-不管子元素什么情况都能让网页撑满全屏。相比`100vh`的好处是，在高版本ios（即“safari浏览器的地址栏变到下面且浮动”的ios版本）上，也不会在内容未超出一屏时出现滚动条。
+相比于常规的`vh`，以下方式能实现类似`dvh`的效果。页面高度会随着地址栏的出现与消失而动态变化，但同时又能一直保持撑满全屏显示。
 
-在外层元素上添加
+在外层元素上添加：
 
 ```css
 main {
@@ -22,32 +20,14 @@ main {
 }
 ```
 
-<CodePreview>
-  <template #preview>
-    <main class="bg-yellow p-3">
-    father
-    <div class="bg-gray">child</div>
-    </main>
-  </template>
-  <template #code>
-
-```html
-<main class="min-h-full grid">
-  <!-- child -->
-</main>
-```
-
-</template>
-</CodePreview>
-
 ## 全面屏iPhone的Safe Area
 
 > [!TIP]
-> Reference: [Designing Websites for iPhone X](https://webkit.org/blog/7929/designing-websites-for-iphone-x/)
+> [Designing Websites for iPhone X](https://webkit.org/blog/7929/designing-websites-for-iphone-x/)
 
-## CSS边框合并
+## CSS实现边框合并
 
-使用`<table>`标签时可以通过设置`border-collapse: collapse`合并表格边框。对于非表格布局，可以对单元格使用`margin-right`, `margin-bottom`
+使用`<table>`标签时可以通过设置`border-collapse: collapse`合并表格边框。对于非`<table>`布局，可以对单元格使用`margin-right`, `margin-bottom`实现类似的效果：
 
 ```css
 .cell {
@@ -106,17 +86,17 @@ main {
 ## 使用Cloudflare Workers实现域名代理
 
 > [!TIP]
-> Reference: [使用 Cloudflare Workers 解决 OpenAI 和 ChatGPT 的 API 无法访问的问题](https://github.com/noobnooc/noobnooc/discussions/9)
+> [使用 Cloudflare Workers 解决 OpenAI 和 ChatGPT 的 API 无法访问的问题](https://github.com/noobnooc/noobnooc/discussions/9)
 
 ## 同时使用对象与数组解构
 
 > [!TIP]
-> Reference: [解构...使用对象还是数组？](https://antfu.me/posts/destructuring-with-object-or-array)
+> [解构...使用对象还是数组？](https://antfu.me/posts/destructuring-with-object-or-array)
 
 ## 美化你的类型
 
-> [!TIP]
-> Playground: [Prettier your type](https://www.typescriptlang.org/zh/play?#code/C4TwDgpgBAYg9nKBeKBvAsAKClUkBcUAzsAE4CWAdgOYDcWOlAhgLYSEkU32YC+WWPNABCTUsjQMoAYzgBXSsEKU5LAEYRSPfpkHhoAYTgsJ8RADIoorQMxCoABVIRgwcpoA8AFQB8EjNhQANoA0lBUUADWECBwAGZQXgC6hF6hSVg6epCJECQSTi5unkYsPkA)
+> [!NOTE]
+> [Prettier your type](https://www.typescriptlang.org/zh/play?#code/C4TwDgpgBAYg9nKBeKBvAsAKClUkBcUAzsAE4CWAdgOYDcWOlAhgLYSEkU32YC+WWPNABCTUsjQMoAYzgBXSsEKU5LAEYRSPfpkHhoAYTgsJ8RADIoorQMxCoABVIRgwcpoA8AFQB8EjNhQANoA0lBUUADWECBwAGZQXgC6hF6hSVg6epCJECQSTi5unkYsPkA)
 
 通过这个类型使你的类型提示显示完整的`{ type: string; name: string; count: number }`而不是`Foo & Bar`
 
