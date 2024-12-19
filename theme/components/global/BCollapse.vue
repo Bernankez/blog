@@ -12,6 +12,7 @@ const { type = "tip", disabled, headerClass, titleClass, title, readonly, defaul
   headerClass?: string;
   titleClass?: string;
   title?: string;
+  desc?: string;
   defaultCollapsed?: boolean;
 }>();
 
@@ -54,7 +55,7 @@ function onCollapse() {
 
 <template>
   <div class="b-collapse grid my overflow-hidden rounded-lg" :class="[collapsed ? 'grid-rows-[min-content_0fr]' : 'grid-rows-[min-content_1fr]', collapseVariants({ type })]">
-    <div v-if="title ?? $slots.header ?? $slots.title" :class="[twMerge('p-4', collapseVariants({ disabled, readonly }))]" @click="onCollapse">
+    <div v-if="title ?? $slots.header ?? $slots.title ?? $slots.desc" :class="[twMerge('p-4', collapseVariants({ disabled, readonly }))]" @click="onCollapse">
       <slot name="header" :collapsed>
         <div :class="twMerge(headerClass)" class="flex items-center justify-between">
           <div :class="twMerge(titleClass)">
@@ -62,7 +63,12 @@ function onCollapse() {
               {{ title }}
             </slot>
           </div>
-          <div>
+          <div class="flex items-center gap-1">
+            <slot name="desc">
+              <span class="text-xs opacity-70">
+                {{ desc }}
+              </span>
+            </slot>
             <div class="i-line-md-chevron-small-right transition motion-reduce:transition-none" :class="[!collapsed && 'rotate-90']"></div>
           </div>
         </div>
