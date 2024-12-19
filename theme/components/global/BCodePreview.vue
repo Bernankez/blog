@@ -12,7 +12,7 @@ const active = ref(tabs.value[0]);
 </script>
 
 <template>
-  <div class="-mx-6 sm:mx-revert">
+  <div class="my -mx-6 sm:mx-revert">
     <div class="flex rounded-t-none bg-muted bg-opacity-30 px-xs shadow-[inset_0_-1px_hsl(var(--border))] sm:rounded-t-lg">
       <div v-for="tab in tabs" :key="tab" class="relative cursor-pointer px-3 text-sm font-medium leading-12" @click="active = tab">
         {{ tab }}
