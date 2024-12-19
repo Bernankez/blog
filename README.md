@@ -26,9 +26,9 @@
 
 - [x] !Auto generate sidebar
 - [x] Migrate posts
-- [ ] Handle assets path
+- [x] Handle assets path
 - [ ] !Search
-- [ ] Back to top
-- [ ] Switch theme
+- [ ] Back to top floating button
+- [ ] Switch theme floating button
 - [ ] Homepage Cow
 - [ ] Homepage look around

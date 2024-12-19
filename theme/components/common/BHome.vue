@@ -3,7 +3,8 @@ import { useMouseInElement } from "@vueuse/core";
 import { useData } from "vitepress";
 import { onMounted, ref, watch, watchEffect } from "vue";
 import BButton from "./BButton.vue";
-import BCow from "./BCow.vue";
+import BLink from "./BLink.vue";
+// import BCow from "./BCow.vue";
 import type { ThemeConfig } from "../../types";
 
 const { frontmatter } = useData<ThemeConfig>();
@@ -38,7 +39,7 @@ watch(isOutside, (isOutside) => {
   <div class="grid mx-auto h-full max-w-[var(--b-max-width)] min-h-[calc(100vh_-_var(--b-nav-height)_-_var(--b-footer-height))] w-full p-xs">
     <div class="h-full flex flex-col items-center justify-center gap-sm">
       <h1 class="text-6xl">
-        <span ref="shakeElRef" class="shake inline-block cursor-grab">
+        <span ref="shakeElRef" class="shake inline-block cursor-default">
           👋
         </span>
       </h1>
@@ -53,14 +54,22 @@ watch(isOutside, (isOutside) => {
           </rt>
         </ruby>
       </div>
-      <BCow />
-      <div class="space-x-xs">
-        <BButton class="rounded-full px-lg">
-          随便看看
-        </BButton>
-        <BButton variant="secondary" class="rounded-full px-lg">
-          GitHub
-        </BButton>
+      <!-- <BCow /> -->
+      <div class="flex items-center gap-xs">
+        <BLink href="/blog/tricks">
+          <BButton class="rounded-full px-lg" as="div">
+            随便看看
+          </BButton>
+        </BLink>
+        <BLink href="https://github.com/Bernankez/blog" target="_blank">
+          <BButton variant="secondary" class="rounded-full px-lg">
+            GitHub
+          </BButton>
+        </BLink>
+      </div>
+      <div class="text-muted-foreground italic">
+        🚧
+        首页仍在施工中...
       </div>
     </div>
   </div>

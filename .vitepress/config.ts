@@ -98,15 +98,6 @@ export default async () => {
       //     indexName: "keke",
       //   },
       // },
-      // docFooter: {
-      //   prev: "上一页",
-      //   next: "下一页",
-      // },
-      // darkModeSwitchLabel: "外观",
-      // darkModeSwitchTitle: "切换到深色模式",
-      // lightModeSwitchTitle: "切换到浅色模式",
-      // returnToTopLabel: "回到顶部",
-      // externalLinkIcon: true,
     },
     markdown: {
       image: {
