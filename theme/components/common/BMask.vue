@@ -44,7 +44,7 @@ watch(show, (show) => {
 <template>
   <Teleport :to="to ?? 'body'">
     <Transition name="fade" @after-leave="unlock?.()">
-      <div v-if="show" class="b-mask fixed bottom-0 left-0 right-0 top-0 z-[var(--b-mask-z-index)] bg-foreground bg-opacity-60" :class="[!visible && 'opacity-0', _class]" :style="[style]" @click="e => emit('click', e)"></div>
+      <div v-if="show" class="b-mask fixed bottom-0 left-0 right-0 top-0 z-[var(--b-mask-z-index)] bg-[var(--b-backdrop-bg-color)]" :class="[!visible && 'opacity-0', _class]" :style="[style]" @click="e => emit('click', e)"></div>
     </Transition>
   </Teleport>
 </template>

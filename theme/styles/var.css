@@ -2,6 +2,13 @@
 :root {
   --violet: 258 90% 66%;
   --violet-foreground: 0 0% 100%;
+  --pure: 0 0% 100%;
+  --pure-foreground: 0 0% 0%;
+}
+
+.dark :root {
+  --pure: 0 0% 0%;
+  --pure-foreground: 0 0% 100%;
 }
 
 /** height */
@@ -37,6 +44,11 @@
   --b-transition-duration-slow: 500ms;
   --b-transition-duration-fast: 100ms;
   --b-transition-animation: ease;
+}
+
+/** background */
+:root {
+  --b-backdrop-bg-color: hsl(var(--foreground) / 0.6);
 }
 
 :root {
@@ -142,4 +154,15 @@
   --b-code-tab-hover-text-color: hsl(var(--foreground));
   --b-code-tab-active-text-color: hsl(var(--foreground));
   --b-code-tab-active-bar-color: hsl(var(--primary));
+}
+
+/** b-local-search-box */
+:root {
+  --b-local-search-bg: hsl(var(--background));
+  --b-local-search-result-border: hsl(var(--border));
+  --b-local-search-result-selected-bg: hsl(var(--background));
+  --b-local-search-result-selected-border: hsl(var(--border));
+  --b-local-search-result-bg: var(--b-local-search-result-selected-bg);
+  --b-local-search-highlight-bg: hsl(var(--primary));
+  --b-local-search-highlight-text: hsl(var(--primary-foreground));
 }

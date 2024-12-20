@@ -405,7 +405,7 @@ function onMouseMove(e: MouseEvent) {
       aria-expanded="true"
       aria-haspopup="listbox"
       aria-labelledby="localsearch-label"
-      class="VPLocalSearchBox"
+      class="b-local-search-box"
     >
       <div class="backdrop" @click="$emit('close')"></div>
 
@@ -420,7 +420,8 @@ function onMouseMove(e: MouseEvent) {
             :title="buttonText"
             for="localsearch-input"
           >
-            <span aria-hidden="true" class="vpi-search search-icon local-search-icon"></span>
+            <div class="search-icon local-search-icon i-line-md-search"></div>
+            <!-- <span aria-hidden="true" class="vpi-search search-icon local-search-icon"></span> -->
           </label>
           <div class="search-actions before">
             <button
@@ -428,9 +429,10 @@ function onMouseMove(e: MouseEvent) {
               :title="translate('modal.backButtonTitle')"
               @click="$emit('close')"
             >
-              <span class="local-search-icon vpi-arrow-left"></span>
+              <div class="local-search-icon i-line-md-chevron-left"></div>
             </button>
           </div>
+          TODO x
           <input
             id="localsearch-input"
             ref="searchInput"
@@ -460,7 +462,7 @@ function onMouseMove(e: MouseEvent) {
                 selectedIndex > -1 && (showDetailedList = !showDetailedList)
               "
             >
-              <span class="local-search-icon vpi-layout-list"></span>
+              <div class="local-search-icon i-lucide-layout-list"></div>
             </button>
 
             <button
@@ -470,7 +472,7 @@ function onMouseMove(e: MouseEvent) {
               :title="translate('modal.resetButtonTitle')"
               @click="resetSearch"
             >
-              <span class="local-search-icon vpi-delete"></span>
+              <div class="local-search-icon i-lucide-delete"></div>
             </button>
           </div>
         </form>
@@ -539,16 +541,16 @@ function onMouseMove(e: MouseEvent) {
         <div class="search-keyboard-shortcuts">
           <span>
             <kbd :aria-label="translate('modal.footer.navigateUpKeyAriaLabel')">
-              <span class="vpi-arrow-up navigate-icon"></span>
+              <div class="navigate-icon i-lucide-arrow-up"></div>
             </kbd>
             <kbd :aria-label="translate('modal.footer.navigateDownKeyAriaLabel')">
-              <span class="navigate-icon vpi-arrow-down"></span>
+              <div class="navigate-icon i-lucide-arrow-down"></div>
             </kbd>
             {{ translate('modal.footer.navigateText') }}
           </span>
           <span>
             <kbd :aria-label="translate('modal.footer.selectKeyAriaLabel')">
-              <span class="navigate-icon vpi-corner-down-left"></span>
+              <div class="navigate-icon i-lucide-corner-down-left"></div>
             </kbd>
             {{ translate('modal.footer.selectText') }}
           </span>
@@ -563,294 +565,5 @@ function onMouseMove(e: MouseEvent) {
 </template>
 
 <style scoped>
-.VPLocalSearchBox {
-  position: fixed;
-  z-index: 100;
-  inset: 0;
-  display: flex;
-}
-
-.backdrop {
-  position: absolute;
-  inset: 0;
-  background: var(--vp-backdrop-bg-color);
-  transition: opacity 0.5s;
-}
-
-.shell {
-  position: relative;
-  padding: 12px;
-  margin: 64px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  background: var(--vp-local-search-bg);
-  width: min(100vw - 60px, 900px);
-  height: min-content;
-  max-height: min(100vh - 128px, 900px);
-  border-radius: 6px;
-}
-
-@media (max-width: 767px) {
-  .shell {
-    margin: 0;
-    width: 100vw;
-    height: 100vh;
-    max-height: none;
-    border-radius: 0;
-  }
-}
-
-.search-bar {
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  cursor: text;
-}
-
-@media (max-width: 767px) {
-  .search-bar {
-    padding: 0 8px;
-  }
-}
-
-.search-bar:focus-within {
-  border-color: var(--vp-c-brand-1);
-}
-
-.local-search-icon {
-  display: block;
-  font-size: 18px;
-}
-
-.navigate-icon {
-  display: block;
-  font-size: 14px;
-}
-
-.search-icon {
-  margin: 8px;
-}
-
-@media (max-width: 767px) {
-  .search-icon {
-    display: none;
-  }
-}
-
-.search-input {
-  padding: 6px 12px;
-  font-size: inherit;
-  width: 100%;
-}
-
-@media (max-width: 767px) {
-  .search-input {
-    padding: 6px 4px;
-  }
-}
-
-.search-actions {
-  display: flex;
-  gap: 4px;
-}
-
-@media (any-pointer: coarse) {
-  .search-actions {
-    gap: 8px;
-  }
-}
-
-@media (min-width: 769px) {
-  .search-actions.before {
-    display: none;
-  }
-}
-
-.search-actions button {
-  padding: 8px;
-}
-
-.search-actions button:not([disabled]):hover,
-.toggle-layout-button.detailed-list {
-  color: var(--vp-c-brand-1);
-}
-
-.search-actions button.clear-button:disabled {
-  opacity: 0.37;
-}
-
-.search-keyboard-shortcuts {
-  font-size: 0.8rem;
-  opacity: 75%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  line-height: 14px;
-}
-
-.search-keyboard-shortcuts span {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-@media (max-width: 767px) {
-  .search-keyboard-shortcuts {
-    display: none;
-  }
-}
-
-.search-keyboard-shortcuts kbd {
-  background: rgba(128, 128, 128, 0.1);
-  border-radius: 4px;
-  padding: 3px 6px;
-  min-width: 24px;
-  display: inline-block;
-  text-align: center;
-  vertical-align: middle;
-  border: 1px solid rgba(128, 128, 128, 0.15);
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
-}
-
-.results {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
-.result {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-radius: 4px;
-  transition: none;
-  line-height: 1rem;
-  border: solid 2px var(--vp-local-search-result-border);
-  outline: none;
-}
-
-.result > div {
-  margin: 12px;
-  width: 100%;
-  overflow: hidden;
-}
-
-@media (max-width: 767px) {
-  .result > div {
-    margin: 8px;
-  }
-}
-
-.titles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  position: relative;
-  z-index: 1001;
-  padding: 2px 0;
-}
-
-.title {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.title.main {
-  font-weight: 500;
-}
-
-.title-icon {
-  opacity: 0.5;
-  font-weight: 500;
-  color: var(--vp-c-brand-1);
-}
-
-.title svg {
-  opacity: 0.5;
-}
-
-.result.selected {
-  --vp-local-search-result-bg: var(--vp-local-search-result-selected-bg);
-  border-color: var(--vp-local-search-result-selected-border);
-}
-
-.excerpt-wrapper {
-  position: relative;
-}
-
-.excerpt {
-  opacity: 50%;
-  pointer-events: none;
-  max-height: 140px;
-  overflow: hidden;
-  position: relative;
-  margin-top: 4px;
-}
-
-.result.selected .excerpt {
-  opacity: 1;
-}
-
-.excerpt :deep(*) {
-  font-size: 0.8rem !important;
-  line-height: 130% !important;
-}
-
-.titles :deep(mark),
-.excerpt :deep(mark) {
-  background-color: var(--vp-local-search-highlight-bg);
-  color: var(--vp-local-search-highlight-text);
-  border-radius: 2px;
-  padding: 0 2px;
-}
-
-.excerpt :deep(.vp-code-group) .tabs {
-  display: none;
-}
-
-.excerpt :deep(.vp-code-group) div[class*="language-"] {
-  border-radius: 8px !important;
-}
-
-.excerpt-gradient-bottom {
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  width: 100%;
-  height: 8px;
-  background: linear-gradient(transparent, var(--vp-local-search-result-bg));
-  z-index: 1000;
-}
-
-.excerpt-gradient-top {
-  position: absolute;
-  top: -1px;
-  left: 0;
-  width: 100%;
-  height: 8px;
-  background: linear-gradient(var(--vp-local-search-result-bg), transparent);
-  z-index: 1000;
-}
-
-.result.selected .titles,
-.result.selected .title-icon {
-  color: var(--vp-c-brand-1) !important;
-}
-
-.no-results {
-  font-size: 0.9rem;
-  text-align: center;
-  padding: 12px;
-}
-
-svg {
-  flex: none;
-}
+@import "../../styles/components/b-local-search-box.css";
 </style>
