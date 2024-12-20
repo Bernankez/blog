@@ -56,7 +56,7 @@ watch(isOutside, (isOutside) => {
       </div>
       <!-- <BCow /> -->
       <div class="flex items-center gap-xs">
-        <BLink href="/blog/tricks">
+        <BLink href="/tech/front-end/tricks">
           <BButton class="rounded-full px-lg" as="div">
             随便看看
           </BButton>

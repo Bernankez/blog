@@ -104,7 +104,7 @@ function onActive(index: number, item?: TocItem) {
         <BTocBar class="lg:hidden" />
         <div class="box-border p-2xl md:px-4xl">
           <Content class="b-doc" />
-          <div class="my-sm flex flex-col items-center justify-between gap-sm sm:flex-row">
+          <div class="my-sm mt-6xl flex flex-col items-center justify-between gap-sm sm:flex-row">
             <BEditLink />
             <BLastUpdated />
           </div>
