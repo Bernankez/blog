@@ -1,5 +1,5 @@
 import { readdirSync, readFileSync } from "node:fs";
-import { basename, parse, resolve } from "node:path";
+import { basename, parse, relative, resolve } from "node:path";
 import process from "node:process";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import { parseYAML } from "confbox";
@@ -10,7 +10,7 @@ import DevTools from "vite-plugin-vue-devtools";
 import { defineConfigWithTheme } from "vitepress";
 import { groupIconMdPlugin, groupIconVitePlugin } from "vitepress-plugin-group-icons";
 import { RssPlugin } from "vitepress-plugin-rss";
-import type { _DirConfig, SidebarItem, ThemeConfig } from "../theme/types";
+import type { _DirConfig, NavItemWithLink, SidebarItem, ThemeConfig } from "../theme/types";
 
 // https://vitepress.dev/reference/site-config
 export default async () => {
@@ -36,15 +36,18 @@ export default async () => {
         { icon: "home", link: "https://keke.cc", ariaLabel: "Home", title: "Home" },
       ],
       nav: [
-        { text: "Blog", link: "/blog/tricks", activeMatch: "/blog/" },
-        { text: "面试题", link: "/stereotyped-writing/browser/browser-cache", activeMatch: "/stereotyped-writing/" },
+        generateNavItem(resolve(process.cwd(), "content", "tech")),
+        generateNavItem(resolve(process.cwd(), "content", "blog")),
+        generateNavItem(resolve(process.cwd(), "content", "stereotyped-writing")),
       ],
       sidebar: {
-        "/blog/": [
-          ...generateSidebarItem(resolve(process.cwd(), "content", "blog"), {
+        "/tech/": [
+          ...generateSidebarItem(resolve(process.cwd(), "content", "tech"), {
             indentFromLevel: 0,
-            collapsed: false,
           }).items!,
+        ],
+        "/blog/": [
+          ...generateSidebarItem(resolve(process.cwd(), "content", "blog")).items!,
         ],
         "/stereotyped-writing/": [
           ...generateSidebarItem(resolve(process.cwd(), "content", "stereotyped-writing"), {
@@ -194,6 +197,45 @@ function generateSidebarItem(path: string, options?: GenerateSidebarItemOptions)
   }).filter(item => item !== undefined);
 
   return sidebarItem;
+}
+
+function generateNavItem(path: string) {
+  const navItem: NavItemWithLink = {} as NavItemWithLink;
+  const directoryName = basename(path);
+  navItem.activeMatch = `/${directoryName}/`;
+  const files = readdirSync(path, { withFileTypes: true });
+  const _dir = files.find(file => file.name === "_dir.yml" || file.name === "_dir.yaml");
+  if (_dir?.isFile()) {
+    const _dirFile = readFileSync(resolve(path, _dir.name), "utf-8");
+    const config = parseYAML<_DirConfig>(_dirFile);
+    navItem.text = config.title;
+  } else {
+    navItem.text = pascalCase(directoryName);
+  }
+  const md = getFirstMdFile(path);
+  if (md) {
+    navItem.link = `/${directoryName}/${relative(path, md.path)}/${extractName(md.filename)}`;
+  }
+  return navItem;
+}
+
+function getFirstMdFile(path: string) {
+  // 递归找到目录下第一个md文件
+  const files = readdirSync(path, { withFileTypes: true });
+  for (const file of files) {
+    if (file.isDirectory()) {
+      return getFirstMdFile(resolve(path, file.name));
+    }
+    if (file.name === "_dir.yml" || file.name === "_dir.yaml") {
+      continue;
+    }
+    if (file.name.endsWith(".md")) {
+      return {
+        path,
+        filename: file.name,
+      };
+    }
+  }
 }
 
 function extractName(filename: string) {
