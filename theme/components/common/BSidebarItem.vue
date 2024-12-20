@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { hasDirectActiveLink, isActive } from "../../utils/sidebar";
+import { hasActiveLink, isActive } from "../../utils/sidebar";
 import BCollapse from "./BCollapse.vue";
 import type { SidebarItem } from "../../types";
 
@@ -20,7 +20,7 @@ const emit = defineEmits<{
 
 const isParentNode = computed(() => item.items?.length || (keepNodeStyle && item.items?.length === 0));
 const active = computed(() => isActive(path, item.link));
-const hasActive = computed(() => hasDirectActiveLink(path, isParentNode.value ? item.items! : (parent?.items || [])));
+const hasActive = computed(() => hasActiveLink(path, isParentNode.value ? item.items! : (parent?.items || [])));
 
 function onClick(e: MouseEvent, _item?: SidebarItem) {
   emit("click", e, _item ?? item);
@@ -31,14 +31,14 @@ function onClick(e: MouseEvent, _item?: SidebarItem) {
   <div v-if="isParentNode">
     <BCollapse :readonly="item.collapsed === undefined" :default-collapsed="item.collapsed === true">
       <template v-if="item.text" #header="{ collapsed }">
-        <div class="b-sidebar-item flex select-none items-center justify-between py-2 transition motion-reduce:transition-none" :class="[!hasActive && 'opacity-70']">
+        <div class="b-sidebar-item flex select-none items-center justify-between py-2 transition motion-reduce:transition-none" :class="[hasActive ? 'opacity-100' : 'opacity-70']">
           <div class="font-semibold">
             {{ item.text }}
           </div>
           <div v-if="item.collapsed !== undefined" class="i-line-md-chevron-small-right transition motion-reduce:transition-none" :class="[!collapsed && 'rotate-90']"></div>
         </div>
       </template>
-      <div :class="[level >= (item.indentFromLevel ?? 1) && item.text && 'pl-4 b-0 b-l-1 b-solid b-border', !hasActive && 'opacity-70']">
+      <div :class="[level >= (item.indentFromLevel ?? 1) && item.text && 'pl-4 b-0 b-l-1 b-solid b-border', hasActive ? 'opacity-100' : 'opacity-70']">
         <BSidebarItem v-for="_item in item.items" :key="_item.link" :parent="item" :path :level="level + 1" :item="_item" :collapsed="_item.collapsed" @click="onClick" />
       </div>
     </BCollapse>
