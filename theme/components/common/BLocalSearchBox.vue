@@ -432,7 +432,6 @@ function onMouseMove(e: MouseEvent) {
               <div class="local-search-icon i-line-md-chevron-left"></div>
             </button>
           </div>
-          TODO x
           <input
             id="localsearch-input"
             ref="searchInput"
@@ -449,9 +448,17 @@ function onMouseMove(e: MouseEvent) {
             maxlength="64"
             :placeholder="buttonText"
             spellcheck="false"
-            type="search"
           />
           <div class="search-actions">
+            <button
+              class="clear-button"
+              type="reset"
+              :disabled="disableReset"
+              :title="translate('modal.resetButtonTitle')"
+              @click="resetSearch"
+            >
+              <div class="local-search-icon i-lucide-x"></div>
+            </button>
             <button
               v-if="!disableDetailedView"
               class="toggle-layout-button"
@@ -463,16 +470,6 @@ function onMouseMove(e: MouseEvent) {
               "
             >
               <div class="local-search-icon i-lucide-layout-list"></div>
-            </button>
-
-            <button
-              class="clear-button"
-              type="reset"
-              :disabled="disableReset"
-              :title="translate('modal.resetButtonTitle')"
-              @click="resetSearch"
-            >
-              <div class="local-search-icon i-lucide-delete"></div>
             </button>
           </div>
         </form>
@@ -513,7 +510,7 @@ function onMouseMove(e: MouseEvent) {
                     class="title"
                   >
                     <span class="text" v-html="t"></span>
-                    <span class="local-search-icon vpi-chevron-right"></span>
+                    <div class="i-lucide-chevron-right text-sm"></div>
                   </span>
                   <span class="title main">
                     <span class="text" v-html="p.title"></span>
@@ -522,7 +519,7 @@ function onMouseMove(e: MouseEvent) {
 
                 <div v-if="showDetailedList" class="excerpt-wrapper">
                   <div v-if="p.text" class="excerpt" inert>
-                    <div class="vp-doc" v-html="p.text"></div>
+                    <div class="b-doc" v-html="p.text"></div>
                   </div>
                   <div class="excerpt-gradient-bottom"></div>
                   <div class="excerpt-gradient-top"></div>
@@ -566,4 +563,16 @@ function onMouseMove(e: MouseEvent) {
 
 <style scoped>
 @import "../../styles/components/b-local-search-box.css";
+
+.b-local-search-box .title-icon {
+  display: none;
+}
+
+.b-local-search-box .result.selected .excerpt-gradient-top {
+  background: linear-gradient(var(--b-local-search-result-selected-bg), transparent) !important;
+}
+
+.b-local-search-box .result.selected .excerpt-gradient-bottom {
+  background: linear-gradient(transparent, var(--b-local-search-result-selected-bg)) !important;
+}
 </style>

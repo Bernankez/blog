@@ -7,8 +7,6 @@ const show = ref(false);
 </script>
 
 <template>
-  <div id="local-search">
-    <BSearchButton v-model="show" @click="show = true" />
-  </div>
+  <BSearchButton v-model="show" @click="show = true" />
   <BLocalSearchBox v-if="show" @close="show = false" />
 </template>

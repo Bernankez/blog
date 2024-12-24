@@ -4,11 +4,14 @@
   --violet-foreground: 0 0% 100%;
   --pure: 0 0% 100%;
   --pure-foreground: 0 0% 0%;
+  --light-pure: 0 0% 89.8%;
+  --light-pure-foreground: 0 0% 10.2%;
 }
-
-.dark :root {
+:root.dark {
   --pure: 0 0% 0%;
   --pure-foreground: 0 0% 100%;
+  --light-pure: 0 0% 10.2%;
+  --light-pure-foreground: 0 0% 90%;
 }
 
 /** height */
@@ -51,7 +54,7 @@
   --b-backdrop-bg-color: hsl(var(--pure-foreground) / 0.6);
 }
 :root.dark {
-  --b-backdrop-bg-color: hsl(var(--pure-foreground) / 0.6);
+  --b-backdrop-bg-color: hsl(var(--pure) / 0.6);
 }
 
 :root {
@@ -163,7 +166,7 @@
 :root {
   --b-local-search-bg: hsl(var(--background));
   --b-local-search-result-border: hsl(var(--border));
-  --b-local-search-result-selected-bg: hsl(var(--muted) / 0.5);
+  --b-local-search-result-selected-bg: hsl(var(--light-pure));
   --b-local-search-result-selected-border: hsl(var(--border));
   --b-local-search-result-bg: hsl(var(--background));
   --b-local-search-highlight-bg: hsl(var(--primary));

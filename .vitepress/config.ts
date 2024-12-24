@@ -95,6 +95,29 @@ export default async () => {
       },
       search: {
         provider: "local",
+        options: {
+          locales: {
+            root: {
+              translations: {
+                button: {
+                  buttonText: "搜索文档",
+                  buttonAriaLabel: "搜索文档",
+                },
+                modal: {
+                  displayDetails: "显示预览",
+                  resetButtonTitle: "清空",
+                  backButtonTitle: "返回",
+                  footer: {
+                    selectText: "选择",
+                    navigateText: "切换",
+                    closeText: "关闭",
+                  },
+                  noResultsText: "无法找到相关结果",
+                },
+              },
+            },
+          },
+        },
       },
       // search: {
       //   provider: "algolia",

@@ -68,7 +68,7 @@ button {
 
 .navigate-icon {
   display: block;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .search-icon {
@@ -85,6 +85,7 @@ button {
   padding: 6px 12px;
   font-size: inherit;
   width: 100%;
+  background-color: transparent;
 }
 
 .search-input:focus-visible {
@@ -176,7 +177,7 @@ button {
   border-radius: 4px;
   transition: none;
   line-height: 1rem;
-  border: solid 2px var(--b-local-search-result-border);
+  border: solid 1px var(--b-local-search-result-border);
   outline: none;
 }
 
@@ -222,6 +223,7 @@ button {
 }
 
 .result.selected {
+  background-color: var(--b-local-search-result-selected-bg);
   border-color: var(--b-local-search-result-selected-border);
 }
 
@@ -242,9 +244,14 @@ button {
   opacity: 1;
 }
 
-.excerpt :deep(*) {
+.excerpt :deep(*):not(p) {
   font-size: 0.8rem !important;
   line-height: 130% !important;
+}
+
+.excerpt :deep(p) {
+  font-size: 0.8rem !important;
+  line-height: 20px !important;
 }
 
 .titles :deep(mark),
