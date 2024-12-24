@@ -48,7 +48,10 @@
 
 /** background */
 :root {
-  --b-backdrop-bg-color: hsl(var(--foreground) / 0.6);
+  --b-backdrop-bg-color: hsl(var(--pure-foreground) / 0.6);
+}
+:root.dark {
+  --b-backdrop-bg-color: hsl(var(--pure-foreground) / 0.6);
 }
 
 :root {
@@ -160,9 +163,9 @@
 :root {
   --b-local-search-bg: hsl(var(--background));
   --b-local-search-result-border: hsl(var(--border));
-  --b-local-search-result-selected-bg: hsl(var(--background));
+  --b-local-search-result-selected-bg: hsl(var(--muted) / 0.5);
   --b-local-search-result-selected-border: hsl(var(--border));
-  --b-local-search-result-bg: var(--b-local-search-result-selected-bg);
+  --b-local-search-result-bg: hsl(var(--background));
   --b-local-search-highlight-bg: hsl(var(--primary));
   --b-local-search-highlight-text: hsl(var(--primary-foreground));
 }
