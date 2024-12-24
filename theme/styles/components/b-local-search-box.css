@@ -4,7 +4,7 @@ button {
 
 .b-local-search-box {
   position: fixed;
-  z-index: 100;
+  z-index: var(--b-search-box-z-index);
   inset: 0;
   display: flex;
 }
@@ -198,7 +198,7 @@ button {
   flex-wrap: wrap;
   gap: 4px;
   position: relative;
-  z-index: 1001;
+  z-index: var(--b-search-box-title-z-index);
   padding: 2px 0;
 }
 
@@ -277,7 +277,7 @@ button {
   width: 100%;
   height: 8px;
   background: linear-gradient(transparent, var(--b-local-search-result-bg));
-  z-index: 1000;
+  z-index: var(--b-search-box-gradient-z-index);
 }
 
 .excerpt-gradient-top {
@@ -287,7 +287,7 @@ button {
   width: 100%;
   height: 8px;
   background: linear-gradient(var(--b-local-search-result-bg), transparent);
-  z-index: 1000;
+  z-index: var(--b-search-box-gradient-z-index);
 }
 
 .result.selected .titles,

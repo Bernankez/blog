@@ -39,6 +39,9 @@
   --b-mask-z-index: 40;
   --b-aside-z-index: 50;
   --b-popover-z-index: 90;
+  --b-search-box-z-index: 100;
+  --b-search-box-title-z-index: 111;
+  --b-search-box-gradient-z-index: 110;
 }
 
 /** transition */
