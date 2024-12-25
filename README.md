@@ -31,5 +31,5 @@
 - [x] Back to top floating button
 - [x] Switch theme floating button
 - [ ] Homepage Cow
-- [ ] Homepage look around
+- [x] Homepage look around
 - [x] Shiki twoslash

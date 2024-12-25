@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { useMouseInElement } from "@vueuse/core";
 import { useData } from "vitepress";
-import { onMounted, ref, watch, watchEffect } from "vue";
+import { onMounted, ref, toRefs, watch, watchEffect } from "vue";
+import { isSidebarSingle } from "../../utils/sidebar";
 import BButton from "./BButton.vue";
 import BLink from "./BLink.vue";
 // import BCow from "./BCow.vue";
-import type { ThemeConfig } from "../../types";
+import type { SidebarItem, SidebarSingle, ThemeConfig } from "../../types";
 
-const { frontmatter } = useData<ThemeConfig>();
+const { frontmatter, theme } = useData<ThemeConfig>();
+
+const { sidebar } = toRefs(theme.value);
+
 // TODO custom with frontmatter
 // TODO responsive style
 watchEffect(() => {
@@ -33,6 +37,35 @@ watch(isOutside, (isOutside) => {
     shakeElRef.value?.classList.remove("hover");
   }
 }, { immediate: true });
+
+function randomPick<T>(arr: T[]) {
+  const day = Number(`${new Date().getFullYear()}${new Date().getMonth() + 1}${new Date().getDate()}`);
+  return arr[day % arr.length];
+}
+
+function lookAround() {
+  if (!sidebar?.value) {
+    return "/";
+  }
+  let sidebarSingle: SidebarSingle;
+  if (isSidebarSingle(sidebar.value)) {
+    sidebarSingle = sidebar.value;
+  } else {
+    sidebarSingle = sidebar.value[randomPick(Object.keys(sidebar.value))];
+  }
+
+  function pick(sidebarItem: SidebarItem) {
+    if (sidebarItem.items?.length) {
+      return pick(randomPick(sidebarItem.items));
+    }
+    return sidebarItem.link;
+  }
+
+  if (Array.isArray(sidebarSingle)) {
+    return pick(randomPick(sidebarSingle));
+  }
+  return pick(randomPick(sidebarSingle.items));
+}
 </script>
 
 <template>
@@ -56,7 +89,7 @@ watch(isOutside, (isOutside) => {
       </div>
       <!-- <BCow /> -->
       <div class="flex items-center gap-xs">
-        <BLink href="/tech/front-end/tricks">
+        <BLink :href="lookAround()">
           <BButton class="rounded-full px-lg" as="div">
             随便看看
           </BButton>
