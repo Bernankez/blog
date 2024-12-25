@@ -4,9 +4,9 @@ title: Webpack Loader
 
 # Webpack Loader
 
-webpack.config.js
-
 ```javascript
+// webpack.config.js
+
 module.exports = {
   module: {
     rules: [

@@ -10,7 +10,7 @@ title: "获取隐藏（display: none）元素的样式"
 
 `useHiddenElementStyle.ts`
 
-```typescript
+```typescript twoslash
 import type { Fn, MaybeComputedElementRef, MaybeElement, UnRefElementReturn } from "@vueuse/core";
 import { unrefElement, useEventListener } from "@vueuse/core";
 import { onMounted, onUnmounted, ref, watch } from "vue";

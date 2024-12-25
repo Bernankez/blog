@@ -15,11 +15,7 @@ function Person(name){
 const p = new Person('jack');
 ```
 
-构造函数创建实例的过程 (模拟new操作符)：
-
-::Badge
-BLOOMCHIC
-::
+构造函数创建实例的过程 (模拟new操作符)：<Badge text="BLOOMCHIC" type="info" />
 
 ```javascript
 function new(constructor){
@@ -56,9 +52,8 @@ p.constructor === Person // true
 
 ### `__proto__`
 
-::alert
-`__proto__`不是一个标准属性，是各大浏览器厂商添加的私有属性。一般可以用`Object.getPrototypeOf`获取实例对象原型。
-::
+> [!TIP]
+> `__proto__`不是一个标准属性，是各大浏览器厂商添加的私有属性。一般可以用`Object.getPrototypeOf`获取实例对象原型。
 
 从上面构造函数创建实例的过程可以看出来，我们新建的对象的原型对象指向构造函数的prototype。而在实例对象中，我们可以通过`Object.getPrototypeOf`获取实例的原型。
 

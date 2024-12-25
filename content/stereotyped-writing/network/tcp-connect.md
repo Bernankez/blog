@@ -2,7 +2,7 @@
 title: TCP三次握手与四次挥手
 ---
 
-# TCP三次握手与四次挥手 <Badge type="tip" text="SHEIN" />
+# TCP三次握手与四次挥手 <Badge type="info" text="SHEIN" />
 
 ## 网络协议
 

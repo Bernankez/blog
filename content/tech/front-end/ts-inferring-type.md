@@ -9,7 +9,7 @@ title: TS函数重载类型推断
 
 当从函数重载推断类型时，只会从最后一个函数签名中推断，比如：
 
-```typescript
+```typescript twoslash
 interface EventBus {
   (event: 'refresh', type: string):void;
   (event: 'query', data: number):void;

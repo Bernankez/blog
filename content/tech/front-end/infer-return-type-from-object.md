@@ -6,7 +6,7 @@ title: TS从函数参数对象中推导返回值类型
 
 我们在做网络请求的时候经常会用到拦截器，在返回值拦截器中，我们可能会对返回值进行处理，并返回一个新的类型。因此我们会遇上这种需求：
 
-```ts
+```ts twoslash
 interface InterceptorOption<T> {
   // ignore other props
   responseTransformer?: (res: T) => any;
@@ -66,7 +66,7 @@ type InferResponse<T, O> = O extends { responseTransformer: (res: any) => any } 
 如果`O`中有`responseTransformer`并且`responseTransformer`为函数时，我们取它的返回值`ReturnType<O["responseTransformer"]>`；否则返回原本的`T`类型。
 完整代码如下：
 
-```ts
+```ts twoslash
 interface InterceptorOption<T> {
   responseTransformer?: (response: T) => any;
 }
@@ -76,6 +76,18 @@ type InferResponse<T, O> = O extends { responseTransformer: (res: any) => any } 
 function interceptor<T, O extends InterceptorOption<T>>(instance: (...args: any[]) => Promise<T>, options?: O) {
   return {} as InferResponse<T, O>;
 }
+
+const api = () => Promise.resolve({ name: "bobo" });
+
+const res1 = interceptor(api); // typeof res1 === { name: string }
+const res2 = interceptor(api, {}); // typeof res2 === { name: string }
+const res3 = interceptor(api, { // typeof res3 === { value: string }
+  responseTransformer(res) {
+    return {
+      value: "bobo"
+    };
+  }
+});
 ```
 
 此时我们的`interceptor`便能根据`options`返回正确的类型。
@@ -84,7 +96,7 @@ function interceptor<T, O extends InterceptorOption<T>>(instance: (...args: any[
 
 其实一开始我要写的不是这个，一开始想做的是这种类型体操：
 
-```ts
+```ts twoslash
 interface InterceptorOption<T> {
   // ignore other props
   responseTransformer?: (res: T) => any;

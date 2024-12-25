@@ -98,10 +98,28 @@ main {
 > [!NOTE]
 > [Prettier your type](https://www.typescriptlang.org/zh/play?#code/C4TwDgpgBAYg9nKBeKBvAsAKClUkBcUAzsAE4CWAdgOYDcWOlAhgLYSEkU32YC+WWPNABCTUsjQMoAYzgBXSsEKU5LAEYRSPfpkHhoAYTgsJ8RADIoorQMxCoABVIRgwcpoA8AFQB8EjNhQANoA0lBUUADWECBwAGZQXgC6hF6hSVg6epCJECQSTi5unkYsPkA)
 
-通过这个类型使你的类型提示显示完整的`{ type: string; name: string; count: number }`而不是`Foo & Bar`
-
-```ts
+```ts twoslash
 type Prettier<T> = {
   [K in keyof T]: T[K]
 };
+```
+
+通过这个类型使你的类型提示显示完整的`{ type: string; name: string; count: number }`而不是`Foo & Bar`，例如：
+
+```ts twoslash
+type Prettier<T> = {
+  [K in keyof T]: T[K]
+};
+
+type Foo = {
+  type: string;
+}
+
+type Bar = {
+  name: string;
+  count: number;
+}
+
+type FooBar = Foo & Bar;
+type PrettyFooBar = Prettier<FooBar>;
 ```
