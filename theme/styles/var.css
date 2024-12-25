@@ -40,8 +40,8 @@
   --b-aside-z-index: 50;
   --b-popover-z-index: 90;
   --b-search-box-z-index: 500;
-  --b-search-box-title-z-index: 511;
-  --b-search-box-gradient-z-index: 510;
+  --b-search-box-gradient-z-index: calc(var(--b-search-box-z-index) + 10);
+  --b-search-box-title-z-index: calc(var(--b-search-box-gradient-z-index) + 1);
 }
 
 /** transition */
@@ -155,7 +155,7 @@
   --b-custom-block-details-code-bg: hsl(var(--muted) / 0.1);
 }
 
-/** vp-code-group */
+/** b-code-group */
 :root {
   --b-code-tab-bg: hsl(var(--muted) / 0.3);
   --b-code-tab-divider: hsl(var(--border));

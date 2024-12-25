@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { basename, parse, relative, resolve } from "node:path";
 import process from "node:process";
+import { transformerTwoslash } from "@shikijs/vitepress-twoslash";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import { parseYAML } from "confbox";
 import matter from "gray-matter";
@@ -132,6 +133,9 @@ export default async () => {
       image: {
         lazyLoading: true,
       },
+      codeTransformers: [
+        transformerTwoslash(),
+      ],
       config(md) {
         md.use(groupIconMdPlugin);
       },

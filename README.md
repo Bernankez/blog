@@ -32,4 +32,4 @@
 - [x] Switch theme floating button
 - [ ] Homepage Cow
 - [ ] Homepage look around
-- [ ] Shiki twoslash
+- [x] Shiki twoslash
