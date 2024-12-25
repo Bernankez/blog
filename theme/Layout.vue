@@ -1,17 +1,30 @@
 <script setup lang="ts">
+import { useElementVisibility } from "@vueuse/core";
 import { useData } from "vitepress";
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
+import BBackToTop from "./components/common/BBackToTop.vue";
 import BContent from "./components/common/BContent.vue";
 import BFooter from "./components/common/BFooter.vue";
 import BHome from "./components/common/BHome.vue";
 import BNav from "./components/common/BNav.vue";
 import BNotFound from "./components/common/BNotFound.vue";
+import BToggleTheme from "./components/common/BToggleTheme.vue";
 import type { Layout, PageClass, ThemeConfig } from "./types";
 
 const { frontmatter, page } = useData<ThemeConfig>();
 
 const layout = computed<Layout>(() => frontmatter.value.layout);
 const pageClass = computed<PageClass>(() => frontmatter.value.pageClass || undefined);
+
+const headerEl = ref<HTMLDivElement>();
+onMounted(() => {
+  const el = document.querySelector(".b-nav");
+  if (el) {
+    headerEl.value = el as HTMLDivElement;
+  }
+});
+
+const visible = useElementVisibility(headerEl);
 </script>
 
 <template>
@@ -33,6 +46,14 @@ const pageClass = computed<PageClass>(() => frontmatter.value.pageClass || undef
     </template>
     <template v-else>
       <BContent />
+      <Teleport to="body">
+        <Transition name="fade">
+          <div v-show="headerEl && !visible" class="fixed bottom-2 right-2 flex flex-col gap-sm md:hidden">
+            <BToggleTheme />
+            <BBackToTop />
+          </div>
+        </Transition>
+      </Teleport>
     </template>
   </div>
   <Content v-else />
@@ -41,5 +62,15 @@ const pageClass = computed<PageClass>(() => frontmatter.value.pageClass || undef
 <style scoped>
 .b-main {
   min-height: calc(100vh - var(--b-nav-height) - var(--b-footer-height));
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity var(--b-transition-duration-slow) var(--b-transition-animation);
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

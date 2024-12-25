@@ -28,8 +28,8 @@
 - [x] Migrate posts
 - [x] Handle assets path
 - [x] !Search todo vars
-- [ ] Back to top floating button
-- [ ] Switch theme floating button
+- [x] Back to top floating button
+- [x] Switch theme floating button
 - [ ] Homepage Cow
 - [ ] Homepage look around
 - [ ] Shiki twoslash
