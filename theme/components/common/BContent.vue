@@ -34,7 +34,6 @@ watchEffect(() => {
 });
 
 const sidebarWrapperClass = computed(() => twMerge([
-  "sticky top-[var(--b-nav-height)] z-[var(--b-toc-bar-z-index)]",
   expandSidebar.value ? "b-0 b-r-1 b-border b-solid" : "",
   "transition-max-width motion-reduce:transition-none",
   "h-[calc(100vh_-_var(--b-nav-height))] overflow-hidden",
@@ -87,17 +86,20 @@ function onActive(index: number, item?: TocItem) {
 <template>
   <main class="b-main">
     <div class="mx-auto max-w-[var(--b-max-width)] flex">
-      <div :class="sidebarWrapperClass">
-        <div class="h-full w-[var(--b-sidebar-expand-width)] flex flex-col">
-          <div class="box-border h-full overflow-y-auto p-sm transition motion-reduce:transition-none" :class="[expandSidebar ? '' : 'opacity-0 pointer-events-none']">
-            <BSidebar />
+      <div class="relative sticky top-[var(--b-nav-height)] z-[var(--b-toc-bar-z-index)] h-full">
+        <!-- Change sidebar width -->
+        <div :class="sidebarWrapperClass">
+          <!-- Keep sidebar width to prevent layout shift -->
+          <div class="h-full w-[var(--b-sidebar-expand-width)] flex flex-col">
+            <div class="box-border h-full overflow-y-auto p-sm transition motion-reduce:transition-none" :class="[expandSidebar ? '' : 'opacity-0 pointer-events-none']">
+              <BSidebar />
+            </div>
           </div>
-          <div class="flex px-sm py-1.5" :class="[expandSidebar ? 'b-0 b-t-1 b-border b-solid' : '']">
-            <div class="transition-width motion-reduce:transition-none" :class="[expandSidebar ? 'w-full' : 'w-0']"></div>
-            <BButton class="shrink-0" :title="expandSidebar ? '收起' : '展开'" variant="ghost" size="icon" @click="expandSidebar = !expandSidebar">
-              <div :class="[expandSidebar ? 'i-lucide-panel-left-close' : 'i-lucide-panel-left-open']"></div>
-            </BButton>
-          </div>
+        </div>
+        <div class="absolute top-50% hidden translate-x-50% transition-all md:block -translate-y-50%" :class="[expandSidebar ? 'right-0' : 'right-30%']">
+          <BButton :variant="expandSidebar ? 'outline' : 'ghost'" size="icon" class="rounded-full" :title="expandSidebar ? '收起' : '展开'" @click="expandSidebar = !expandSidebar">
+            <div :class="[expandSidebar ? 'i-lucide-panel-left-close' : 'i-lucide-panel-left-open']"></div>
+          </BButton>
         </div>
       </div>
       <div class="w-0 flex-1">
