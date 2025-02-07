@@ -34,6 +34,7 @@
 
 /** z-index */
 :root {
+  --b-floating-buttons-z-index: 4;
   --b-toc-bar-z-index: 20;
   --b-nav-z-index: 30;
   --b-mask-z-index: 40;

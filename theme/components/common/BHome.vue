@@ -72,7 +72,7 @@ function lookAround() {
   <div class="grid mx-auto h-full max-w-[var(--b-max-width)] min-h-[calc(100vh_-_var(--b-nav-height)_-_var(--b-footer-height))] w-full p-xs">
     <div class="h-full flex flex-col items-center justify-center gap-sm">
       <h1 class="text-6xl">
-        <span ref="shakeElRef" class="shake inline-block cursor-default">
+        <span ref="shakeElRef" class="shake inline-block cursor-default select-none">
           👋
         </span>
       </h1>

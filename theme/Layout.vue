@@ -48,7 +48,7 @@ const visible = useElementVisibility(headerEl);
       <BContent />
       <Teleport to="body">
         <Transition name="fade">
-          <div v-show="headerEl && !visible" class="fixed bottom-2 right-2 flex flex-col gap-sm md:hidden">
+          <div v-show="headerEl && !visible" class="fixed bottom-2 right-2 z-[var(--b-floating-buttons-z-index)] flex flex-col gap-sm rounded-full bg-background bg-opacity-0 p-1 ring-0 ring-border transition md:hidden hover:bg-opacity-100 hover:ring-1">
             <BToggleTheme />
             <BBackToTop />
           </div>
