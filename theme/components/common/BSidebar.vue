@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useId } from "vue";
 import { useSidebar } from "../../composables/useSidebar";
 import BSidebarItem from "./BSidebarItem.vue";
 import type { SidebarItem } from "../../types";
@@ -15,5 +16,5 @@ function onClick(e: MouseEvent, item: SidebarItem) {
 </script>
 
 <template>
-  <BSidebarItem v-for="item in sidebar.items" :key="item.link" :collapsed="sidebar.collapsed" :path :item @click="onClick" />
+  <BSidebarItem v-for="item in sidebar.items" :key="item.link ?? useId()" :collapsed="sidebar.collapsed" :path :item @click="onClick" />
 </template>
