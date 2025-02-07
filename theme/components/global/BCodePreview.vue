@@ -14,7 +14,7 @@ const active = ref(tabs.value[0]);
 <template>
   <div class="my -mx-6 sm:mx-revert">
     <div class="flex rounded-t-none bg-muted bg-opacity-30 px-xs shadow-[inset_0_-1px_hsl(var(--border))] sm:rounded-t-lg">
-      <div v-for="tab in tabs" :key="tab" class="relative cursor-pointer px-3 text-sm font-medium leading-12" @click="active = tab">
+      <div v-for="tab in tabs" :key="tab" class="relative cursor-pointer px-3 text-sm font-medium leading-12 transition hover:text-[var(--b-code-tab-hover-text-color)]" :class="[active === tab ? 'text-[var(--b-code-tab-active-text-color)]' : 'text-[var(--b-code-tab-text-color)]']" @click="active = tab">
         {{ tab }}
         <div class="absolute left-2 right-2 z-1 h-2px transition-250 -bottom-1px motion-reduce:transition-none" :class="[active === tab ? 'bg-primary' : 'bg-transparent']"></div>
       </div>
