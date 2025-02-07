@@ -81,7 +81,7 @@ main {
 </style>
 ```
 
-通过`window.getComputedStyle(document.getElementsByClassName('hidden')[0])`获取到的`width`是`fit-content`。如果想要获取实际宽高，可以参考我写的这篇文章 ➡️ [获取隐藏元素（display: none）的样式](/blog/front-end/getting-styles-of-elements-with-display-none)
+通过`window.getComputedStyle(document.getElementsByClassName('hidden')[0])`获取到的`width`是`fit-content`。如果想要获取实际宽高，可以参考我写的这篇文章 ➡️ [获取隐藏元素（display: none）的样式](/tech/front-end/getting-styles-of-elements-with-display-none)
 
 ## 使用Cloudflare Workers实现域名代理
 
