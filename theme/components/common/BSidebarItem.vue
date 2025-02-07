@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, useId } from "vue";
 import { hasActiveLink, isActive } from "../../utils/sidebar";
 import BCollapse from "./BCollapse.vue";
 import type { SidebarItem } from "../../types";
@@ -39,7 +39,7 @@ function onClick(e: MouseEvent, _item?: SidebarItem) {
         </div>
       </template>
       <div :class="[level >= (item.indentFromLevel ?? 1) && item.text && 'pl-4 b-0 b-l-1 b-solid b-border', hasActive ? 'opacity-100' : 'opacity-70']">
-        <BSidebarItem v-for="_item in item.items" :key="_item.link" :parent="item" :path :level="level + 1" :item="_item" :collapsed="_item.collapsed" @click="onClick" />
+        <BSidebarItem v-for="_item in item.items" :key="_item.link ?? useId()" :parent="item" :path :level="level + 1" :item="_item" :collapsed="_item.collapsed" @click="onClick" />
       </div>
     </BCollapse>
   </div>
