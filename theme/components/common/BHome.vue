@@ -4,8 +4,8 @@ import { useData } from "vitepress";
 import { onMounted, ref, toRefs, watch, watchEffect } from "vue";
 import { isSidebarSingle } from "../../utils/sidebar";
 import BButton from "./BButton.vue";
+import BCow from "./BCow.vue";
 import BLink from "./BLink.vue";
-// import BCow from "./BCow.vue";
 import type { SidebarItem, SidebarSingle, ThemeConfig } from "../../types";
 
 const { frontmatter, theme } = useData<ThemeConfig>();
@@ -87,7 +87,7 @@ function lookAround() {
           </rt>
         </ruby>
       </div>
-      <!-- <BCow /> -->
+      <BCow />
       <div class="flex items-center gap-xs">
         <BLink :href="lookAround()">
           <BButton class="rounded-full px-lg" as="div">
@@ -99,10 +99,6 @@ function lookAround() {
             GitHub
           </BButton>
         </BLink>
-      </div>
-      <div class="text-muted-foreground italic">
-        🚧
-        首页仍在施工中...
       </div>
     </div>
   </div>
