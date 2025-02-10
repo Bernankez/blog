@@ -21,15 +21,3 @@
 1. 在根目录下运行 `pnpm install`。
 
 2. 运行 `pnpm dev` 启动开发服务器。
-
-### TODO
-
-- [x] !Auto generate sidebar
-- [x] Migrate posts
-- [x] Handle assets path
-- [x] !Search todo vars
-- [x] Back to top floating button
-- [x] Switch theme floating button
-- [ ] Homepage Cow
-- [x] Homepage look around
-- [x] Shiki twoslash
