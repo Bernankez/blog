@@ -1,11 +1,13 @@
 /* eslint-disable no-new */
 import { type MaybeRefOrGetter, ref, toValue, watch } from "vue";
-import Zdog, { TAU } from "zdog";
+import Zdog from "zdog";
 
 export interface UseCowModelOptions {
   zoom?: number;
   scale?: number;
 }
+
+const TAU = Zdog.TAU;
 
 export function useCowModel(el: MaybeRefOrGetter<string | HTMLCanvasElement | SVGSVGElement | undefined | null>, options?: MaybeRefOrGetter<UseCowModelOptions | undefined>) {
   const isPlaying = ref(false);
