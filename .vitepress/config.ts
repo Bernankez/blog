@@ -150,7 +150,7 @@ export default async () => {
         groupIconVitePlugin(),
         RssPlugin({
           title: "科科Cole",
-          description: "Knows nothing, likes sleeping.",
+          description: "feedId:111681957385752576+userId:69547876374833152",
           baseUrl: "https://blog.keke.cc",
           copyright: "Copyright ©️ 2023-PRESENT 科科Cole",
           icon: false,
