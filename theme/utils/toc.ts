@@ -60,8 +60,8 @@ export function resolveTitle(theme: ThemeConfig): string {
     (typeof theme.toc?.outline === "object"
       && !Array.isArray(theme.toc.outline)
       && theme.toc.outline.label)
-      || theme.toc?.title
-      || "Table of content"
+    || theme.toc?.title
+    || "Table of content"
   );
 }
 

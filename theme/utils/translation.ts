@@ -1,5 +1,5 @@
-import { useData } from "vitepress";
 import type { ThemeConfig } from "../types";
+import { useData } from "vitepress";
 
 /**
  * @param defaultTranslations themeObject. Can be an object with `translations` and `locales` properties
@@ -16,7 +16,7 @@ export function createSearchTranslate(
     const isObject = themeObject && typeof themeObject === "object";
     const locales
       = (isObject && themeObject.locales?.[localeIndex.value]?.translations)
-      || null;
+        || null;
     const translations = (isObject && themeObject.translations) || null;
 
     let localeResult: Record<string, any> | null = locales;

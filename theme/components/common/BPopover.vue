@@ -1,12 +1,14 @@
 <script lang="ts" setup>
+import type { Middleware, Placement, Strategy } from "@floating-ui/vue";
+import type { ComponentPublicInstance, StyleValue, TeleportProps } from "vue";
+import type { DisplayDirective } from "../../composables/useDisplayDirective";
+import type { Trigger } from "../../composables/usePopover";
 import { autoUpdate, flip as flipMw, offset as offsetMw, shift as shiftMw, useFloating } from "@floating-ui/vue";
 import { isDefined } from "@vueuse/core";
 import { computed, ref } from "vue";
-import type { Middleware, Placement, Strategy } from "@floating-ui/vue";
-import type { ComponentPublicInstance, StyleValue, TeleportProps } from "vue";
-import { type DisplayDirective, useDisplayDirective } from "../../composables/useDisplayDirective";
+import { useDisplayDirective } from "../../composables/useDisplayDirective";
 import { useMergedState } from "../../composables/useMergedState";
-import { refDebouncedShow, type Trigger, usePopover, usePopoverTransition } from "../../composables/usePopover";
+import { refDebouncedShow, usePopover, usePopoverTransition } from "../../composables/usePopover";
 import BMask from "./BMask.vue";
 import { BSlot } from "./BSlot";
 

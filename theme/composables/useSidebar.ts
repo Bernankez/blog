@@ -1,7 +1,7 @@
+import type { ThemeConfig } from "../types";
 import { useData } from "vitepress";
 import { computed, toRefs } from "vue";
 import { resolveSidebar } from "../utils/sidebar";
-import type { ThemeConfig } from "../types";
 
 export function useSidebar() {
   const { theme, page } = useData<ThemeConfig>();

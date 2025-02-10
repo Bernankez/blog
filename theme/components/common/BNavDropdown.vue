@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import type { NavItem, ThemeConfig } from "../../types";
 import { twMerge } from "tailwind-merge";
 import { useData } from "vitepress";
 import { computed, ref } from "vue";
 import { isActive } from "../../utils/sidebar";
 import BNavDropdownItem from "./BNavDropdownItem.vue";
 import BPopover from "./BPopover.vue";
-import type { NavItem, ThemeConfig } from "../../types";
 
 const { item } = defineProps<{
   item: NavItem;

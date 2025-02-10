@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import type { NavItem, ThemeConfig } from "../../types";
 import { useData } from "vitepress";
 import { computed } from "vue";
 import { isActive } from "../../utils/sidebar";
 import BMoreSidebarItem from "./BMoreSidebarItem.vue";
-import type { NavItem, ThemeConfig } from "../../types";
 
 const { item } = defineProps<{
   item: NavItem;

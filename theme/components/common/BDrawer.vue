@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { cva } from "cva";
-import { computed } from "vue";
 import type { VariantProps } from "cva";
 import type { StyleValue, TeleportProps } from "vue";
+import type { DisplayDirective } from "../../composables/useDisplayDirective";
+import { cva } from "cva";
+import { computed } from "vue";
 import { useDisplayDirective } from "../../composables/useDisplayDirective";
 import BIcon from "./BIcon.vue";
 import BMask from "./BMask.vue";
-import type { DisplayDirective } from "../../composables/useDisplayDirective";
 
 defineOptions({
   inheritAttrs: false,

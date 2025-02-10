@@ -1,4 +1,5 @@
-import { Comment, createTextVNode, Fragment, h, type Slot, Text, type VNode, type VNodeChild } from "vue";
+import type { Slot, VNode, VNodeChild } from "vue";
+import { Comment, createTextVNode, Fragment, h, Text } from "vue";
 
 export function slotToVNode<T extends Slot<any>>(slot?: T, name?: string) {
   const slotName = `slot${name ? `[${name}]` : ""}`;

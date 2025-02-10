@@ -1,6 +1,7 @@
-import { useDebounceFn, useEventListener } from "@vueuse/core";
-import { type ComponentPublicInstance, computed, type MaybeRefOrGetter, onMounted, type Ref, ref, toValue, watch } from "vue";
 import type { Placement } from "@floating-ui/vue";
+import type { ComponentPublicInstance, MaybeRefOrGetter, Ref } from "vue";
+import { useDebounceFn, useEventListener } from "@vueuse/core";
+import { computed, onMounted, ref, toValue, watch } from "vue";
 
 export type Trigger = "click" | "hover" | "focus" | "manual";
 

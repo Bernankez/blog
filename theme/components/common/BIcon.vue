@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { twMerge } from "tailwind-merge";
 import type { Component } from "vue";
+import { twMerge } from "tailwind-merge";
 
 const { icon } = defineProps<{
   icon?: Component | string | { svg: string };

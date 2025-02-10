@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import type { ThemeConfig } from "../../types";
 import { useElementHover } from "@vueuse/core";
 import { useData, withBase } from "vitepress";
 import { computed, ref, toRefs } from "vue";
 import BLink from "./BLink.vue";
-import type { ThemeConfig } from "../../types";
 
 const { showLogo = true, size = "md" } = defineProps<{
   showLogo?: boolean;

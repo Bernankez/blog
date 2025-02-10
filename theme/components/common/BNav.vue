@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import LineMdMoonToSunny from "~icons/line-md/moon-alt-to-sunny-outline-loop-transition";
-import LineMdSunnyToMoon from "~icons/line-md/sunny-outline-to-moon-alt-loop-transition";
+import type { ThemeConfig } from "../../types";
 import { useData } from "vitepress";
 import { toRefs } from "vue";
+import LineMdMoonToSunny from "~icons/line-md/moon-alt-to-sunny-outline-loop-transition";
+import LineMdSunnyToMoon from "~icons/line-md/sunny-outline-to-moon-alt-loop-transition";
 import BIcon from "./BIcon.vue";
 import BLogo from "./BLogo.vue";
 import BMore from "./BMore.vue";
 import BNavDropdown from "./BNavDropdown.vue";
 import BSearch from "./BSearch.vue";
-import type { ThemeConfig } from "../../types";
 
 const { isDark, theme } = useData<ThemeConfig>();
 

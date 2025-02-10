@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import type { ThemeConfig } from "../../types";
 import Gitalk from "gitalk";
 import { useData, useRoute } from "vitepress";
 import { computed, ref, watchEffect } from "vue";
-import type { ThemeConfig } from "../../types";
 import "gitalk/dist/gitalk.css";
 import "../../styles/components/b-gitalk.css";
 

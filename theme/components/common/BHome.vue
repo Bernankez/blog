@@ -1,14 +1,14 @@
 <script setup lang="ts">
+import type { Ref } from "vue";
+import type { SidebarItem, SidebarSingle, ThemeConfig } from "../../types";
+import type { ButtonVariants } from "./BButton.vue";
 import { breakpointsTailwind, useBreakpoints, useMouseInElement } from "@vueuse/core";
 import { useData } from "vitepress";
 import { onMounted, ref, toRefs, useId, watch } from "vue";
-import type { Ref } from "vue";
 import { isSidebarSingle } from "../../utils/sidebar";
 import BButton from "./BButton.vue";
 import BCow from "./BCow.vue";
 import BLink from "./BLink.vue";
-import type { SidebarItem, SidebarSingle, ThemeConfig } from "../../types";
-import type { ButtonVariants } from "./BButton.vue";
 
 const { frontmatter, theme } = useData<ThemeConfig>();
 

@@ -1,5 +1,6 @@
 /* eslint-disable no-new */
-import { type MaybeRefOrGetter, ref, toValue, watch } from "vue";
+import type { MaybeRefOrGetter } from "vue";
+import { ref, toValue, watch } from "vue";
 import Zdog from "zdog";
 
 export interface UseCowModelOptions {

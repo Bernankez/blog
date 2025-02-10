@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Layout, PageClass, ThemeConfig } from "./types";
 import { useElementVisibility } from "@vueuse/core";
 import { useData } from "vitepress";
 import { computed, onMounted, ref } from "vue";
@@ -9,7 +10,6 @@ import BHome from "./components/common/BHome.vue";
 import BNav from "./components/common/BNav.vue";
 import BNotFound from "./components/common/BNotFound.vue";
 import BToggleTheme from "./components/common/BToggleTheme.vue";
-import type { Layout, PageClass, ThemeConfig } from "./types";
 
 const { frontmatter, page } = useData<ThemeConfig>();
 

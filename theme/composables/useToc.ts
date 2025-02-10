@@ -1,9 +1,9 @@
+import type { ThemeConfig, TocItem } from "../types";
 import { useEventListener, useMounted } from "@vueuse/core";
 import { getScrollOffset, useData, useRoute } from "vitepress";
 import { computed, onMounted, ref, toRefs, watch } from "vue";
 import { throttleAndDebounce } from "../utils";
 import { getAbsoluteTop, getHeaders } from "../utils/toc";
-import type { ThemeConfig, TocItem } from "../types";
 
 export function useToc() {
   const { theme, frontmatter } = useData<ThemeConfig>();

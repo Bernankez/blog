@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ThemeConfig, TocItem } from "../../types";
 import { useDebounceFn, useElementHover, useElementVisibility, useMounted } from "@vueuse/core";
 import { twMerge } from "tailwind-merge";
 import { useData } from "vitepress";
@@ -13,7 +14,6 @@ import BLastUpdated from "./BLastUpdated.vue";
 import BSidebar from "./BSidebar.vue";
 import BToc from "./BToc.vue";
 import BTocBar from "./BTocBar.vue";
-import type { ThemeConfig, TocItem } from "../../types";
 import "../../styles/components/b-content.css";
 
 const { theme } = useData<ThemeConfig>();

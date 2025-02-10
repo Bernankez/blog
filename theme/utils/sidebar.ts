@@ -1,5 +1,5 @@
-import { inBrowser } from "vitepress";
 import type { Sidebar, SidebarItem, SidebarObject, SidebarSingle } from "../types";
+import { inBrowser } from "vitepress";
 
 const HASH_RE = /#.*$/;
 const HASH_OR_QUERY_RE = /[?#].*$/;

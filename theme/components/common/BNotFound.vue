@@ -1,12 +1,12 @@
 <script setup lang="ts">
+import type { ThemeConfig } from "../../types";
 import { presetShadcn } from "@bernankez/theme";
 import { useData } from "vitepress";
 import { computed } from "vue";
 import BButton from "./BButton.vue";
-import BLifeGame from "./BLifeGame.vue";
 
+import BLifeGame from "./BLifeGame.vue";
 import BLink from "./BLink.vue";
-import type { ThemeConfig } from "../../types";
 
 const { isDark, theme } = useData<ThemeConfig>();
 

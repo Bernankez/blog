@@ -1,7 +1,7 @@
-import { presetShadcn as themeShadcn } from "@bernankez/theme";
-import { h } from "@unocss/preset-mini/utils";
 import type { Preset } from "unocss";
 import type { PresetMiniOptions, Theme } from "unocss/preset-mini";
+import { presetShadcn as themeShadcn } from "@bernankez/theme";
+import { h } from "@unocss/preset-mini/utils";
 
 export interface PresetShadcnOptions extends PresetMiniOptions {}
 

@@ -1,4 +1,5 @@
-import { computed, isRef, type MaybeRefOrGetter, type Ref, toValue, watch } from "vue";
+import type { MaybeRefOrGetter, Ref } from "vue";
+import { computed, isRef, toValue, watch } from "vue";
 
 export function useMergedState<T>(controlledRef: MaybeRefOrGetter<T | undefined>, uncontrolledRef: Ref<T>, onSet?: (value: T) => void) {
   watch(() => toValue(controlledRef), (value) => {

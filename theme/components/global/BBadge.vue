@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { cva } from "cva";
 import type { VariantProps } from "cva";
+import { cva } from "cva";
 
 const { type = "default", text } = defineProps<{
   type?: BadgeVariants["type"];

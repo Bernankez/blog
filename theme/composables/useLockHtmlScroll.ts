@@ -1,4 +1,5 @@
-import { type MaybeRefOrGetter, onBeforeUnmount, onMounted, ref, toValue, watch, type WatchStopHandle } from "vue";
+import type { MaybeRefOrGetter, WatchStopHandle } from "vue";
+import { onBeforeUnmount, onMounted, ref, toValue, watch } from "vue";
 
 export interface UseLockHtmlScrollOptions {
   hideScrollbar?: boolean;

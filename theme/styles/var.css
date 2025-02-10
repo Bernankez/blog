@@ -94,8 +94,9 @@
   --b-code-line-diff-add-color: hsl(var(--success) / 0.2);
   --b-code-line-diff-add-symbol-color: hsl(var(--success));
   --b-code-block-divider-color: hsl(var(--border));
-  --b-font-family-base: "Punctuation SC", "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --b-font-family-base:
+    "Punctuation SC", "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
   --b-font-family-mono: ui-monospace, "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;
   --b-code-line-number-color: hsl(var(--muted-foreground));
   --b-code-copy-code-border-color: hsl(var(--border));

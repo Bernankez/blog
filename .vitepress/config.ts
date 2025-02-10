@@ -1,3 +1,4 @@
+import type { _DirConfig, NavItemWithLink, SidebarItem, ThemeConfig } from "../theme/types";
 import { readdirSync, readFileSync } from "node:fs";
 import { basename, parse, relative, resolve } from "node:path";
 import process from "node:process";
@@ -11,7 +12,6 @@ import DevTools from "vite-plugin-vue-devtools";
 import { defineConfigWithTheme } from "vitepress";
 import { groupIconMdPlugin, groupIconVitePlugin } from "vitepress-plugin-group-icons";
 import { RssPlugin } from "vitepress-plugin-rss";
-import type { _DirConfig, NavItemWithLink, SidebarItem, ThemeConfig } from "../theme/types";
 
 // https://vitepress.dev/reference/site-config
 export default async () => {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { VariantProps } from "cva";
 import { cva } from "cva";
 import { twMerge } from "tailwind-merge";
-import type { VariantProps } from "cva";
 
 const { as = "button", variant = "primary", size = "md", disabled, class: classVal } = defineProps<{
   as?: string;
