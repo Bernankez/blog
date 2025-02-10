@@ -37,7 +37,7 @@ const buttonVariants = cva("transition motion-reduce:transition-none hover:bg-op
   },
 });
 
-type ButtonVariants = VariantProps<typeof buttonVariants>;
+export type ButtonVariants = VariantProps<typeof buttonVariants>;
 
 function onClick(e: MouseEvent) {
   if (!disabled) {

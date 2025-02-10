@@ -3,20 +3,23 @@ import { type MaybeRefOrGetter, ref, toValue, watch } from "vue";
 import Zdog, { TAU } from "zdog";
 
 export interface UseCowModelOptions {
+  zoom?: number;
+  scale?: number;
 }
 
-export function useCowModel(el: MaybeRefOrGetter<string | HTMLCanvasElement | SVGSVGElement | undefined | null>) {
+export function useCowModel(el: MaybeRefOrGetter<string | HTMLCanvasElement | SVGSVGElement | undefined | null>, options?: MaybeRefOrGetter<UseCowModelOptions | undefined>) {
   const isPlaying = ref(false);
   const scene = ref<Zdog.Illustration>();
 
-  watch(() => toValue(el), (el) => {
+  watch([() => toValue(el), () => toValue(options)], ([el, options]) => {
     if (el) {
-      scene.value = createModel(el);
+      scene.value = createModel(el, options);
       render();
     }
   }, {
     immediate: true,
   });
+
   function render() {
     if (scene.value) {
       scene.value.rotate.y += isPlaying.value ? 0.03 : 0;
@@ -33,10 +36,18 @@ export function useCowModel(el: MaybeRefOrGetter<string | HTMLCanvasElement | SV
     isPlaying.value = false;
   }
 
-  function createModel(el: string | HTMLCanvasElement | SVGSVGElement) {
+  function createModel(el: string | HTMLCanvasElement | SVGSVGElement, options?: UseCowModelOptions) {
+    const { scale, zoom = 1 } = options || {};
+
     const illo = new Zdog.Illustration({
       element: el,
       dragRotate: true,
+      scale,
+      zoom,
+      rotate: {
+        x: -TAU / 30,
+        y: -TAU / 15,
+      },
     });
 
     const headGroup = new Zdog.Group({

@@ -1,22 +1,33 @@
 <script setup lang="ts">
-import { useMouseInElement } from "@vueuse/core";
+import { breakpointsTailwind, useBreakpoints, useMouseInElement } from "@vueuse/core";
 import { useData } from "vitepress";
-import { onMounted, ref, toRefs, watch, watchEffect } from "vue";
+import { onMounted, ref, toRefs, useId, watch } from "vue";
+import type { Ref } from "vue";
 import { isSidebarSingle } from "../../utils/sidebar";
 import BButton from "./BButton.vue";
 import BCow from "./BCow.vue";
 import BLink from "./BLink.vue";
 import type { SidebarItem, SidebarSingle, ThemeConfig } from "../../types";
+import type { ButtonVariants } from "./BButton.vue";
 
 const { frontmatter, theme } = useData<ThemeConfig>();
 
 const { sidebar } = toRefs(theme.value);
 
-// TODO custom with frontmatter
-// TODO responsive style
-watchEffect(() => {
-  console.log(frontmatter.value);
-});
+const fm = frontmatter as Ref<{
+  hero?: {
+    text?: string;
+    taglineRt?: string;
+    tagline?: string;
+    actions?: {
+      theme?: ButtonVariants["variant"];
+      text?: string;
+      link?: "random" | string;
+      target?: string;
+      as?: string;
+    }[];
+  };
+}>;
 
 const shakeElRef = ref<HTMLSpanElement>();
 onMounted(() => {
@@ -66,40 +77,63 @@ function lookAround() {
   }
   return pick(randomPick(sidebarSingle.items));
 }
+
+const { lg } = useBreakpoints(breakpointsTailwind);
 </script>
 
 <template>
   <div class="grid mx-auto h-full max-w-[var(--b-max-width)] min-h-[calc(100vh_-_var(--b-nav-height)_-_var(--b-footer-height))] w-full p-xs">
-    <div class="h-full flex flex-col items-center justify-center gap-sm">
-      <h1 class="text-6xl">
-        <span ref="shakeElRef" class="shake inline-block cursor-default select-none">
+    <div v-if="!lg" class="h-full flex flex-col items-center justify-center gap-sm">
+      <h1 class="flex flex-col items-center justify-center gap-sm text-3xl font-bold">
+        <span ref="shakeElRef" class="shake inline-block cursor-default select-none text-6xl">
           👋
         </span>
+        {{ fm.hero?.text }}
       </h1>
-      <h1 class="text-3xl font-bold">
-        我是科科
-      </h1>
-      <div class="text-muted-foreground">
+      <h2 class="text-muted-foreground">
         <ruby>
-          什么也不会，喜欢睡觉
+          {{ fm.hero?.tagline }}
           <rt>
-            <samp>Knows nothing, likes sleeping.</samp>
+            <samp>{{ fm.hero?.taglineRt }}</samp>
           </rt>
         </ruby>
-      </div>
+      </h2>
       <BCow />
-      <div class="flex items-center gap-xs">
-        <BLink :href="lookAround()">
-          <BButton class="rounded-full px-lg" as="div">
-            随便看看
+      <section class="flex items-center gap-xs">
+        <!-- eslint-disable-next-line vue/valid-v-for -->
+        <BLink v-for="btn in fm.hero?.actions" :key="useId()" :href=" btn.link === 'random' ? lookAround() : btn.link" :target="btn.target">
+          <BButton class="rounded-full px-lg" :variant="btn.theme" :as="btn.as">
+            {{ btn.text }}
           </BButton>
         </BLink>
-        <BLink href="https://github.com/Bernankez/blog" target="_blank">
-          <BButton variant="secondary" class="rounded-full px-lg">
-            GitHub
-          </BButton>
-        </BLink>
-      </div>
+      </section>
+    </div>
+    <div v-else class="flex items-center justify-evenly">
+      <section class="flex flex-col gap-sm">
+        <h1 class="text-4xl font-bold">
+          {{ fm.hero?.text }}
+          <span ref="shakeElRef" class="shake inline-block cursor-default select-none">
+            👋
+          </span>
+        </h1>
+        <h2 class="text-muted-foreground">
+          <ruby>
+            {{ fm.hero?.tagline }}
+            <rt>
+              <samp>{{ fm.hero?.taglineRt }}</samp>
+            </rt>
+          </ruby>
+        </h2>
+        <section class="flex items-center gap-xs">
+          <!-- eslint-disable-next-line vue/valid-v-for -->
+          <BLink v-for="btn in fm.hero?.actions" :key="useId()" :href=" btn.link === 'random' ? lookAround() : btn.link" :target="btn.target">
+            <BButton class="rounded-full px-lg" :variant="btn.theme" :as="btn.as">
+              {{ btn.text }}
+            </BButton>
+          </BLink>
+        </section>
+      </section>
+      <BCow :zoom="2" :height="500" :width="500" />
     </div>
   </div>
 </template>

@@ -3,25 +3,16 @@
 layout: home
 
 hero:
-  name: "Hi 👋"
   text: "我是科科"
+  taglineRt: Knows nothing, likes sleeping.
   tagline: 什么也不会， 喜欢睡觉
-  image:
-    src: /avatar.webp
-    alt: Avatar
   actions:
-    - theme: brand
-      text: Markdown Examples
-      link: /blog/tricks
-    - theme: alt
-      text: API Examples
-      link: /api-examples
-
-features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+    - theme: primary
+      text: 随便看看
+      link: random
+      as: div
+    - theme: secondary
+      text: GitHub
+      link: https://github.com/Bernankez/blog
+      target: _blank
 ---
