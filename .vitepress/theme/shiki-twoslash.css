@@ -1,0 +1,18 @@
+/** Shiki Twoslash popup */
+:root {
+  --twoslash-popup-bg: hsl(var(--background));
+  --twoslash-popup-color: hsl(var(--foreground));
+  --twoslash-docs-color: hsl(var(--foreground));
+  --twoslash-docs-font: var(--b-font-family-base);
+  --twoslash-code-font: var(--b-font-family-mono);
+  --twoslash-code-size: var(--b-code-font-size);
+  --twoslash-underline-color: #8888;
+  --twoslash-border-color: hsl(var(--border));
+  --twoslash-cursor-color: hsl(var(--primary));
+  --twoslash-matched-color: hsl(var(--primary));
+  --twoslash-unmatched-color: hsl(var(--muted-foreground));
+}
+
+.v-popper--theme-twoslash {
+  z-index: var(--b-popover-z-index);
+}

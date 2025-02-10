@@ -2,7 +2,7 @@
 
 **[blog.keke.cc](https://blog.keke.cc/)**
 
-<samp>Powered by <a href="https://docus.dev/" target="_blank">Docus</a></samp>
+<samp>Powered by <a href="https://vitepress.dev/" target="_blank">VitePress</a></samp>
 
 中文 | [English](./README.en.md)
 
@@ -15,39 +15,6 @@
 代码使用 [MIT](./LICENSE) 许可。
 
 文字与图像使用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可。
-
-## 文档
-
-<samp>
-框架 | 
-<a href="https://docus.dev/" target="_blank">Docus</a> · 
-<a href="https://content.nuxtjs.org/" target="_blank">nuxt/content</a> · 
-<a href="https://nuxt.com.cn/" target="_blank">Nuxt</a>
-</samp>
-<br>
-<samp>
-搜索引擎 ｜ 
-<a href="https://crawler.algolia.com/">crawler</a> · 
-<a href="https://docsearch.algolia.com/docs/api" target="_blank">DocSearch API</a> · 
-<a href="https://algolia.nuxtjs.org/">@nuxtjs/algolia</a> · 
-<a href="https://www.algolia.com/">algolia</a> 
-</samp>
-<br>
-<samp>
-图床 | 
-<a href="https://smms.app/" target="_blank">smms</a>
-</samp>
-<br>
-<samp>
-图标 | 
-<a href="https://icones.js.org/" target="_blank">Icônes</a> · 
-<a href="https://icon-sets.iconify.design/" target="_blank">Iconify</a>
-</samp>
-<br>
-<samp>
-MDC语法 | 
-<a href="https://content.nuxtjs.org/guide/writing/mdc" target="_blank">MDC Syntax</a>
-</samp>
 
 ## 贡献
 

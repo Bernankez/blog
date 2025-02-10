@@ -1,0 +1,76 @@
+<script setup lang="ts">
+import type { Layout, PageClass, ThemeConfig } from "./types";
+import { useElementVisibility } from "@vueuse/core";
+import { useData } from "vitepress";
+import { computed, onMounted, ref } from "vue";
+import BBackToTop from "./components/common/BBackToTop.vue";
+import BContent from "./components/common/BContent.vue";
+import BFooter from "./components/common/BFooter.vue";
+import BHome from "./components/common/BHome.vue";
+import BNav from "./components/common/BNav.vue";
+import BNotFound from "./components/common/BNotFound.vue";
+import BToggleTheme from "./components/common/BToggleTheme.vue";
+
+const { frontmatter, page } = useData<ThemeConfig>();
+
+const layout = computed<Layout>(() => frontmatter.value.layout);
+const pageClass = computed<PageClass>(() => frontmatter.value.pageClass || undefined);
+
+const headerEl = ref<HTMLDivElement>();
+onMounted(() => {
+  const el = document.querySelector(".b-nav");
+  if (el) {
+    headerEl.value = el as HTMLDivElement;
+  }
+});
+
+const visible = useElementVisibility(headerEl);
+</script>
+
+<template>
+  <div v-if="layout !== false" :class="pageClass">
+    <BNav />
+    <template v-if="page.isNotFound">
+      <BNotFound />
+      <BFooter />
+    </template>
+    <template v-else-if="layout === 'home'">
+      <BHome />
+      <BFooter />
+    </template>
+    <template v-else-if="layout === 'page'">
+      <Content />
+    </template>
+    <template v-else-if="layout && layout !== 'doc'">
+      <component :is="layout" />
+    </template>
+    <template v-else>
+      <BContent />
+      <Teleport to="body">
+        <Transition name="fade">
+          <div v-show="headerEl && !visible" class="fixed bottom-2 right-2 z-[var(--b-floating-buttons-z-index)] flex flex-col gap-sm rounded-full bg-background bg-opacity-0 p-1 ring-0 ring-border transition md:hidden hover:bg-opacity-100 hover:ring-1">
+            <BToggleTheme />
+            <BBackToTop />
+          </div>
+        </Transition>
+      </Teleport>
+    </template>
+  </div>
+  <Content v-else />
+</template>
+
+<style scoped>
+.b-main {
+  min-height: calc(100vh - var(--b-nav-height) - var(--b-footer-height));
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity var(--b-transition-duration-slow) var(--b-transition-animation);
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

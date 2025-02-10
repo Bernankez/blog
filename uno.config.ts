@@ -1,27 +1,19 @@
-import { defineConfig, presetIcons, presetUno, transformerDirectives } from "unocss";
-import { color } from "./utils";
+import { defineConfig, presetIcons, presetTypography, presetUno, transformerDirectives } from "unocss";
+import presetShadcn from "./preset.shadcn";
 
 export default defineConfig({
-  presets: [presetUno(), presetIcons()],
+  presets: [presetUno(), presetTypography(), presetIcons({
+    scale: 1.2,
+  }), presetShadcn()],
   transformers: [transformerDirectives()],
-  // see https://github.com/unocss/unocss/discussions/1947
-  extraContent: {
-    filesystem: ["./content/**/*.md"],
-  },
   theme: {
-    colors: {
-      nuxtGray: {
-        50: "var(--color-gray-50)",
-        900: "var(--color-gray-900)",
-        400: "var(--color-gray-400)",
+    duration: {
+      DEFAULT: "var(--b-transition-duration)",
+    },
+    animation: {
+      timingFns: {
+        DEFAULT: "var(--b-transition-animation)",
       },
-      primary: color.primary,
-    },
-    fontFamily: {
-      "nuxt-sans": "var(--font-sans)",
-    },
-    fontSize: {
-      "nuxt-xl": "var(--fontSize-xl)",
     },
   },
 });

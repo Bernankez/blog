@@ -1,0 +1,122 @@
+.gt-container a {
+  color: hsl(var(--primary) / 0.9);
+}
+
+.gt-container a:hover {
+  color: hsl(var(--primary));
+  border-color: hsl(var(--primary));
+}
+
+.gt-container .gt-meta {
+  border-bottom-color: hsl(var(--border));
+}
+
+.gt-container .gt-svg svg {
+  fill: hsl(var(--primary)) !important;
+}
+
+.gt-container .gt-spinner::before {
+  border-top-color: hsl(var(--primary));
+}
+
+.gt-container .gt-btn {
+  border-color: hsl(var(--primary));
+  background-color: hsl(var(--primary));
+}
+
+.gt-container .gt-btn-preview {
+  background-color: hsl(var(--secondary) / 0.2);
+  color: hsl(var(--primary));
+  border-color: hsl(var(--primary));
+}
+
+.gt-container .gt-btn-preview:hover {
+  background-color: hsl(var(--secondary) / 0.5);
+  border-color: hsl(var(--primary));
+}
+
+.gt-container .gt-btn-public:hover,
+.gt-container .gt-btn-login:hover {
+  background-color: hsl(var(--primary));
+  border-color: hsl(var(--primary));
+}
+
+.gt-container .gt-error {
+  text-align: center;
+  margin: 0.625em;
+  color: hsl(var(--primary));
+}
+
+.gt-container .gt-link {
+  border-color: hsl(var(--primary));
+}
+
+.gt-container .gt-user .is--poping .gt-ico svg {
+  fill: hsl(var(--primary));
+}
+
+.gt-container .gt-popup .gt-action.is--active:before {
+  background: hsl(var(--primary));
+}
+
+.gt-container .gt-header-controls-tip {
+  color: hsl(var(--primary));
+}
+
+.gt-container .gt-comment-username {
+  color: hsl(var(--primary));
+}
+
+.gt-comment-content {
+  border-radius: 0.5rem;
+  background-color: hsl(var(--secondary) / 0.3) !important;
+}
+
+.gt-comment-content:hover {
+  box-shadow: none !important;
+}
+
+.gt-container .gt-comment-body {
+  color: hsl(var(--foreground)) !important;
+}
+
+.gt-container .gt-header-textarea {
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--muted) / 0.3);
+}
+
+.gt-container .gt-header-textarea:hover {
+  background-color: hsl(var(--muted) / 0.5);
+}
+
+.gt-container .gt-header-preview {
+  color: hsl(var(--foreground));
+  background: hsl(var(--muted) / 0.3);
+}
+
+.gt-container .gt-popup {
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0.5rem hsl(var(--muted));
+  background-color: hsl(var(--background));
+  border-color: hsl(var(--border));
+}
+
+.gt-container .gt-popup .gt-copyright {
+  border-top-color: hsl(var(--border));
+}
+
+.gt-container .gt-ico-github svg {
+  fill: hsl(var(--foreground)) !important;
+}
+
+.gt-no-init {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.markdown-body blockquote {
+  border-left-color: hsl(var(--muted));
+}

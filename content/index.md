@@ -1,25 +1,18 @@
 ---
-title: 嗨
-navigation: false
-layout: page
----
+# https://vitepress.dev/reference/default-theme-home-page
+layout: home
 
-::Introduction
-#title
-Hi&nbsp;
-  ::Shake
-  👋
-  ::
-<br />
-我是科科
-#subtitle
-<ruby>
-  什么也不会，
-  喜欢睡觉
-  <rt>
-    <samp>Knows nothing, likes sleeping.</samp>
-  </rt>
-</ruby>
-#action
-:ButtonLink[随便看看]{href="/blog/tricks"}
-::
+hero:
+  text: "我是科科"
+  taglineRt: Knows nothing, likes sleeping.
+  tagline: 什么也不会， 喜欢睡觉
+  actions:
+    - theme: primary
+      text: 随便看看
+      link: random
+      as: div
+    - theme: secondary
+      text: GitHub
+      link: https://github.com/Bernankez/blog
+      target: _blank
+---
