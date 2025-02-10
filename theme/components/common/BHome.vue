@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import type { MaybeElementRef } from "@vueuse/core";
 import type { Ref } from "vue";
 import type { SidebarItem, SidebarSingle, ThemeConfig } from "../../types";
 import type { ButtonVariants } from "./BButton.vue";
-import { breakpointsTailwind, useBreakpoints, useMouseInElement } from "@vueuse/core";
+import { useMouseInElement } from "@vueuse/core";
 import { useData } from "vitepress";
-import { onMounted, ref, toRefs, useId, watch } from "vue";
+import { ref, toRefs, toValue, useId, watch, watchEffect } from "vue";
 import { isSidebarSingle } from "../../utils/sidebar";
 import BButton from "./BButton.vue";
 import BCow from "./BCow.vue";
@@ -29,25 +30,31 @@ const fm = frontmatter as Ref<{
   };
 }>;
 
-const shakeElRef = ref<HTMLSpanElement>();
-onMounted(() => {
-  const shakeEl = shakeElRef.value;
-  if (shakeEl) {
-    shakeEl.classList.add("hover");
-    setTimeout(() => {
-      shakeEl.classList.remove("hover");
-    }, 870);
-  }
-});
+function useShake(elRef: MaybeElementRef<HTMLSpanElement | undefined>) {
+  watchEffect(() => {
+    const shakeEl = toValue(elRef);
+    if (shakeEl) {
+      shakeEl.classList.add("hover");
+      setTimeout(() => {
+        shakeEl.classList.remove("hover");
+      }, 870);
+    }
+  });
 
-const { isOutside } = useMouseInElement(shakeElRef);
-watch(isOutside, (isOutside) => {
-  if (!isOutside) {
-    shakeElRef.value?.classList.add("hover");
-  } else {
-    shakeElRef.value?.classList.remove("hover");
-  }
-}, { immediate: true });
+  const { isOutside } = useMouseInElement(elRef);
+  watch(isOutside, (isOutside) => {
+    if (!isOutside) {
+      toValue(elRef)?.classList.add("hover");
+    } else {
+      toValue(elRef)?.classList.remove("hover");
+    }
+  }, { immediate: true });
+}
+
+const shakeElRef1 = ref<HTMLSpanElement>();
+const shakeElRef2 = ref<HTMLSpanElement>();
+useShake(shakeElRef1);
+useShake(shakeElRef2);
 
 function randomPick<T>(arr: T[]) {
   const day = Number(`${new Date().getFullYear()}${new Date().getMonth() + 1}${new Date().getDate()}`);
@@ -77,15 +84,13 @@ function lookAround() {
   }
   return pick(randomPick(sidebarSingle.items));
 }
-
-const { lg } = useBreakpoints(breakpointsTailwind);
 </script>
 
 <template>
   <div class="grid mx-auto h-full max-w-[var(--b-max-width)] min-h-[calc(100vh_-_var(--b-nav-height)_-_var(--b-footer-height))] w-full p-xs">
-    <div v-if="!lg" class="h-full flex flex-col items-center justify-center gap-sm">
+    <div class="h-full flex flex-col items-center justify-center gap-sm lg:hidden">
       <h1 class="flex flex-col items-center justify-center gap-sm text-3xl font-bold">
-        <span ref="shakeElRef" class="shake inline-block cursor-default select-none text-6xl">
+        <span ref="shakeElRef1" class="shake inline-block cursor-default select-none text-6xl">
           👋
         </span>
         {{ fm.hero?.text }}
@@ -108,11 +113,11 @@ const { lg } = useBreakpoints(breakpointsTailwind);
         </BLink>
       </section>
     </div>
-    <div v-else class="flex items-center justify-evenly">
+    <div class="hidden items-center justify-evenly lg:flex">
       <section class="flex flex-col gap-sm">
         <h1 class="text-4xl font-bold">
           {{ fm.hero?.text }}
-          <span ref="shakeElRef" class="shake inline-block cursor-default select-none">
+          <span ref="shakeElRef2" class="shake inline-block cursor-default select-none">
             👋
           </span>
         </h1>
