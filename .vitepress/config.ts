@@ -27,11 +27,7 @@ export default async () => {
        * polyfill
        * @see https://devhints.io/polyfill.io
        */
-      [
-        "script",
-        {},
-        `if(!(window.Promise&&[].includes&&Object.assign&&window.Map)){document.write('<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js"></scr'+'ipt>')}`,
-      ],
+      ["script", { src: "https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js" }],
     ],
     srcDir: "content",
     cleanUrls: true,
