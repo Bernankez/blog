@@ -23,6 +23,15 @@ export default async () => {
     description: "Cole.blog",
     head: [
       ["link", { rel: "icon", href: "/favicon.ico" }],
+      /**
+       * polyfill
+       * @see https://devhints.io/polyfill.io
+       */
+      [
+        "script",
+        {},
+        `if(!(window.Promise&&[].includes&&Object.assign&&window.Map)){document.write('<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js"></scr'+'ipt>')}`,
+      ],
     ],
     srcDir: "content",
     cleanUrls: true,
