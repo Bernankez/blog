@@ -11,6 +11,7 @@ import Icons from "unplugin-icons/vite";
 import DevTools from "vite-plugin-vue-devtools";
 import { defineConfigWithTheme } from "vitepress";
 import { groupIconMdPlugin, groupIconVitePlugin } from "vitepress-plugin-group-icons";
+import lightbox from "vitepress-plugin-lightbox";
 import { RssPlugin } from "vitepress-plugin-rss";
 
 // https://vitepress.dev/reference/site-config
@@ -138,6 +139,7 @@ export default async () => {
       ],
       config(md) {
         md.use(groupIconMdPlugin);
+        md.use(lightbox);
       },
     },
     vite: {

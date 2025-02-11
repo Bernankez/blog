@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { Layout, PageClass, ThemeConfig } from "./types";
 import { useElementVisibility } from "@vueuse/core";
-import { useData } from "vitepress";
+import mediumZoom from "medium-zoom";
+import { useData, useRouter } from "vitepress";
 import { computed, onMounted, ref } from "vue";
 import BBackToTop from "./components/common/BBackToTop.vue";
 import BContent from "./components/common/BContent.vue";
@@ -23,6 +24,17 @@ onMounted(() => {
     headerEl.value = el as HTMLDivElement;
   }
 });
+
+function setupMediumZoom() {
+  mediumZoom("[data-zoomable]", {
+    background: "transparent",
+  });
+}
+
+onMounted(setupMediumZoom);
+
+const router = useRouter();
+router.onAfterRouteChange = setupMediumZoom;
 
 const visible = useElementVisibility(headerEl);
 </script>
@@ -58,6 +70,17 @@ const visible = useElementVisibility(headerEl);
   </div>
   <Content v-else />
 </template>
+
+<style>
+.medium-zoom-overlay {
+  backdrop-filter: blur(5rem);
+}
+
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+  z-index: 999;
+}
+</style>
 
 <style scoped>
 .b-main {
