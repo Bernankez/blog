@@ -27,7 +27,7 @@ export default async () => {
        * polyfill
        * @see https://devhints.io/polyfill.io
        */
-      ["script", { src: "https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js" }],
+      ["script", { src: "https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?version=4.8.0&features=default%2Cdom4%2Ces2015%2Ces2016%2Ces2017%2Ces2018%2Ces2019%2Ces2020%2Ces2021%2Ces2022%2Ces2023%2Ces5%2Ces6%2Ces7" }],
     ],
     srcDir: "content",
     cleanUrls: true,
