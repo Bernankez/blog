@@ -20,6 +20,36 @@ systemctl status docker
 systemctl stop docker
 ```
 
+## 配置
+
+:::code-group
+
+```json [/etc/docker/daemon.json]
+{
+  "registry-mirrors": [
+    "https://dockerpull.org/"
+  ],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "500m",
+    "max-file": "3"
+  }
+}
+```
+
+:::
+
+> `registry-mirrors`: docker镜像源
+>
+> `max-size`: 日志文件最大大小
+>
+> `max-file`: 日志文件最大数量
+
+```sh
+# 查看docker配置
+docker info
+```
+
 ## 镜像
 
 ```sh
@@ -52,30 +82,30 @@ docker stop <container-name>
 docker rm <container-id>
 ```
 
-> `--rm`：容器退出时自动删除
+> `--rm`: 容器退出时自动删除
 >
-> `--detach|-d`：后台运行
+> `--detach|-d`: 后台运行
 >
-> `--name <name>`：指定容器名称
+> `--name <name>`: 指定容器名称
 >
-> `--env-file=<file>`：环境文件
+> `--env-file=<file>`: 环境文件
 >
-> `--volume <LOCAL_PATH:CONTAINER_PATH>`：数据持久化。本地路径:容器内路径
+> `--volume <LOCAL_PATH:CONTAINER_PATH>`: 数据持久化。本地路径:容器内路径
 >
-> `--publish|-p <LOCAL_PORT:CONTAINER_PORT>`：端口映射。本机端口:容器内端口
+> `--publish|-p <LOCAL_PORT:CONTAINER_PORT>`: 端口映射。本机端口:容器内端口
 >
-> `image-name`：镜像名
+> `image-name`: 镜像名
 
 ```sh
 # 进入运行中的容器
 docker exec [-u <user-id>] -it <container-name|container-id> [command]
 ```
 
-> `-it`：映射标准输入输出并分配终端
+> `-it`: 映射标准输入输出并分配终端
 >
-> `-u <user-id>`：`-u`指定登录用户，`-u 0`使用root用户进入容器
+> `-u <user-id>`: `-u`指定登录用户，`-u 0`使用root用户进入容器
 >
-> `command`：一般是bash
+> `command`: 一般是bash
 
 ## Compose
 
@@ -137,8 +167,8 @@ docker compose down [-v]
 docker compose logs <server-name>
 ```
 
-> `--build`：重新构建
+> `--build`: 重新构建
 >
-> `--detach|-d`：后台运行
+> `--detach|-d`: 后台运行
 >
-> `-v`：use `-v` to remove volumes
+> `-v`: use `-v` to remove volumes
