@@ -140,7 +140,7 @@ export default async () => {
         lazyLoading: true,
       },
       codeTransformers: [
-        transformerTwoslash(),
+        transformerTwoslash() as any,
       ],
       config(md) {
         md.use(groupIconMdPlugin);
