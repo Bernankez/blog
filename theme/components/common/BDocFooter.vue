@@ -35,6 +35,6 @@ const control = usePrevNext();
 
 <style scoped>
 .b-doc-footer-item {
-  @apply b-1 b-solid b-border flex flex-col gap-sm p-sm box-border hover:bg-muted/30 rounded-lg transition motion-reduce:transition-none hover:b-primary;
+  @apply b-1 b-solid b-border flex flex-col gap-sm p-sm box-border h-full hover:bg-muted/30 rounded-lg transition motion-reduce:transition-none hover:b-primary;
 }
 </style>
