@@ -11,7 +11,8 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "types": [
-      "unplugin-icons/types/vue"
+      "unplugin-icons/types/vue",
+      "vite-plugin-pwa/client"
     ],
     "allowImportingTsExtensions": true,
 

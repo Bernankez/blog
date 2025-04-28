@@ -3,6 +3,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { basename, parse, relative, resolve } from "node:path";
 import process from "node:process";
 import { transformerTwoslash } from "@shikijs/vitepress-twoslash";
+import { withPwa } from "@vite-pwa/vitepress";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import { parseYAML } from "confbox";
 import matter from "gray-matter";
@@ -16,7 +17,7 @@ import { RssPlugin } from "vitepress-plugin-rss";
 
 // https://vitepress.dev/reference/site-config
 export default async () => {
-  return defineConfigWithTheme<ThemeConfig>({
+  return withPwa(defineConfigWithTheme<ThemeConfig>({
     lang: "zh-CN",
     title: "科科Cole",
     titleTemplate: ":title · 科科Cole",
@@ -174,7 +175,44 @@ export default async () => {
         DevTools(),
       ],
     },
-  });
+    pwa: {
+      registerType: "prompt",
+      experimental: {
+        includeAllowlist: true,
+      },
+      manifest: {
+        id: "/",
+        name: "科科的Blog",
+        short_name: "Blog",
+        description: "科科Cole's blog",
+        theme_color: "#ffffff",
+        icons: [
+          {
+            src: "pwa-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "pwa-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
+          {
+            src: "pwa-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any",
+          },
+          {
+            src: "pwa-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "maskable",
+          },
+        ],
+      },
+    },
+  }));
 };
 
 const _DIR_NAME = ["_dir.yaml", "_dir.yml"];

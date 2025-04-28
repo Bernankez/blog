@@ -11,7 +11,8 @@
     "preview": "vitepress preview",
     "lint": "eslint . -f mo",
     "fix": "eslint . -f mo --fix",
-    "typecheck": "vue-tsc --noEmit"
+    "typecheck": "vue-tsc --noEmit",
+    "generate-pwa-assets": "pwa-assets-generator"
   },
   "dependencies": {
     "@floating-ui/vue": "^1.1.6",
@@ -29,6 +30,7 @@
     "unocss": "^66.0.0",
     "vitepress-plugin-group-icons": "^1.5.2",
     "vue": "^3.5.13",
+    "vue-sonner": "^1.3.2",
     "zdog": "^1.1.3"
   },
   "devDependencies": {
@@ -43,6 +45,8 @@
     "@unocss/eslint-plugin": "^66.0.0",
     "@unocss/preset-mini": "^66.0.0",
     "@unocss/reset": "^66.0.0",
+    "@vite-pwa/assets-generator": "^1.0.0",
+    "@vite-pwa/vitepress": "^1.0.0",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vitejs/plugin-vue-jsx": "^4.1.2",
     "confbox": "^0.2.2",
@@ -55,11 +59,13 @@
     "typescript": "^5.8.3",
     "unplugin-icons": "^22.1.0",
     "vite": "^6.3.3",
+    "vite-plugin-pwa": "^1.0.0",
     "vite-plugin-vue-devtools": "^7.7.5",
     "vitepress": "^1.6.3",
     "vitepress-plugin-lightbox": "^1.0.2",
     "vitepress-plugin-rss": "^0.3.1",
-    "vue-tsc": "^2.2.10"
+    "vue-tsc": "^2.2.10",
+    "workbox-window": "^7.3.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

@@ -3,14 +3,18 @@ import type { Layout, PageClass, ThemeConfig } from "./types";
 import { useElementVisibility } from "@vueuse/core";
 import mediumZoom from "medium-zoom";
 import { useData, useRouter } from "vitepress";
-import { computed, onMounted, ref } from "vue";
+import { computed, markRaw, onMounted, ref, watchEffect } from "vue";
+import { toast } from "vue-sonner";
 import BBackToTop from "./components/common/BBackToTop.vue";
 import BContent from "./components/common/BContent.vue";
 import BFooter from "./components/common/BFooter.vue";
 import BHome from "./components/common/BHome.vue";
 import BNav from "./components/common/BNav.vue";
 import BNotFound from "./components/common/BNotFound.vue";
+import BPwaPrompt from "./components/common/BPwaPrompt.vue";
+import BToast from "./components/common/BToast.vue";
 import BToggleTheme from "./components/common/BToggleTheme.vue";
+import { useServiceWorker } from "./composables/useServiceWorker";
 
 const { frontmatter, page } = useData<ThemeConfig>();
 
@@ -37,6 +41,30 @@ const router = useRouter();
 router.onAfterRouteChange = setupMediumZoom;
 
 const visible = useElementVisibility(headerEl);
+
+const { offlineReady, needRefresh, updateServiceWorker, close } = useServiceWorker();
+
+watchEffect(() => {
+  if (offlineReady.value) {
+    toast.custom(markRaw(BPwaPrompt), {
+      componentProps: {
+        type: "offlineReady",
+      },
+      onDismiss: close,
+      onAutoClose: close,
+    });
+  } else if (needRefresh.value && updateServiceWorker.value) {
+    toast.custom(markRaw(BPwaPrompt), {
+      duration: Infinity,
+      componentProps: {
+        type: "needRefresh",
+        refresh: updateServiceWorker.value,
+      },
+      onDismiss: close,
+      onAutoClose: close,
+    });
+  }
+});
 </script>
 
 <template>
@@ -69,6 +97,7 @@ const visible = useElementVisibility(headerEl);
     </template>
   </div>
   <Content v-else />
+  <BToast />
 </template>
 
 <style>
