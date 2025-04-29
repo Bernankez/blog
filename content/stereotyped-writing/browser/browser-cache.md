@@ -104,4 +104,4 @@ last-modified/etag控制
 
 ### Cache-Control各值关系
 
-![image](https://s2.loli.net/2023/06/20/Hqxfhdr4ILzbP57.png)
+![](https://image-bed.keke.cc/202504291430111.png)

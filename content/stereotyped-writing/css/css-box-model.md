@@ -43,7 +43,7 @@ box-sizing: content-box;
 
 这种盒模型下，width = content width，height = content height
 
-![img](https://s2.loli.net/2023/08/15/ZxcJYkA95NDFmTR.webp)
+![](https://image-bed.keke.cc/202504291433181.webp)
 
 ### 替代盒模型
 
@@ -53,7 +53,7 @@ box-sizing: border-box;
 
 这种盒模型下，width = content width + padding X + border X，height = content height + padding Y + border Y
 
-![img](https://s2.loli.net/2023/08/15/Md2nxRU9SaO6rgv.jpg)
+![](https://image-bed.keke.cc/202504291434299.jpg)
 
 ## 外边距折叠（外边距合并）
 
@@ -169,7 +169,7 @@ father中包含了一个空的block，这个block的margin-top 0.25rem，margin-
 
 IFC只有在一个块元素中仅包含内联级别元素时才会生成
 
-![img](https://s2.loli.net/2023/08/15/JKgDcN4YFwznlyo.jpg)
+![](https://image-bed.keke.cc/202504291434123.jpg)
 
 - 内部的`box` 会在水平方向排布
 - 这些`box` 之间的水平方向的`margin` `boder` `padding` 都有效

@@ -32,7 +32,7 @@ rm -rf ~/Library/Application Support/Caches/cursor-updater/pending
 
 7. 打开Cursor，设置中搜索`update`，将`Application/Update`下的自动更新模式设置为`none`
 
-![](https://s2.loli.net/2025/03/14/oPXNWuMqKflrRUD.png)
+![](https://image-bed.keke.cc/202504291427559.png)
 
 8. 关闭Cursor
 

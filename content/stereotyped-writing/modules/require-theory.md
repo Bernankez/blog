@@ -32,4 +32,4 @@ function require(path){
 
    如果还是没有，报错
 
-![](https://s2.loli.net/2023/03/15/W97uZGMvPHQrADo.png)
+![](https://image-bed.keke.cc/202504291436281.png)

@@ -8,7 +8,7 @@ title: TCP三次握手与四次挥手
 
 OSI (Open System Interconnect)规定了七层协议模型，TCP/IP规定了四层模型，七层模型和四层模型的对应关系：
 
-![img](https://s2.loli.net/2023/08/15/3onZH8VvhM4DFBq.png)
+![](https://image-bed.keke.cc/202504291436861.png)
 
 四层模型主要分为：应用层，传输层，网络层，数据链路层。TCP/UDP协议处于传输层。
 
@@ -30,7 +30,7 @@ TCP通信包括三个步骤：
 
 TCP在传输时会附加自己的TCP包首部。下面是一个TCP头部规范定义：
 
-![img](https://s2.loli.net/2023/08/15/jqnE3TQPYhJaGc2.png)
+![](https://image-bed.keke.cc/202504291437256.png)
 
 #### TCP标识位
 
@@ -67,7 +67,7 @@ TCP在传输时会附加自己的TCP包首部。下面是一个TCP头部规范�
 
   客户端收到确认后检查ack是否为X+1，ACK是否为1，如果都是的话，则将ACK置为1，ack置为Y+1，并发回给服务器。服务器检查ACK是否为1，ack是否为Y+1。如果都是的话则连接建立成功。客户端和服务器都进入`ESTABLISHED`状态，此时客户端与服务端可以开始传输数据。
 
-![img](https://s2.loli.net/2023/08/15/oLqRg6kEJtA9BV3.png)
+![](https://image-bed.keke.cc/202504291439291.png)
 
 <Collapse>
   <template #title>
@@ -109,7 +109,7 @@ TCP在传输时会附加自己的TCP包首部。下面是一个TCP头部规范�
 
   客户端收到服务端发送的FIN包后回应服务端发送的FIN包，此时客户端进入`TIME_WAIT`状态。当服务端收到客户端的ACK报文后，关闭连接，变为`CLOSED`状态。此时**客户端等待2MSL(报文段最大生存时间)时间后依然没收到回复，则证明服务端已关闭，此时客户端也关闭连接。**
 
-![img](https://s2.loli.net/2023/08/15/cfKRC7YyAOw2UoP.png)
+![](https://image-bed.keke.cc/202504291440841.png)
 
 <Collapse>
   <template #title>

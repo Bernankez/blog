@@ -48,7 +48,7 @@ const p = Person.prototype
 p.constructor === Person // true
 ```
 
-![image.png](https://s2.loli.net/2023/08/15/CU72okj1IENK9yw.webp)
+![](https://image-bed.keke.cc/202504291435441.webp)
 
 ### `__proto__`
 
