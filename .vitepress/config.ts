@@ -1,3 +1,4 @@
+import type { UserConfig } from "vite";
 import type { _DirConfig, NavItemWithLink, SidebarItem, ThemeConfig } from "../theme/types";
 import { readdirSync, readFileSync } from "node:fs";
 import { basename, parse, relative, resolve } from "node:path";
@@ -10,13 +11,14 @@ import matter from "gray-matter";
 import UnoCSS from "unocss/vite";
 import Icons from "unplugin-icons/vite";
 import DevTools from "vite-plugin-vue-devtools";
-import { defineConfigWithTheme } from "vitepress";
+import { defineConfigWithTheme, loadEnv } from "vitepress";
 import { groupIconMdPlugin, groupIconVitePlugin } from "vitepress-plugin-group-icons";
 import lightbox from "vitepress-plugin-lightbox";
 import { RssPlugin } from "vitepress-plugin-rss";
 
 // https://vitepress.dev/reference/site-config
-export default async () => {
+export default async ({ mode }: UserConfig) => {
+  const env = loadEnv(mode ?? "", process.cwd()) as ImportMetaEnv;
   return withPwa(defineConfigWithTheme<ThemeConfig>({
     lang: "zh-CN",
     title: "科科Cole",
@@ -79,8 +81,8 @@ export default async () => {
       },
       comment: {
         gitalk: {
-          clientID: "40827213be1939c08aba",
-          clientSecret: "40da0008fb88ccd7c81fb004c1292543e66998c9",
+          clientID: env.VITE_GH_CLIENT_ID,
+          clientSecret: env.VITE_GH_CLIENT_SECRET,
           repo: "blog-comment",
           owner: "Bernankez",
           admin: ["Bernankez"],
@@ -130,9 +132,9 @@ export default async () => {
       // search: {
       //   provider: "algolia",
       //   options: {
-      //     apiKey: "f3c4b78009a6ed7d455512effbadf33a",
-      //     appId: "4U4R8B36SX",
-      //     indexName: "keke",
+      //     apiKey: env.VITE_ALGOLIA_API_KEY,
+      //     appId: env.VITE_ALGOLIA_APP_ID,
+      //     indexName: env.VITE_ALGOLIA_INDEX_NAME,
       //   },
       // },
     },
