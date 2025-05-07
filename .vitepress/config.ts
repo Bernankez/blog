@@ -14,6 +14,7 @@ import DevTools from "vite-plugin-vue-devtools";
 import { defineConfigWithTheme, loadEnv } from "vitepress";
 import { groupIconMdPlugin, groupIconVitePlugin } from "vitepress-plugin-group-icons";
 import lightbox from "vitepress-plugin-lightbox";
+import llmstxt from "vitepress-plugin-llms";
 import { RssPlugin } from "vitepress-plugin-rss";
 
 // https://vitepress.dev/reference/site-config
@@ -174,6 +175,7 @@ export default async ({ mode }: UserConfig) => {
           ignoreHome: true,
           ignorePublish: false,
         }),
+        llmstxt(),
         DevTools(),
       ],
     },

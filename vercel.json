@@ -10,5 +10,11 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/llms-full.md",
+      "destination": "/llms-full.txt"
+    }
   ]
 }
