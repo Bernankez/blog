@@ -44,11 +44,10 @@ public-hoist-pattern[]=*@vue/runtime-core*
 shamefully-hoist=true
 ```
 
-::alert
-Reference: <br>
+::: info Reference
 [public-hoist-pattern](https://pnpm.io/zh/npmrc#public-hoist-pattern)<br>
 [shamefully-hoist](https://pnpm.io/zh/npmrc#shamefully-hoist)
-::
+:::
 
 2. 直接安装`@vue/runtime-core`
 
