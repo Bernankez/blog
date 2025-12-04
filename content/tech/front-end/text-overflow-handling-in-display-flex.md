@@ -136,7 +136,7 @@ title: "display: flex下文本溢出处理"
 ```html
 <div class="flex">
   <div class="bg-green shrink-0">这是左侧布局</div>
-  <div class="bg-red p-3 truncate"> // [!code highlight]
+  <div class="bg-red p-3 truncate"> <!-- [!code highlight] -->
     这是右侧父布局 text-overflow: ellipsis
     <div class="bg-blue">
         这是右侧嵌套的子布局。这也是很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的一句话
@@ -167,7 +167,7 @@ title: "display: flex下文本溢出处理"
   <div class="bg-green shrink-0">这是左侧布局</div>
   <div class="bg-red p-3">
     这是右侧父布局
-    <div class="bg-blue truncate"> // [!code highlight]
+    <div class="bg-blue truncate"> <!-- [!code highlight] -->
         这是右侧嵌套的子布局。 text-overflow: ellipsis。这也是很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的一句话
     </div>
   </div>
@@ -194,9 +194,9 @@ title: "display: flex下文本溢出处理"
 ```html
 <div class="flex">
   <div class="bg-green shrink-0">这是左侧布局</div>
-  <div class="bg-red p-3 truncate"> // [!code highlight]
+  <div class="bg-red p-3 truncate"> <!-- [!code highlight] -->
     这是右侧父布局 text-overflow: ellipsis
-    <div class="bg-blue truncate"> // [!code highlight]
+    <div class="bg-blue truncate"> <!-- [!code highlight] -->
         这是右侧嵌套的子布局。 text-overflow: ellipsis。这也是很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的一句话
     </div>
   </div>
