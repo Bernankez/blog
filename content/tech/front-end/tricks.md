@@ -88,6 +88,15 @@ main {
 > [!TIP]
 > [使用 Cloudflare Workers 解决 OpenAI 和 ChatGPT 的 API 无法访问的问题](https://github.com/noobnooc/noobnooc/discussions/9)
 
+## 使用[tunnl.gg](https://tunnl.gg/)临时反代出本机服务
+
+当开发需要临时访问时很有用。使用一行命令即可：
+
+```sh
+# 8080为本机服务端口
+$ ssh -t -R 80:localhost:8080 proxy.tunnl.gg
+```
+
 ## 同时使用对象与数组解构
 
 > [!TIP]
