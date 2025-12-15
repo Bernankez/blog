@@ -2,6 +2,7 @@ import type { Theme } from "vitepress";
 import BBadge from "./components/global/BBadge.vue";
 import BCodePreview from "./components/global/BCodePreview.vue";
 import BCollapse from "./components/global/BCollapse.vue";
+import BMarkdownButtons from "./components/global/BMarkdownButtons.vue";
 import Layout from "./Layout.vue";
 import "virtual:uno.css";
 import "@unocss/reset/tailwind-compat.css";
@@ -17,5 +18,6 @@ export default {
     app.component("Badge", BBadge);
     app.component("CodePreview", BCodePreview);
     app.component("Collapse", BCollapse);
+    app.component("MarkdownButtons", BMarkdownButtons);
   },
 } satisfies Theme;
