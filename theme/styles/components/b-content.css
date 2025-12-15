@@ -171,13 +171,13 @@
 }
 
 .b-doc tr {
-  background-color: hsl(var(--muted));
+  background-color: hsl(var(--background));
   border-top: 1px solid hsl(var(--border));
   transition: background-color 0.5s;
 }
 
 .b-doc tr:nth-child(2n) {
-  background-color: hsl(var(--background));
+  background-color: hsl(var(--muted) / 0.6);
 }
 
 .b-doc th,
