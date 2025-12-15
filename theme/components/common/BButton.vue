@@ -29,10 +29,11 @@ const buttonVariants = cva("transition motion-reduce:transition-none hover:bg-op
       true: "bg-muted text-muted-foreground cursor-not-allowed",
     },
     size: {
-      sm: "text-sm py-1 px-2 rounded-lg",
-      md: "rounded-xl p-2",
-      lg: "px-sm py-2 text-lg rounded-xl",
-      icon: "w-10 h-10 rounded-xl flex justify-center items-center",
+      "sm": "text-sm py-1 px-2 rounded-lg",
+      "md": "rounded-xl p-2",
+      "lg": "px-sm py-2 text-lg rounded-xl",
+      "icon": "w-10 h-10 rounded-xl flex justify-center items-center",
+      "icon-sm": "w-8 h-8 rounded-xl flex justify-center items-center text-sm",
     },
   },
 });
