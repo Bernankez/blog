@@ -32,7 +32,8 @@ const { markUnlock, lock, unlock } = useLockHtmlScroll(isLocked, { manual: true 
 watch(show, (show) => {
   if (show && lockScroll) {
     lock?.();
-  } else {
+  }
+  else {
     markUnlock?.();
     if (!transition) {
       unlock?.();

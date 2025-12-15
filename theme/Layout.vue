@@ -53,7 +53,8 @@ watchEffect(() => {
       onDismiss: close,
       onAutoClose: close,
     });
-  } else if (needRefresh.value && updateServiceWorker.value) {
+  }
+  else if (needRefresh.value && updateServiceWorker.value) {
     toast.custom(markRaw(BPwaPrompt), {
       duration: Infinity,
       componentProps: {

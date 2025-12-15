@@ -228,7 +228,8 @@ async function fetchExcerpt(id: string) {
       throw new Error(`Cannot find file for id: ${id}`);
     }
     return { id, mod: await import(/* @vite-ignore */ file) };
-  } catch (e) {
+  }
+  catch (e) {
     console.error(e);
     return { id, mod: {} };
   }

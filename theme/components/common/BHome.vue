@@ -45,7 +45,8 @@ function useShake(elRef: MaybeElementRef<HTMLSpanElement | undefined>) {
   watch(isOutside, (isOutside) => {
     if (!isOutside) {
       toValue(elRef)?.classList.add("hover");
-    } else {
+    }
+    else {
       toValue(elRef)?.classList.remove("hover");
     }
   }, { immediate: true });
@@ -68,7 +69,8 @@ function lookAround() {
   let sidebarSingle: SidebarSingle;
   if (isSidebarSingle(sidebar.value)) {
     sidebarSingle = sidebar.value;
-  } else {
+  }
+  else {
     sidebarSingle = sidebar.value[randomPick(Object.keys(sidebar.value))];
   }
 

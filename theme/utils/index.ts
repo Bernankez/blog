@@ -15,7 +15,8 @@ export function throttleAndDebounce<T extends any[]>(fn: (...args: T) => void, d
       setTimeout(() => {
         called = false;
       }, delay);
-    } else {
+    }
+    else {
       timeoutId = setTimeout(() => fn(...args), delay);
     }
   };
@@ -51,7 +52,8 @@ export function pathToFile(path: string) {
   if (import.meta.env.DEV) {
     // always force re-fetch content in dev
     pagePath += `.md?t=${Date.now()}`;
-  } else {
+  }
+  else {
     // in production, each .md file is built into a .md.js file following
     // the path conversion scheme.
     // /foo/bar.html -> ./foo_bar.md
@@ -74,7 +76,8 @@ export function pathToFile(path: string) {
         return null;
       }
       pagePath = `${base}${__ASSETS_DIR__}/${pagePath}.${pageHash}.js`;
-    } else {
+    }
+    else {
       // ssr build uses much simpler name mapping
       pagePath = `./${sanitizeFileName(
         pagePath.slice(1).replace(/\//g, "_"),

@@ -30,7 +30,8 @@ function serializeHeader(h: Element): string {
         continue;
       }
       ret += node.textContent;
-    } else if (node.nodeType === 3) {
+    }
+    else if (node.nodeType === 3) {
       ret += node.textContent;
     }
   }
@@ -108,7 +109,8 @@ function buildTree(data: TocItem[], min: number, max: number): TocItem[] {
 
     if (parent) {
       parent.children!.push(node);
-    } else {
+    }
+    else {
       result.push(node);
     }
 

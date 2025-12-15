@@ -40,7 +40,8 @@ export function flatten(vNodes: VNodeChild[], filterCommentNode = true, result: 
       if (Array.isArray(vNode.children)) {
         flatten(vNode.children, filterCommentNode, result);
       }
-    } else if (vNode.type !== Comment) {
+    }
+    else if (vNode.type !== Comment) {
       result.push(vNode);
     }
   });

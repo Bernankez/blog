@@ -53,7 +53,8 @@ function initGrid() {
     for (let j = 0; j < cols; j++) {
       if (initialSeed) {
         newGrid[i][j] = initialSeed[i][j];
-      } else {
+      }
+      else {
         newGrid[i][j] = Math.random() > 0.7;
       }
     }
@@ -111,7 +112,8 @@ function nextGeneration() {
       const neighbors = countNeighbors(i, j);
       if (grid.value[i][j]) {
         newGrid[i][j] = neighbors === 2 || neighbors === 3;
-      } else {
+      }
+      else {
         newGrid[i][j] = neighbors === 3;
       }
     }
@@ -129,7 +131,8 @@ function nextGeneration() {
   historyStates.value.push(JSON.parse(JSON.stringify(newGrid)));
   if (historyStates.value.length > MAX_HISTORY) {
     historyStates.value.shift(); // 删除最老的记录
-  } else {
+  }
+  else {
     currentHistoryIndex.value++;
   }
 }
@@ -156,7 +159,8 @@ function togglePlay() {
   isPlaying.value = !isPlaying.value;
   if (isPlaying.value) {
     startGame();
-  } else {
+  }
+  else {
     cancelAnimationFrame(animationId);
   }
 }
@@ -184,7 +188,8 @@ function nextStep() {
     currentHistoryIndex.value++;
     grid.value = JSON.parse(JSON.stringify(historyStates.value[currentHistoryIndex.value]));
     draw();
-  } else {
+  }
+  else {
     // 生成新的下一步
     isPlaying.value = false;
     cancelAnimationFrame(animationId);

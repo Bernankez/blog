@@ -251,7 +251,8 @@ function generateSidebarItem(path: string, options?: GenerateSidebarItemOptions)
     const _dirFile = readFileSync(resolve(path, _dir.name), "utf-8");
     const config = parseYAML<_DirConfig>(_dirFile);
     sidebarItem.text = config.title;
-  } else {
+  }
+  else {
     sidebarItem.text = pascalCase(directoryName);
   }
 
@@ -286,7 +287,8 @@ function generateNavItem(path: string) {
     const _dirFile = readFileSync(resolve(path, _dir.name), "utf-8");
     const config = parseYAML<_DirConfig>(_dirFile);
     navItem.text = config.title;
-  } else {
+  }
+  else {
     navItem.text = pascalCase(directoryName);
   }
   const md = getFirstMdFile(path);

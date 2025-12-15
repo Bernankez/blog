@@ -16,7 +16,8 @@ export function useToc() {
   watch([() => route.data.relativePath, mounted], ([_, _mounted]) => {
     if (_mounted) {
       headers.value = getHeaders(frontmatter.value.toc ?? toc?.value?.outline);
-    } else {
+    }
+    else {
       headers.value = [];
     }
   }, {

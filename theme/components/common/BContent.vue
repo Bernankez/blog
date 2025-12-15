@@ -27,7 +27,8 @@ watchEffect(() => {
   if (mounted.value) {
     if (expandSidebar.value) {
       document.documentElement.style.setProperty("--b-sidebar-width", "var(--b-sidebar-expand-width)");
-    } else {
+    }
+    else {
       document.documentElement.style.setProperty("--b-sidebar-width", "var(--b-sidebar-fold-width)");
     }
   }
@@ -57,7 +58,8 @@ const scroll = useDebounceFn((el: HTMLDivElement) => {
           behavior: "smooth",
           top: targetTop,
         });
-      } else {
+      }
+      else {
         tocWrapperRef.value.scrollTo({
           behavior: "smooth",
           top: targetTop,

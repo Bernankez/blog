@@ -1,4 +1,3 @@
-/* eslint-disable style/brace-style */
 // adapted from https://stackoverflow.com/a/46432113/11613622
 
 export class LRUCache<K, V> {

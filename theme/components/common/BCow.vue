@@ -31,7 +31,8 @@ useEventListener(canvasRef, "pointerdown", () => {
       dragging.value = false;
       if (cursor.value) {
         document.body.style.setProperty("cursor", cursor.value);
-      } else {
+      }
+      else {
         document.body.style.removeProperty("cursor");
       }
       stopMoveFn();

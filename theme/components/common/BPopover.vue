@@ -20,7 +20,7 @@ const { displayDirective = "if", strategy, placement, disabled, lockScroll, keep
   keepAliveOnHover?: boolean;
   trigger?: Trigger;
   to?: TeleportProps["to"];
-  offset?: number ;
+  offset?: number;
   flip?: boolean;
   shift?: boolean;
   delay?: number;
@@ -78,7 +78,8 @@ defineExpose({
   toggle: (_show?: boolean) => {
     if (isDefined(_show)) {
       show.value = _show;
-    } else {
+    }
+    else {
       show.value = !show.value;
     }
   },

@@ -122,7 +122,8 @@ export function usePopoverTransition(placement?: MaybeRefOrGetter<Placement>, of
     let _offset = toValue(offset);
     if (typeof _offset === "number") {
       _offset = `${_offset}px`;
-    } else if (!Number.isNaN(Number(_offset))) {
+    }
+    else if (!Number.isNaN(Number(_offset))) {
       _offset = `${_offset}px`;
     }
 

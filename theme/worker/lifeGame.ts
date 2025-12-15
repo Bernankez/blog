@@ -7,7 +7,8 @@ let cols = 0;
 globalThis.onmessage = (e: MessageEvent) => {
   if (e.data.type === "init") {
     handleInit(e.data);
-  } else if (e.data.type === "next") {
+  }
+  else if (e.data.type === "next") {
     handleNext();
   }
 };
