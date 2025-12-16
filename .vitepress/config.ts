@@ -115,6 +115,8 @@ export default async ({ mode }: UserConfig) => {
                   buttonAriaLabel: "搜索文档",
                 },
                 modal: {
+                  searchResultTitle: "搜索结果",
+                  askAiPlaceholder: "没找到答案？试试问AI",
                   displayDetails: "显示预览",
                   resetButtonTitle: "清空",
                   backButtonTitle: "返回",

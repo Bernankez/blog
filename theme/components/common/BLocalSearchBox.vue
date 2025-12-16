@@ -325,6 +325,8 @@ onKeyStroke("Escape", () => {
 // Translations
 const defaultTranslations: { modal: ModalTranslations } = {
   modal: {
+    searchResultTitle: "Documentation",
+    askAiPlaceholder: "Didn't find it in the docs? Ask AI to help",
     displayDetails: "Display detailed list",
     resetButtonTitle: "Reset search",
     backButtonTitle: "Close search",

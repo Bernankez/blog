@@ -9,6 +9,8 @@ export interface ButtonTranslations {
 }
 
 export interface ModalTranslations {
+  searchResultTitle?: string;
+  askAiPlaceholder?: string;
   displayDetails?: string;
   resetButtonTitle?: string;
   backButtonTitle?: string;
