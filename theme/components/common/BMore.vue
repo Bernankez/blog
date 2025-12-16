@@ -24,7 +24,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <BIcon icon="i-lucide-grip" class="md:hidden" title="更多" @click="showDrawer = !showDrawer" />
+  <BIcon icon="i-line-md-menu-unfold-left" class="md:hidden" title="更多" @click="showDrawer = !showDrawer" />
   <BDrawer v-model="showDrawer" to="body" placement="right" class="max-w-100vw w-[var(--b-drawer-width)]">
     <div class="px-sm">
       <BMoreSidebar v-for="(item, i) in nav" :key="i" :item />

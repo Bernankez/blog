@@ -115,11 +115,11 @@ function onDownload() {
 <template>
   <div class="my-sm flex items-center gap-1">
     <BButton variant="ghost" :size="sm ? 'sm' : 'icon-sm'" title="复制Markdown" class="flex items-center gap-1" @click="onCopy">
-      <div :class="copied ? 'i-lucide:check' : 'i-lucide:copy'"></div>
+      <div :class="copied ? 'i-lucide-check' : 'i-lucide-copy'"></div>
       {{ sm ? '复制Markdown' : '' }}
     </BButton>
     <BButton variant="ghost" :size="sm ? 'sm' : 'icon-sm'" title="保存为Markdown" class="flex items-center gap-1" @click="onDownload">
-      <div :class="downloaded ? 'i-lucide:check' : 'i-lucide:download'"></div>
+      <div :class="downloaded ? 'i-lucide-check' : 'i-lucide-download'"></div>
       {{ sm ? '保存为Markdown' : '' }}
     </BButton>
   </div>
