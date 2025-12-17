@@ -36,9 +36,9 @@ title: 通过GitHub + Cloudflare自建图床
 
 进入Cloudflare账户，计算和AI - Workers 和 Pages，创建一个新的Worker，这里我取名叫image-bed
 
-将以下代码复制到 `worker.js` 中
+::: code-group
 
-```js
+```js twoslash [worker.js]
 /**
  * Cloudflare Worker Github Raw Proxy
  * 功能：
@@ -190,6 +190,8 @@ Commercial support is available at <a href="http://nginx.com/">nginx.com</a>.</p
 </html>
 `;
 ```
+
+:::
 
 在“变量和机密”中添加以下环境变量
 
