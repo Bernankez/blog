@@ -167,6 +167,9 @@ export default async ({ mode }: UserConfig) => {
           description: "Knows nothing, likes sleeping.",
           baseUrl: "https://blog.keke.cc",
           copyright: "Copyright ©️ 2023-PRESENT 科科Cole",
+          image: "https://blog.keke.cc/avatar.webp",
+          favicon: "https://blog.keke.cc/favicon.ico",
+          // NEVER enable icon. Since the theme is custom, this option can cause style issues.
           icon: false,
           language: "zh-CN",
           author: {
