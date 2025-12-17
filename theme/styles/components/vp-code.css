@@ -10,3 +10,9 @@ html:not(.dark) .vp-code span,
 html:not(.dark) .twoslash-popup-code span {
   color: var(--shiki-light, inherit);
 }
+
+.twoslash-popup-docs a {
+  color: hsl(var(--primary));
+  font-weight: 500;
+  text-decoration: underline;
+}
