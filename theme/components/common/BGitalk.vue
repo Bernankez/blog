@@ -13,10 +13,6 @@ export interface GitalkOptions {
   owner: string;
   admin: string[];
   /**
-   * @default ['comment']
-   */
-  labels?: string[];
-  /**
    * @default 'last'
    */
   pagerDirection?: "last" | "first";
@@ -24,10 +20,28 @@ export interface GitalkOptions {
 
 const props = defineProps<GitalkOptions>();
 
+/**
+ * FNV-1a
+ * 产出: 6-7 位 Base36 字符串 (如 "1z8p4q")
+ */
+function getShortHash(str: string): string {
+  let h = 0x811C9DC5; // 32-bit FNV offset basis
+
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 0x01000193); // FNV prime
+  }
+
+  // (h >>> 0) 强制转为无符号整数，确保结果总是正数
+  return (h >>> 0).toString(36);
+}
+
 const { frontmatter } = useData<ThemeConfig>();
 const route = useRoute();
-const pageTitle = computed(() => frontmatter.value.title as string);
-const documentPath = computed(() => route.path.split("/").pop() || route.path);
+// 文档标题
+const documentTitle = computed(() => frontmatter.value.title as string);
+// 文档路径哈希
+const hash = computed(() => getShortHash(route.path));
 
 const commentRef = ref<HTMLDivElement>();
 
@@ -37,11 +51,11 @@ watchEffect(() => {
   }
   const gitalk = new Gitalk({
     ...props,
-    labels: props.labels || ["comment"],
+    labels: [],
     pagerDirection: props.pagerDirection || "last",
-    id: documentPath.value,
-    title: documentPath.value,
-    body: `${location.href}\n\n${pageTitle.value}`,
+    id: hash.value,
+    title: documentTitle.value,
+    body: `[${documentTitle.value}](${location.href})`,
     distractionFreeMode: false,
     flipMoveOptions: {
       appearAnimation: "fade",
