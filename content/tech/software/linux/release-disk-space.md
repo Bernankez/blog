@@ -74,7 +74,7 @@ nginx:
     driver: "json-file",
     options:
       # 5g / 500m etc.
-      max-size: "5g" // [!code highlight]
+      max-size: "5g" # [!code highlight]
 ```
 
 :::
