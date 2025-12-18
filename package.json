@@ -10,7 +10,7 @@
   "scripts": {
     "prepare": "simple-git-hooks",
     "dev": "vitepress dev",
-    "build": "vue-tsc -b && git fetch --unshallow && vitepress build",
+    "build": "vue-tsc -b && vitepress build",
     "preview": "vitepress preview",
     "lint": "eslint . -f mo",
     "fix": "eslint . -f mo --fix",
