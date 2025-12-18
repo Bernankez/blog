@@ -85,29 +85,14 @@ async function handleProxy(url, request, env) {
 
   // 2. 处理鉴权 Token
   const clientToken = url.searchParams.get("token");
-  let githubToken = "";
-
-  // 逻辑说明：
-  // 情况 A: 设置了访问密码 (env.TOKEN) 和 内部GithubToken (env.GH_TOKEN)
-  //        用户必须提供正确的密码 (?token=密码)，Worker 才会使用内部 GithubToken 去请求。
-  // 情况 B: 未设置内部逻辑，直接使用用户传入的 Token 作为 Github Token。
-
-  if (env.GH_TOKEN && env.TOKEN) {
-    if (clientToken === env.TOKEN) {
-      githubToken = env.GH_TOKEN; // 密码匹配，使用内部 Token
-    }
-    else {
-      // 密码不对，回退尝试用用户传的做 token
-      githubToken = clientToken;
-    }
+  // 必须匹配 env.TOKEN (如果设置了的话)
+  if (env.TOKEN && clientToken !== env.TOKEN) {
+    return new Response("Invalid Access Token", { status: 403 });
   }
-  else {
-    // 优先用环境变量，否则用 URL 参数
-    githubToken = env.GH_TOKEN || env.TOKEN || clientToken;
-  }
-
+  // 确定最终用于请求 GitHub 的 Token
+  const githubToken = env.GH_TOKEN;
   if (!githubToken) {
-    return new Response("Error: Token is required.", { status: 403 });
+    return new Response("Server Configuration Error: GH_TOKEN is missing", { status: 500 });
   }
 
   // 3. 构建并发送请求
