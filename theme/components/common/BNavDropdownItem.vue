@@ -12,7 +12,7 @@ const { item } = defineProps<{
 const { page } = useData<ThemeConfig>();
 const active = computed(() => isActive(page.value.relativePath, item.activeMatch, true));
 
-const base = computed(() => twMerge(["flex items-center gap-1 rounded-lg p-2 text-sm transition hover:bg-secondary motion-reduce:transition-none hover:text-secondary-foreground! outline-none", active.value && "text-primary hover:text-primary"]));
+const base = computed(() => twMerge(["flex items-center gap-1 rounded-lg p-2 text-sm transition hover:bg-accent motion-reduce:transition-none hover:text-secondary-foreground! outline-none", active.value && "text-primary hover:text-primary"]));
 </script>
 
 <template>

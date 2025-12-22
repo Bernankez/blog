@@ -118,5 +118,7 @@
 }
 
 .markdown-body blockquote {
-  border-left-color: hsl(var(--muted));
+  font-size: 14px;
+  color: hsl(var(--muted-foreground));
+  border-left-color: hsl(var(--secondary));
 }

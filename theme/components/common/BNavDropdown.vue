@@ -18,7 +18,7 @@ const active = computed(() => isActive(page.value.relativePath, item.activeMatch
 
 const base = computed(() => twMerge(
   ["rounded-xl bg-opacity-40 px-sm py-2 transition hover:text-primary motion-reduce:transition-none"],
-  [active.value && "bg-secondary hover:bg-opacity-50! shadow-inset shadow"],
+  [active.value && "bg-accent hover:bg-opacity-50! shadow-inset shadow"],
 ));
 </script>
 

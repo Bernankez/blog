@@ -40,7 +40,7 @@ watchEffect(() => {
       <BIcon icon="i-lucide-more-horizontal" class="hidden md:block lg:hidden" />
     </template>
     <div class="w-50 left-unset! right-sm!">
-      <BLink v-for="link in socialLinks" :key="link.link" class="flex items-center rounded-lg transition hover:bg-secondary motion-reduce:transition-none hover:text-secondary-foreground!" :href="link.link" :target="link.target ?? '_target'" :aria-label="link.ariaLabel">
+      <BLink v-for="link in socialLinks" :key="link.link" class="flex items-center rounded-lg transition hover:bg-accent motion-reduce:transition-none hover:text-secondary-foreground!" :href="link.link" :target="link.target ?? '_target'" :aria-label="link.ariaLabel">
         <BIcon :icon="getIcon(link.icon)" />
         <span class="text-sm opacity-70">{{ link.title }}</span>
       </BLink>
