@@ -87,6 +87,29 @@ export interface ThemeConfig {
      */
     formatOptions?: Intl.DateTimeFormatOptions & { forceLocale?: boolean };
   };
+  changelog?: false | {
+    sortOptions?: {
+      /**
+       * @default 'desc'
+       */
+      default?: "asc" | "desc";
+      text?: {
+        /**
+         * @default 'From new to old'
+         */
+        desc?: string
+        /**
+         * @default 'From old to new'
+         */;
+        asc?: string;
+      };
+    };
+    /**
+     * @default
+     * { dateStyle: 'short', timeStyle: 'short' }
+     */
+    formatOptions?: Intl.DateTimeFormatOptions & { forceLocale?: boolean };
+  };
   search?: {
     provider: "local";
     options?: LocalSearchOptions;

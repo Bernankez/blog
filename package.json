@@ -41,6 +41,7 @@
     "@bernankez/theme": "^0.4.2",
     "@iconify-json/line-md": "^1.2.11",
     "@iconify-json/lucide": "^1.2.82",
+    "@nolebase/vitepress-plugin-git-changelog": "^2.18.2",
     "@shikijs/vitepress-twoslash": "^3.20.0",
     "@types/mark.js": "^8.11.12",
     "@types/node": "^24.10.4",

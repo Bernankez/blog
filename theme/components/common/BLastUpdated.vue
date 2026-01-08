@@ -25,7 +25,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="text-sm text-foreground text-opacity-60 font-medium">
+  <div>
     {{ theme.lastUpdated?.text || 'Last updated' }}:
     <time :datetime="isoDatetime">{{ datetime }}</time>
   </div>
