@@ -3,6 +3,7 @@ import type { _DirConfig, NavItemWithLink, SidebarItem, ThemeConfig } from "../t
 import { readdirSync, readFileSync } from "node:fs";
 import { basename, parse, relative, resolve } from "node:path";
 import process from "node:process";
+import { GitChangelog } from "@nolebase/vitepress-plugin-git-changelog";
 import { transformerTwoslash } from "@shikijs/vitepress-twoslash";
 import { withPwa } from "@vite-pwa/vitepress";
 import vueJsx from "@vitejs/plugin-vue-jsx";
@@ -107,6 +108,18 @@ export default async ({ mode }: UserConfig) => {
           timeStyle: "medium",
         },
       },
+      changelog: {
+        sortOptions: {
+          text: {
+            desc: "从新到旧",
+            asc: "从旧到新",
+          },
+        },
+        formatOptions: {
+          dateStyle: "short",
+          timeStyle: "short",
+        },
+      },
       search: {
         provider: "local",
         options: {
@@ -183,6 +196,9 @@ export default async ({ mode }: UserConfig) => {
           filename: "feed.xml",
           ignoreHome: true,
           ignorePublish: false,
+        }),
+        GitChangelog({
+          repoURL: () => "https://github.com/Bernankez/blog",
         }),
         llmstxt(),
         DevTools(),
