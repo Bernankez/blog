@@ -96,7 +96,7 @@ function formatDatetime(value: number, options?: { pad?: boolean }) {
             @click="sort = (sort === 'desc' ? 'asc' : 'desc')"
           ></div>
         </div>
-        <BEditLink />
+        <BEditLink class="shrink-0" />
       </div>
     </template>
     <div v-if="enableChangelog" class="pt-2">
