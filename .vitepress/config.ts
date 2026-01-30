@@ -59,6 +59,7 @@ export default async ({ mode }: UserConfig) => {
         "/tech/": [
           ...generateSidebarItem(resolve(process.cwd(), "content", "tech"), {
             indentFromLevel: 0,
+            collapsed: false,
           }).items!,
         ],
         "/blog/": [
