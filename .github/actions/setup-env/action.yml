@@ -142,9 +142,23 @@ runs:
           echo $wixPath >> $env:GITHUB_PATH
         }
 
+    # Clone Pake repository and setup
+    - name: Clone Pake repository
+      if: inputs.mode == 'build'
+      shell: bash
+      run: git clone --depth 1 https://github.com/tw93/Pake.git pake-repo
+
     # Build optimizations (caching)
     - name: Setup Rust cache
       if: inputs.mode == 'build'
       uses: swatinem/rust-cache@v2
       with:
         workspaces: pake-repo/src-tauri -> target
+
+    - name: Install Pake dependencies and build CLI
+      if: inputs.mode == 'build'
+      shell: bash
+      run: |
+        cd pake-repo
+        pnpm install
+        pnpm run cli:build

@@ -54,15 +54,6 @@ jobs:
         with:
           mode: build
 
-      - name: Clone Pake repository
-        run: git clone --depth 1 https://github.com/tw93/Pake.git pake-repo
-
-      - name: Install Pake dependencies and build CLI
-        run: |
-          cd pake-repo
-          pnpm install
-          pnpm run cli:build
-
       - name: Build for macOS
         if: runner.os == 'macOS'
         timeout-minutes: 30
