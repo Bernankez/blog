@@ -61,7 +61,7 @@ jobs:
         uses: pnpm/action-setup@v4
 
       - name: Install Pake CLI
-        run: pnpm add -g tw93/pake
+        run: pnpm add -g pake-cli
 
       - name: Setup mold linker (Linux)
         if: runner.os == 'Linux'
