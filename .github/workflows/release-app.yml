@@ -2,7 +2,6 @@ name: Build Desktop App Release
 
 env:
   NODE_VERSION: "22"
-  PNPM_VERSION: "10"
 
 on:
   push:
@@ -66,8 +65,6 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
 
       - name: Install Pake CLI
         run: pnpm add -g tw93/pake
