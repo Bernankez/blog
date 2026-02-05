@@ -34,14 +34,13 @@ jobs:
         include:
           - os: macos-latest
             platform: macOS
-            targets: universal
-            multi_arch: --multi-arch
+            rust: stable
           - os: windows-latest
             platform: Windows
-            targets: x64
+            rust: stable-x86_64-msvc
           - os: ubuntu-24.04
             platform: Linux
-            targets: deb,appimage
+            rust: stable
 
     steps:
       - name: Checkout repository
@@ -50,7 +49,7 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
-          toolchain: stable
+          toolchain: ${{ matrix.rust }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -60,8 +59,14 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
 
-      - name: Install Pake CLI
-        run: pnpm add -g pake-cli
+      - name: Clone Pake repository
+        run: git clone --depth 1 https://github.com/tw93/Pake.git pake-repo
+
+      - name: Install Pake dependencies and build CLI
+        run: |
+          cd pake-repo
+          pnpm install
+          pnpm run cli:build
 
       - name: Setup mold linker (Linux)
         if: runner.os == 'Linux'
@@ -71,7 +76,7 @@ jobs:
         if: runner.os == 'macOS' && (inputs.platform == 'all' || inputs.platform == 'macos')
         timeout-minutes: 30
         run: |
-          pake https://blog.keke.cc \
+          node pake-repo/dist/cli.js https://blog.keke.cc \
             --name "科科Cole" \
             --app-version "${{ inputs.version }}" \
             --icon ./content/public/avatar.webp \
@@ -83,12 +88,25 @@ jobs:
             --targets universal \
             --multi-arch
 
+          mkdir -p output/macos
+
+          APP_NAME="科科Cole"
+          if [ -f "${APP_NAME}.dmg" ]; then
+            mv "${APP_NAME}.dmg" output/macos/
+          elif [ -n "$(ls pake-repo/src-tauri/target/universal-apple-darwin/release/bundle/dmg/*.dmg 2>/dev/null)" ]; then
+            mv pake-repo/src-tauri/target/universal-apple-darwin/release/bundle/dmg/*.dmg output/macos/
+          else
+            echo "Error: No DMG file found"
+            find . -name "*.dmg" -type f
+            exit 1
+          fi
+
       - name: Build for Windows
         if: runner.os == 'Windows' && (inputs.platform == 'all' || inputs.platform == 'windows')
         timeout-minutes: 30
         shell: pwsh
         run: |
-          pake https://blog.keke.cc `
+          node pake-repo/dist/cli.js https://blog.keke.cc `
             --name "科科Cole" `
             --app-version "${{ inputs.version }}" `
             --icon ./content/public/avatar.webp `
@@ -99,11 +117,34 @@ jobs:
             --inject ./pake/inject/style.js `
             --targets x64
 
+          New-Item -Path "output\windows" -ItemType Directory -Force
+
+          $appName = "科科Cole"
+          $projectRootMsi = "${appName}.msi"
+
+          if (Test-Path $projectRootMsi) {
+            Move-Item -Path $projectRootMsi -Destination "output\windows\"
+          } else {
+            $msiFiles = Get-ChildItem -Path "pake-repo\src-tauri\target\x86_64-pc-windows-msvc\release\bundle\msi\*.msi" -ErrorAction SilentlyContinue
+
+            if (-not $msiFiles) {
+              $msiFiles = Get-ChildItem -Path "pake-repo\src-tauri\target\release\bundle\msi\*.msi" -ErrorAction SilentlyContinue
+            }
+
+            if ($msiFiles) {
+              Move-Item -Path $msiFiles[0].FullName -Destination "output\windows\"
+            } else {
+              Write-Error "No MSI files found in expected locations"
+              Get-ChildItem -Path "pake-repo\src-tauri\target\" -Recurse -Name "*.msi" | Write-Host
+              exit 1
+            }
+          }
+
       - name: Build for Linux
         if: runner.os == 'Linux' && (inputs.platform == 'all' || inputs.platform == 'linux')
         timeout-minutes: 30
         run: |
-          pake https://blog.keke.cc \
+          node pake-repo/dist/cli.js https://blog.keke.cc \
             --name "ColeBlog" \
             --app-version "${{ inputs.version }}" \
             --icon ./content/public/avatar.webp \
@@ -114,12 +155,35 @@ jobs:
             --inject ./pake/inject/style.js \
             --targets deb,appimage
 
+          mkdir -p output/linux
+
+          APP_NAME="ColeBlog"
+          if [ -f "${APP_NAME}.deb" ]; then
+            mv "${APP_NAME}.deb" output/linux/
+          elif [ -n "$(ls pake-repo/src-tauri/target/release/bundle/deb/*.deb 2>/dev/null)" ]; then
+            mv pake-repo/src-tauri/target/release/bundle/deb/*.deb output/linux/
+          else
+            echo "Error: No DEB file found"
+            find . -name "*.deb" -type f
+            exit 1
+          fi
+
+          if [ -f "${APP_NAME}.AppImage" ]; then
+            mv "${APP_NAME}.AppImage" output/linux/
+          elif [ -n "$(ls pake-repo/src-tauri/target/release/bundle/appimage/*.AppImage 2>/dev/null)" ]; then
+            mv pake-repo/src-tauri/target/release/bundle/appimage/*.AppImage output/linux/
+          else
+            echo "Error: No AppImage file found"
+            find . -name "*.AppImage" -type f
+            exit 1
+          fi
+
       - name: Upload artifacts (macOS)
         uses: actions/upload-artifact@v4
         if: runner.os == 'macOS' && (inputs.platform == 'all' || inputs.platform == 'macos')
         with:
           name: macos-build
-          path: "*.dmg"
+          path: output/macos/*.dmg
           retention-days: 7
 
       - name: Upload artifacts (Windows)
@@ -127,7 +191,7 @@ jobs:
         if: runner.os == 'Windows' && (inputs.platform == 'all' || inputs.platform == 'windows')
         with:
           name: windows-build
-          path: "*.msi"
+          path: output/windows/*.msi
           retention-days: 7
 
       - name: Upload artifacts (Linux)
@@ -136,6 +200,6 @@ jobs:
         with:
           name: linux-build
           path: |
-            *.deb
-            *.AppImage
+            output/linux/*.deb
+            output/linux/*.AppImage
           retention-days: 7
