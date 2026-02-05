@@ -43,19 +43,6 @@ jobs:
           - os: ubuntu-24.04
             platform: Linux
             targets: deb,appimage
-    exclude:
-      - platform: macOS
-        os: windows-latest
-      - platform: macOS
-        os: ubuntu-24.04
-      - platform: Windows
-        os: macos-latest
-      - platform: Windows
-        os: ubuntu-24.04
-      - platform: Linux
-        os: macos-latest
-      - platform: Linux
-        os: windows-latest
 
     steps:
       - name: Checkout repository
@@ -84,7 +71,7 @@ jobs:
         uses: rui314/setup-mold@v1
 
       - name: Build for macOS
-        if: runner.os == 'macOS'
+        if: runner.os == 'macOS' && (inputs.platform == 'all' || inputs.platform == 'macos')
         timeout-minutes: 30
         run: |
           pake https://blog.keke.cc \
@@ -100,7 +87,7 @@ jobs:
             --multi-arch
 
       - name: Build for Windows
-        if: runner.os == 'Windows'
+        if: runner.os == 'Windows' && (inputs.platform == 'all' || inputs.platform == 'windows')
         timeout-minutes: 30
         shell: pwsh
         run: |
@@ -116,7 +103,7 @@ jobs:
             --targets x64
 
       - name: Build for Linux
-        if: runner.os == 'Linux'
+        if: runner.os == 'Linux' && (inputs.platform == 'all' || inputs.platform == 'linux')
         timeout-minutes: 30
         run: |
           pake https://blog.keke.cc \
@@ -132,7 +119,7 @@ jobs:
 
       - name: Upload artifacts (macOS)
         uses: actions/upload-artifact@v4
-        if: runner.os == 'macOS'
+        if: runner.os == 'macOS' && (inputs.platform == 'all' || inputs.platform == 'macos')
         with:
           name: macos-build
           path: "*.dmg"
@@ -140,7 +127,7 @@ jobs:
 
       - name: Upload artifacts (Windows)
         uses: actions/upload-artifact@v4
-        if: runner.os == 'Windows'
+        if: runner.os == 'Windows' && (inputs.platform == 'all' || inputs.platform == 'windows')
         with:
           name: windows-build
           path: "*.msi"
@@ -148,7 +135,7 @@ jobs:
 
       - name: Upload artifacts (Linux)
         uses: actions/upload-artifact@v4
-        if: runner.os == 'Linux'
+        if: runner.os == 'Linux' && (inputs.platform == 'all' || inputs.platform == 'linux')
         with:
           name: linux-build
           path: |
