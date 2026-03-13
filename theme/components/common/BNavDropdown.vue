@@ -23,17 +23,17 @@ const base = computed(() => twMerge(
 </script>
 
 <template>
-  <a v-if="!item.items" :class="[base]" class="flex select-none items-center gap-1" :href="item.link" :rel="item.rel" :target="item.target" :title="item.text">
-    <div :class="item.icon"></div>
-    <span class="hidden md:inline" :class="[active && 'text-primary']">
+  <a v-if="!item.items" :class="[base, active && 'text-primary']" class="flex select-none items-center gap-1" :href="item.link" :rel="item.rel" :target="item.target" :title="item.text">
+    <div :class="[item.icon]"></div>
+    <span class="hidden md:inline">
       {{ item.text }}
     </span>
     <div v-if="item.target === '_blank'" class="i-lucide-arrow-up-right text-xs text-muted-foreground"></div>
   </a>
-  <BPopover v-else trigger="hover" :offset="0" :auto-close="false" raw-popup-style class="flex items-center gap-1" :title="item.text">
+  <BPopover v-else trigger="hover" :offset="0" :auto-close="false" raw-popup-style class="flex items-center gap-1" :class="[active && 'text-primary', base]" :title="item.text">
     <template #reference>
-      <div :class="item.icon"></div>
-      <div class="hidden cursor-pointer select-none md:inline-block" :class="[active && 'text-primary', base]" @mouseenter="show = true">
+      <div :class="[item.icon]"></div>
+      <div class="hidden cursor-pointer select-none md:inline-block" @mouseenter="show = true">
         {{ item.text }}
       </div>
     </template>
