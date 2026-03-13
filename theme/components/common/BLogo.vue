@@ -5,8 +5,9 @@ import { useData, withBase } from "vitepress";
 import { computed, ref, toRefs } from "vue";
 import BLink from "./BLink.vue";
 
-const { showLogo = true, size = "md" } = defineProps<{
+const { showLogo = true, showTitle = true, size = "md" } = defineProps<{
   showLogo?: boolean;
+  showTitle?: boolean;
   size?: "md" | "sm";
 }>();
 
@@ -21,7 +22,7 @@ const imgSrc = computed(() => isHover.value ? theme.value.logoOnHover : theme.va
 <template>
   <BLink ref="logoRef" href="/" class="b-logo flex shrink-0 items-center gap-sm" :class="[size]">
     <img v-if="showLogo" :src="imgSrc && withBase(imgSrc)" class="b-logo-img" />
-    <span v-if="siteTitle !== false" class="b-logo-title hidden font-semibold sm:inline">{{ siteTitle ?? site.title }}</span>
+    <span v-if="siteTitle !== false && showTitle" class="b-logo-title font-semibold">{{ siteTitle ?? site.title }}</span>
   </BLink>
 </template>
 
