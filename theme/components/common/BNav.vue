@@ -22,7 +22,7 @@ const { nav } = toRefs(theme.value);
         <BLogo class="px-xs" />
       </section>
       <section class="z-1 flex items-center justify-center">
-        <div class="hidden shrink-0 md:flex">
+        <div class="flex shrink-0">
           <BNavDropdown v-for="(item, i) in nav" :key="i" :item="item" />
         </div>
       </section>

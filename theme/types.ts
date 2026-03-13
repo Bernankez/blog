@@ -143,6 +143,7 @@ export type NavItem = NavItemWithLink | NavItemWithChildren;
 export interface NavItemWithLink {
   text: string;
   link: string;
+  icon: string;
   items?: never;
 
   /**
@@ -161,6 +162,7 @@ export interface NavItemChildren {
 
 export interface NavItemWithChildren {
   text?: string;
+  icon: string;
   items: (NavItemChildren | NavItemWithLink)[];
 
   /**
@@ -262,6 +264,7 @@ export interface TocItem {
 
 export interface _DirConfig {
   title: string;
+  icon?: string;
 }
 
 export interface LocalSearchOptions {

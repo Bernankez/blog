@@ -309,14 +309,13 @@ function generateNavItem(path: string) {
   navItem.activeMatch = `/${directoryName}/`;
   const files = readdirSync(path, { withFileTypes: true });
   const _dir = files.find(file => file.name === "_dir.yml" || file.name === "_dir.yaml");
+  let config: _DirConfig | undefined;
   if (_dir?.isFile()) {
     const _dirFile = readFileSync(resolve(path, _dir.name), "utf-8");
-    const config = parseYAML<_DirConfig>(_dirFile);
-    navItem.text = config.title;
+    config = parseYAML<_DirConfig>(_dirFile);
   }
-  else {
-    navItem.text = pascalCase(directoryName);
-  }
+  navItem.text = config?.title ?? pascalCase(directoryName);
+  navItem.icon = config?.icon ?? "i-lucide-folder";
   const md = getFirstMdFile(path);
   if (md) {
     navItem.link = `/${directoryName}/${relative(path, md.path)}/${extractName(md.filename)}`;
