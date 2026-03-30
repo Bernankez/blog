@@ -33,4 +33,4 @@ scss: generateLoaders('sass', {
 Dart Sass 不再支持`/deep/`深度选择器语法（会报 deprecation 错误），需要在所有 .vue 和 .scss 文件中：
 
 - /deep/ .xxx → ::v-deep .xxx
-- /deep/.xxx → ::v-deep .xxx
+- /deep/.xxx → ::v-deep.xxx
