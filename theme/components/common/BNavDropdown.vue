@@ -1,25 +1,17 @@
 <script setup lang="ts">
-import type { NavItem, ThemeConfig } from "../../types";
-import { twMerge } from "tailwind-merge";
-import { useData } from "vitepress";
-import { computed, ref } from "vue";
-import { isActive } from "../../utils/sidebar";
+import type { NavItem } from "../../types";
+import { ref } from "vue";
 import BNavDropdownItem from "./BNavDropdownItem.vue";
 import BPopover from "./BPopover.vue";
 
-const { item } = defineProps<{
+const { item, active } = defineProps<{
   item: NavItem;
+  active: boolean;
 }>();
 
 const show = ref(false);
 
-const { page } = useData<ThemeConfig>();
-const active = computed(() => isActive(page.value.relativePath, item.activeMatch, true));
-
-const base = computed(() => twMerge(
-  ["rounded-xl bg-opacity-40 px-sm py-2 transition hover:text-primary motion-reduce:transition-none"],
-  [active.value && "bg-accent hover:bg-opacity-50! shadow-inset shadow"],
-));
+const base = "rounded-xl px-sm py-2 transition-colors hover:text-primary motion-reduce:transition-none";
 </script>
 
 <template>
