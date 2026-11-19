@@ -139,8 +139,9 @@ export default async ({ mode }: UserConfig) => {
       // },
     },
     markdown: {
+      languages: ["typescript"],
       image: {
-        lazyLoading: true,
+        lazyLoad: true,
       },
       codeTransformers: [
         transformerTwoslash() as any,

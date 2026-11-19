@@ -1,6 +1,6 @@
 import type { ThemeConfig, TocItem } from "../types";
 import { useEventListener, useMounted } from "@vueuse/core";
-import { getScrollOffset, useData, useRoute } from "vitepress";
+import { useData, useRoute } from "vitepress";
 import { computed, onMounted, ref, toRefs, watch } from "vue";
 import { throttleAndDebounce } from "../utils";
 import { getAbsoluteTop, getHeaders } from "../utils/toc";
@@ -50,6 +50,7 @@ export function useToc() {
       .map(({ element, link }) => ({
         link,
         top: getAbsoluteTop(element),
+        margin: Number.parseFloat(getComputedStyle(element).scrollMarginTop) || 0,
       }))
       .filter(({ top }) => !Number.isNaN(top))
       .sort((a, b) => a.top - b.top);
@@ -74,8 +75,8 @@ export function useToc() {
 
     // find the last header above the top of viewport
     let _activeLink: string | undefined;
-    for (const { link, top } of sortedHeaders) {
-      if (top > scrollY + getScrollOffset() + 4) {
+    for (const { link, top, margin } of sortedHeaders) {
+      if (top > scrollY + margin + 4) {
         break;
       }
       _activeLink = link;
