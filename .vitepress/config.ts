@@ -20,7 +20,8 @@ import { RssPlugin } from "vitepress-plugin-rss";
 // https://vitepress.dev/reference/site-config
 export default async ({ mode }: UserConfig) => {
   const env = loadEnv(mode ?? "", process.cwd()) as ImportMetaEnv;
-  return withPwa(defineConfigWithTheme<ThemeConfig>({
+  const navigation = generateNavigation();
+  const config = defineConfigWithTheme<ThemeConfig>({
     lang: "zh-CN",
     title: "科科Cole",
     titleTemplate: ":title · 科科Cole",
@@ -50,28 +51,7 @@ export default async ({ mode }: UserConfig) => {
         { icon: "github", link: "https://github.com/Bernankez/blog", ariaLabel: "GitHub", title: "GitHub" },
         { icon: "home", link: "https://keke.cc", ariaLabel: "Home", title: "Home" },
       ],
-      nav: [
-        generateNavItem(resolve(process.cwd(), "content", "tech")),
-        generateNavItem(resolve(process.cwd(), "content", "blog")),
-        generateNavItem(resolve(process.cwd(), "content", "stereotyped-writing")),
-      ],
-      sidebar: {
-        "/tech/": [
-          ...generateSidebarItem(resolve(process.cwd(), "content", "tech"), {
-            indentFromLevel: 0,
-            collapsed: false,
-          })?.items ?? [],
-        ],
-        "/blog/": [
-          ...generateSidebarItem(resolve(process.cwd(), "content", "blog"))?.items ?? [],
-        ],
-        "/stereotyped-writing/": [
-          ...generateSidebarItem(resolve(process.cwd(), "content", "stereotyped-writing"), {
-            indentFromLevel: 0,
-            collapsed: false,
-          })?.items ?? [],
-        ],
-      },
+      ...navigation,
       toc: {
         title: "页面导航",
       },
@@ -173,6 +153,37 @@ export default async ({ mode }: UserConfig) => {
     },
     vite: {
       plugins: [
+        {
+          name: "content-navigation",
+          configureServer(server) {
+            let previous = JSON.stringify(navigation);
+            server.watcher.on("all", (event, file) => {
+              const [section] = relative(resolve("content"), file).split(/[/\\]/);
+              const relevant = event.endsWith("Dir") || file.endsWith(".md") || _DIR_NAME.includes(basename(file));
+              if (!sections.includes(section) || !relevant) {
+                return;
+              }
+              try {
+                const next = generateNavigation();
+                const snapshot = JSON.stringify(next);
+                if (previous === snapshot) {
+                  return;
+                }
+                Object.assign(config.themeConfig!, next);
+                previous = snapshot;
+                // VitePress caches site data; the theme reads nav/sidebar once at setup.
+                const mod = server.moduleGraph.getModuleById("/@siteData");
+                if (mod) {
+                  server.moduleGraph.invalidateModule(mod);
+                }
+                server.ws.send({ type: "full-reload" });
+              }
+              catch (error) {
+                server.config.logger.error(`Could not refresh navigation: ${error}`);
+              }
+            });
+          },
+        },
         UnoCSS(),
         Icons({
           scale: 1.2,
@@ -230,10 +241,22 @@ export default async ({ mode }: UserConfig) => {
         ],
       },
     },
-  }));
+  });
+  return withPwa(config);
 };
 
 const _DIR_NAME = ["_dir.yaml", "_dir.yml"];
+const sections = ["tech", "blog", "stereotyped-writing"];
+
+function generateNavigation() {
+  return {
+    nav: sections.map(section => generateNavItem(resolve("content", section))),
+    sidebar: Object.fromEntries(sections.map((section) => {
+      const options = section === "blog" ? undefined : { indentFromLevel: 0, collapsed: false };
+      return [`/${section}/`, generateSidebarItem(resolve("content", section), options)?.items ?? []];
+    })),
+  };
+}
 
 interface GenerateSidebarItemOptions extends SidebarItem {
   base?: string;
@@ -309,26 +332,23 @@ function generateNavItem(path: string) {
   navItem.icon = config?.icon ?? "i-lucide-folder";
   const md = getFirstMdFile(path);
   if (md) {
-    navItem.link = `/${directoryName}/${relative(path, md.path)}/${extractName(md.filename)}`;
+    navItem.link = `/${directoryName}/${relative(path, md).replaceAll("\\", "/").slice(0, -3)}`;
   }
   return navItem;
 }
 
-function getFirstMdFile(path: string) {
+function getFirstMdFile(path: string): string | undefined {
   // 递归找到目录下第一个md文件
   const files = readdirSync(path, { withFileTypes: true });
   for (const file of files) {
     if (file.isDirectory()) {
-      return getFirstMdFile(resolve(path, file.name));
+      const first = getFirstMdFile(resolve(path, file.name));
+      if (first) {
+        return first;
+      }
     }
-    if (file.name === "_dir.yml" || file.name === "_dir.yaml") {
-      continue;
-    }
-    if (file.name.endsWith(".md")) {
-      return {
-        path,
-        filename: file.name,
-      };
+    else if (file.name.endsWith(".md")) {
+      return resolve(path, file.name);
     }
   }
 }
