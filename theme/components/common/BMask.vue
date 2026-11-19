@@ -21,7 +21,7 @@ const emit = defineEmits<{
   click: [e: MouseEvent];
 }>();
 
-const show = defineModel({
+const show = defineModel<boolean>({
   default: false,
 });
 

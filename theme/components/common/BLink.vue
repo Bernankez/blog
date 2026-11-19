@@ -15,6 +15,6 @@ const emit = defineEmits<{
 
 <template>
   <a :rel :href="href ? withBase(href) : undefined" :target :aria-label @click="e => emit('click', e)">
-    <slot></slot>
+    <slot />
   </a>
 </template>

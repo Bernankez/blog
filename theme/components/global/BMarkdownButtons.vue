@@ -85,9 +85,8 @@ const { copy, copied } = useClipboard({
   copiedDuring: duration.value,
   legacy: true,
 });
-const currentURL = window.location.origin + window.location.pathname;
 function onCopy() {
-  fetch(resolveMarkdownPageURL(currentURL))
+  fetch(resolveMarkdownPageURL(window.location.href))
     .then(response => response.text())
     .then(text => copy(text))
     .catch(error => console.error("❌ Error copying markdown:", error));
@@ -96,7 +95,7 @@ function onCopy() {
 /** Download markdown */
 const downloaded = ref(false);
 function onDownload() {
-  const markdownPageURL = resolveMarkdownPageURL(currentURL);
+  const markdownPageURL = resolveMarkdownPageURL(window.location.href);
   fetch(markdownPageURL)
     .then(response => response.text())
     .then((text) => {

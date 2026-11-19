@@ -25,7 +25,7 @@ const { to, showMask = true, lockScroll = true, showClose = true, placement = "l
   maskVisible?: boolean;
 }>();
 
-const show = defineModel({
+const show = defineModel<boolean>({
   default: false,
 });
 
@@ -67,7 +67,7 @@ const { vIf, vShow } = useDisplayDirective(displayDirective, show);
         <div v-if="showClose" class="flex justify-end">
           <BIcon icon="i-line-md-close-small" class="p-sm pr-0" @click="show = false" />
         </div>
-        <slot></slot>
+        <slot />
       </aside>
     </Teleport>
   </Transition>

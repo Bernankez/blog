@@ -1,0 +1,12 @@
+shellEmulator: true
+
+trustPolicy: no-downgrade
+
+allowBuilds:
+  esbuild: true
+  sharp: true
+  simple-git-hooks: true
+  vue-demi: true
+
+patchedDependencies:
+  "@vite-pwa/vitepress@2.0.4": patches/@vite-pwa__vitepress@2.0.4.patch

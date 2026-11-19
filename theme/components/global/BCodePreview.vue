@@ -20,9 +20,9 @@ const active = ref(tabs.value[0]);
       </div>
     </div>
     <div class="code-preview-content overflow-hidden rounded-b-none sm:rounded-b-lg">
-      <slot v-if="active === code && $slots.code" name="code"></slot>
+      <slot v-if="active === code && $slots.code" name="code" />
       <div v-if="active === preview && $slots.preview" class="bg-muted bg-opacity-30 p-sm">
-        <slot name="preview"></slot>
+        <slot name="preview" />
       </div>
     </div>
   </div>

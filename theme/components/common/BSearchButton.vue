@@ -2,7 +2,7 @@
 import { isDefined, onKeyStroke } from "@vueuse/core";
 import BButton from "./BButton.vue";
 
-const show = defineModel({
+const show = defineModel<boolean>({
   default: false,
 });
 

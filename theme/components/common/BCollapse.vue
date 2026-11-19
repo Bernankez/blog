@@ -25,7 +25,7 @@ const collapseVariants = cva("max-h-fit", {
   },
 });
 
-const _collapsed = defineModel<boolean>({
+const _collapsed = defineModel<boolean | undefined>({
   default: undefined,
 });
 
@@ -58,7 +58,7 @@ function onCollapse() {
     </div>
     <div class="flex flex-col-reverse overflow-hidden transition motion-reduce:transition-none" :class="[collapsed && 'opacity-0']">
       <div>
-        <slot></slot>
+        <slot />
       </div>
     </div>
   </div>

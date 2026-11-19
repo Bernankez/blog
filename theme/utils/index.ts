@@ -17,7 +17,7 @@ export function throttleAndDebounce<T extends any[]>(fn: (...args: T) => void, d
       }, delay);
     }
     else {
-      timeoutId = setTimeout(() => fn(...args), delay);
+      timeoutId = setTimeout(fn, delay, ...args);
     }
   };
 }

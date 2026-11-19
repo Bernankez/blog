@@ -28,7 +28,7 @@ function handleNext() {
 
 // 生命演化计算
 function nextGeneration(): number[][] {
-  const newGrid = Array.from({ length: rows }).fill(null).map(() => Array.from({ length: cols }, () => 0));
+  const newGrid = Array.from({ length: rows }, () => Array.from<number>({ length: cols }).fill(0));
 
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {

@@ -34,7 +34,7 @@ const { displayDirective = "if", strategy, placement, disabled, lockScroll, keep
 const referenceRef = ref<ComponentPublicInstance>();
 const floatingRef = ref<ComponentPublicInstance>();
 
-const _show = defineModel({
+const _show = defineModel<boolean>({
   default: false,
 });
 const uncontrolled = ref(false);
@@ -88,13 +88,13 @@ defineExpose({
 
 <template>
   <BSlot ref="referenceRef" v-bind="$attrs">
-    <slot name="reference"></slot>
+    <slot name="reference" />
   </BSlot>
   <BMask v-if="lockScroll" v-model="debouncedShow" :class="maskClass" :style="maskStyle" :visible="false" :lock-scroll />
   <Transition name="fade">
     <Teleport :to="to ?? 'body'">
       <BSlot v-if="vIf" v-show="vShow" ref="floatingRef" class="z-[var(--b-popover-z-index)]" :style="[floatingStyles]" :class="[...customPopupClass]">
-        <slot></slot>
+        <slot />
       </BSlot>
     </Teleport>
   </Transition>

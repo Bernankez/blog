@@ -6,7 +6,6 @@ import process from "node:process";
 import { GitChangelog } from "@nolebase/vitepress-plugin-git-changelog";
 import { transformerTwoslash } from "@shikijs/vitepress-twoslash";
 import { withPwa } from "@vite-pwa/vitepress";
-import vueJsx from "@vitejs/plugin-vue-jsx";
 import { parseYAML } from "confbox";
 import matter from "gray-matter";
 import UnoCSS from "unocss/vite";
@@ -38,6 +37,7 @@ export default async ({ mode }: UserConfig) => {
       hostname: "https://blog.keke.cc",
     },
     srcDir: "content",
+    outDir: resolve(".vitepress/dist"),
     cleanUrls: true,
     lastUpdated: true,
     ignoreDeadLinks: true,
@@ -173,7 +173,6 @@ export default async ({ mode }: UserConfig) => {
     },
     vite: {
       plugins: [
-        vueJsx(),
         UnoCSS(),
         Icons({
           scale: 1.2,
@@ -226,18 +225,7 @@ export default async ({ mode }: UserConfig) => {
             src: "pwa-512x512.png",
             sizes: "512x512",
             type: "image/png",
-          },
-          {
-            src: "pwa-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "any",
-          },
-          {
-            src: "pwa-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "maskable",
+            purpose: "any maskable",
           },
         ],
       },

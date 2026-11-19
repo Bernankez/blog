@@ -36,7 +36,7 @@ const collapseVariants = cva("max-h-fit text-sm", {
   },
 });
 
-const _collapsed = defineModel<boolean>({
+const _collapsed = defineModel<boolean | undefined>({
   default: undefined,
 });
 
@@ -76,7 +76,7 @@ function onCollapse() {
     </div>
     <div class="flex flex-col-reverse overflow-hidden px-4 transition-all motion-reduce:transition-none" :class="[collapsed && 'opacity-0 pb-0', !collapsed && 'pb-4']">
       <div>
-        <slot></slot>
+        <slot />
       </div>
     </div>
   </div>

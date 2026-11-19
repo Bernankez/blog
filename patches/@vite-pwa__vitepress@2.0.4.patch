@@ -1,0 +1,14 @@
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 5f528397171cdbaf241ede9074b53a813fa1d1b6..a32f42580ef3e7cc02c53432ea8ae5f77af4be0f 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -19,7 +19,8 @@ function escapeStringRegexp(value) {
+ // src/create-context.ts
+ function createVitePressPWAContext(config) {
+ 	const pwa = config.pwa ?? {};
+-	const ctx = Object.assign(createVitePWAContext(true, pwa), { vitepress: {
++	// VitePress 1 uses Vite 5, which does not expose server.environments.
++	const ctx = Object.assign(createVitePWAContext(false, pwa), { vitepress: {
+ 		runtimeCachingAdded: false,
+ 		experimental: void 0
+ 	} });

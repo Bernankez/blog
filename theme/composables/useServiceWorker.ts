@@ -20,7 +20,7 @@ export function useServiceWorker() {
       onNeedRefresh() {
         needRefresh.value = true;
       },
-      onRegistered() {
+      onRegisteredSW() {
         // eslint-disable-next-line no-console
         console.log("Service worker registered");
       },

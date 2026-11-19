@@ -49,6 +49,6 @@ function onClick(e: MouseEvent) {
 
 <template>
   <as type="button" :class="twMerge([buttonVariants({ variant, size, disabled }), classVal])" @click="onClick">
-    <slot></slot>
+    <slot />
   </as>
 </template>
