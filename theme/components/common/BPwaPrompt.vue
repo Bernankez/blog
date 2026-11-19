@@ -22,7 +22,7 @@ function onRefresh() {
 </script>
 
 <template>
-  <div class="relative w-356px flex items-center justify-between gap-sm b-1 b-border rounded-md b-solid bg-card p-sm">
+  <div class="relative w-[var(--width)] flex items-center justify-between gap-sm b-1 b-border rounded-md b-solid bg-card p-sm [@media(max-width:600px)]:w-full">
     <template v-if="type === 'needRefresh'">
       有新内容，点击更新
       <BButton size="sm" class="mr-2xl" @click="onRefresh">

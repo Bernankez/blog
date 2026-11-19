@@ -2,6 +2,7 @@
 import type { ThemeConfig } from "../../types";
 import { useData } from "vitepress";
 import { Toaster } from "vue-sonner";
+import "vue-sonner/style.css";
 
 const { isDark } = useData<ThemeConfig>();
 </script>
