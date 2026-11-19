@@ -72,8 +72,9 @@ const disableQueryPersistence = computed(() => theme.value.search?.options?.disa
 const filterText = disableQueryPersistence.value ? ref("") : useSessionStorage("vitepress:local-search-filter", "");
 
 const showDetailedList = useLocalStorage(
-  "vitepress:local-search-search-detailed-list",
+  "blog:search:show-preview",
   theme.value.search?.options?.detailedView === true,
+  { writeDefaults: false },
 );
 
 const disableDetailedView = computed(() => theme.value.search?.options?.detailedView === false);

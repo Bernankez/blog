@@ -106,6 +106,7 @@ export default async ({ mode }: UserConfig) => {
       search: {
         provider: "local",
         options: {
+          detailedView: true,
           locales: {
             root: {
               translations: {
