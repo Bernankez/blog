@@ -265,6 +265,7 @@ export interface TocItem {
 export interface _DirConfig {
   title: string;
   icon?: string;
+  sidebar?: boolean;
 }
 
 export interface LocalSearchOptions {

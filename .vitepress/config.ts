@@ -60,16 +60,16 @@ export default async ({ mode }: UserConfig) => {
           ...generateSidebarItem(resolve(process.cwd(), "content", "tech"), {
             indentFromLevel: 0,
             collapsed: false,
-          }).items!,
+          })?.items ?? [],
         ],
         "/blog/": [
-          ...generateSidebarItem(resolve(process.cwd(), "content", "blog")).items!,
+          ...generateSidebarItem(resolve(process.cwd(), "content", "blog"))?.items ?? [],
         ],
         "/stereotyped-writing/": [
           ...generateSidebarItem(resolve(process.cwd(), "content", "stereotyped-writing"), {
             indentFromLevel: 0,
             collapsed: false,
-          }).items!,
+          })?.items ?? [],
         ],
       },
       toc: {
@@ -251,7 +251,7 @@ interface GenerateSidebarItemOptions extends SidebarItem {
   base?: string;
 }
 
-function generateSidebarItem(path: string, options?: GenerateSidebarItemOptions): SidebarItem {
+function generateSidebarItem(path: string, options?: GenerateSidebarItemOptions): SidebarItem | undefined {
   const { base = "", ...restOptions } = options || {};
   const files = readdirSync(path, { withFileTypes: true });
   const sortedFiles = files
@@ -276,6 +276,9 @@ function generateSidebarItem(path: string, options?: GenerateSidebarItemOptions)
   if (_dir?.isFile()) {
     const _dirFile = readFileSync(resolve(path, _dir.name), "utf-8");
     const config = parseYAML<_DirConfig>(_dirFile);
+    if (config.sidebar === false) {
+      return undefined;
+    }
     sidebarItem.text = config.title;
   }
   else {
