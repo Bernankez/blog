@@ -9,6 +9,7 @@ import { useFocusTrap } from "@vueuse/integrations/useFocusTrap";
 import Mark from "mark.js";
 import MiniSearch from "minisearch";
 import { dataSymbol, inBrowser, useData, useRouter } from "vitepress";
+import { tokenizeSearchText } from "vitepress/dist/client/shared.js";
 import { computed, createApp, markRaw, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch, watchEffect } from "vue";
 import { escapeRegExp, pathToFile } from "../../utils";
 import { LRUCache } from "../../utils/lru";
@@ -53,6 +54,7 @@ const searchIndex = computedAsync(async () =>
       {
         fields: ["title", "titles", "text"],
         storeFields: ["title", "titles"],
+        tokenize: tokenizeSearchText,
         searchOptions: {
           fuzzy: 0.2,
           prefix: true,
