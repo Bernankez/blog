@@ -14,11 +14,13 @@ import { computed, createApp, markRaw, nextTick, onBeforeUnmount, onMounted, ref
 import { escapeRegExp, pathToFile } from "../../utils";
 import { LRUCache } from "../../utils/lru";
 import { createSearchTranslate } from "../../utils/translation";
+import BAgentSearch from "./BAgentSearch.vue";
 
 const emit = defineEmits<{
   close: [];
 }>();
 
+const asking = ref(false);
 const el = ref<HTMLElement>();
 const resultsEl = ref<HTMLElement>();
 
@@ -45,7 +47,7 @@ const { activate } = useFocusTrap(el as any, {
   immediate: true,
   allowOutsideClick: true,
   clickOutsideDeactivates: true,
-  escapeDeactivates: true,
+  escapeDeactivates: false,
 });
 const searchIndex = computedAsync(async () =>
   markRaw(
@@ -207,7 +209,7 @@ debouncedWatch(
     await new Promise((r) => {
       mark.value?.unmark({
         done: () => {
-          mark.value?.markRegExp(formMarkRegex(terms), { done: r });
+          mark.value?.markRegExp(formMarkRegex(terms), { exclude: [".ask-ai-result *"], done: r });
         },
       });
     });
@@ -265,11 +267,13 @@ function onSearchBarClick(event: PointerEvent) {
 
 const selectedIndex = ref(-1);
 const disableMouseOver = ref(true);
+const offset = computed(() => Number(!!filterText.value.trim()));
+const rowCount = computed(() => offset.value + results.value.length);
 
-watch(results, (r) => {
-  selectedIndex.value = r.length ? 0 : -1;
+watch([filterText, rowCount], () => {
+  selectedIndex.value = rowCount.value ? 0 : -1;
   scrollToSelectedResult();
-});
+}, { immediate: true });
 
 function scrollToSelectedResult() {
   nextTick(() => {
@@ -279,20 +283,26 @@ function scrollToSelectedResult() {
 }
 
 onKeyStroke("ArrowUp", (event) => {
+  if (asking.value) {
+    return;
+  }
   event.preventDefault();
   selectedIndex.value--;
   if (selectedIndex.value < 0) {
-    selectedIndex.value = results.value.length - 1;
+    selectedIndex.value = rowCount.value - 1;
   }
   disableMouseOver.value = true;
   scrollToSelectedResult();
 });
 
 onKeyStroke("ArrowDown", (event) => {
+  if (asking.value) {
+    return;
+  }
   event.preventDefault();
   selectedIndex.value++;
-  if (selectedIndex.value >= results.value.length) {
-    selectedIndex.value = 0;
+  if (selectedIndex.value >= rowCount.value) {
+    selectedIndex.value = rowCount.value ? 0 : -1;
   }
   disableMouseOver.value = true;
   scrollToSelectedResult();
@@ -301,7 +311,7 @@ onKeyStroke("ArrowDown", (event) => {
 const router = useRouter();
 
 onKeyStroke("Enter", (e) => {
-  if (e.isComposing) {
+  if (asking.value || e.isComposing) {
     return;
   }
 
@@ -309,7 +319,12 @@ onKeyStroke("Enter", (e) => {
     return;
   }
 
-  const selectedPackage = results.value[selectedIndex.value];
+  if (offset.value && selectedIndex.value === 0) {
+    e.preventDefault();
+    asking.value = true;
+    return;
+  }
+  const selectedPackage = results.value[selectedIndex.value - offset.value];
   if (e.target instanceof HTMLInputElement && !selectedPackage) {
     e.preventDefault();
     return;
@@ -322,7 +337,9 @@ onKeyStroke("Enter", (e) => {
 });
 
 onKeyStroke("Escape", () => {
-  emit("close");
+  if (!asking.value) {
+    emit("close");
+  }
 });
 
 // Translations
@@ -407,17 +424,19 @@ function onMouseMove(e: MouseEvent) {
   <Teleport to="body">
     <div
       ref="el"
-      role="button"
-      :aria-owns="results?.length ? 'localsearch-list' : undefined"
-      aria-expanded="true"
-      aria-haspopup="listbox"
-      aria-labelledby="localsearch-label"
+      role="dialog"
+      aria-modal="true"
+      aria-label="搜索博客"
       class="b-local-search-box"
     >
       <div class="backdrop" @click="$emit('close')"></div>
 
       <div class="shell">
+        <KeepAlive :max="1">
+          <BAgentSearch v-if="asking" :key="filterText.trim()" :initial-question="filterText.trim()" @back="asking = false; nextTick(() => focusSearchInput(false))" @close="emit('close')" />
+        </KeepAlive>
         <form
+          v-show="!asking"
           class="search-bar"
           @pointerup="onSearchBarClick($event)"
           @submit.prevent=""
@@ -445,7 +464,9 @@ function onMouseMove(e: MouseEvent) {
             v-model="filterText"
             :aria-activedescendant="selectedIndex > -1 ? (`localsearch-item-${selectedIndex}`) : undefined"
             aria-autocomplete="both"
-            :aria-controls="results?.length ? 'localsearch-list' : undefined"
+            :aria-controls="rowCount ? 'localsearch-list' : undefined"
+            role="combobox"
+            :aria-expanded="!!rowCount"
             aria-labelledby="localsearch-label"
             autocapitalize="off"
             autocomplete="off"
@@ -482,30 +503,38 @@ function onMouseMove(e: MouseEvent) {
         </form>
 
         <ul
-          :id="results?.length ? 'localsearch-list' : undefined"
+          v-show="!asking"
+          id="localsearch-list"
           ref="resultsEl"
-          :role="results?.length ? 'listbox' : undefined"
-          :aria-labelledby="results?.length ? 'localsearch-label' : undefined"
+          role="listbox"
+          aria-labelledby="localsearch-label"
           class="results"
           @mousemove="onMouseMove"
         >
+          <li v-if="offset" id="localsearch-item-0" class="ask-ai-result" role="option" :aria-selected="selectedIndex === 0">
+            <button type="button" class="result w-full text-left" :class="{ selected: selectedIndex === 0 }" data-index="0" @mouseenter="!disableMouseOver && (selectedIndex = 0)" @focusin="selectedIndex = 0" @click="asking = true">
+              <div class="titles items-center">
+                <span class="i-lucide-sparkles"></span><span>问问 AI：{{ filterText.trim() }}</span>
+              </div>
+            </button>
+          </li>
           <li
             v-for="(p, index) in results"
-            :id="`localsearch-item-${index}`"
+            :id="`localsearch-item-${index + offset}`"
             :key="p.id"
-            :aria-selected="selectedIndex === index ? 'true' : 'false'"
+            :aria-selected="selectedIndex === index + offset"
             role="option"
           >
             <a
               :href="p.id"
               class="result"
               :class="{
-                selected: selectedIndex === index,
+                selected: selectedIndex === index + offset,
               }"
               :aria-label="[...p.titles, p.title].join(' > ')"
-              :data-index="index"
-              @mouseenter="!disableMouseOver && (selectedIndex = index)"
-              @focusin="selectedIndex = index"
+              :data-index="index + offset"
+              @mouseenter="!disableMouseOver && (selectedIndex = index + offset)"
+              @focusin="selectedIndex = index + offset"
               @click="$emit('close')"
             >
               <div>
@@ -542,7 +571,7 @@ function onMouseMove(e: MouseEvent) {
           </li>
         </ul>
 
-        <div class="search-keyboard-shortcuts">
+        <div v-show="!asking" class="search-keyboard-shortcuts">
           <span>
             <kbd :aria-label="translate('modal.footer.navigateUpKeyAriaLabel')">
               <div class="navigate-icon i-lucide-arrow-up"></div>

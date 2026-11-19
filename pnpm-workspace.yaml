@@ -41,6 +41,7 @@ catalog:
   lint-staged: ^17.6.1
   magicast: ^0.5.5
   mark.js: ^8.11.1
+  markstream-vue: ^2.0.28
   medium-zoom: ^1.1.2
   minisearch: ^7.2.0
   simple-git-hooks: ^2.14.0
