@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { useClipboard, useLocalStorage } from "@vueuse/core";
 import { useData } from "vitepress";
-import { nextTick, onActivated, onBeforeUnmount, onDeactivated, onMounted, ref, shallowRef } from "vue";
+import { nextTick, onActivated, onBeforeUnmount, onDeactivated, onMounted, ref, shallowRef, watch } from "vue";
 import BAgentDeletePopover from "./BAgentDeletePopover.vue";
 import BButton from "./BButton.vue";
+import BCow from "./BCow.vue";
 
-const props = defineProps<{ initialQuestion: string }>();
+const props = defineProps<{ initialQuestion: string; questionPool: string[] }>();
 const emit = defineEmits<{ back: []; close: [] }>();
 const { isDark } = useData();
 interface Message { role: "user" | "assistant"; text: string; notice?: string; stopped?: boolean }
@@ -66,9 +67,29 @@ function back() {
   nextTick(() => input.value?.focus());
 }
 
+const suggestions = shallowRef<string[]>([]);
+function pickSuggestions() {
+  const fresh = props.questionPool.filter(question => !suggestions.value.includes(question));
+  const previous = props.questionPool.filter(question => suggestions.value.includes(question));
+  const next: string[] = [];
+  for (const pool of [fresh, previous]) {
+    while (next.length < 3 && pool.length) {
+      next.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
+    }
+  }
+  suggestions.value = next;
+}
+watch(() => props.questionPool, pickSuggestions, { immediate: true });
+
 function openSession(session?: Session) {
+  if (!session && !historyOpen.value && !messages.value.length) {
+    return;
+  }
   request.value?.abort();
   request.value = undefined;
+  if (!session) {
+    pickSuggestions();
+  }
   activeId.value = session?.id ?? "";
   closeConfirmation();
   editing.value = -1;
@@ -367,7 +388,17 @@ async function send(editIndex = -1, retryLast = false) {
       </section>
     </div>
     <template v-else>
-      <div ref="log" role="log" class="transcript">
+      <div v-if="!messages.length" class="starters">
+        <div>
+          <BCow front-facing ascii :width="176" :height="156" :zoom="1.14" class="mx-auto mb-4 block" role="img" aria-label="可以拖动旋转的字符牛头" />
+          <div v-if="suggestions.length" class="suggestions">
+            <button v-for="question in suggestions" :key="question" type="button" @click="draft = question; send()">
+              {{ question }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div v-show="messages.length" ref="log" role="log" class="transcript">
         <div v-for="(message, i) in messages" :key="i" class="turn" :class="{ outgoing: message.role === 'user', editing: editing === i }">
           <div class="message-actions" :data-action-index="i" role="group" aria-label="消息操作" :class="{ open: confirmTarget === i }">
             <button v-if="message.text" type="button" :title="copied && copiedMessage === message ? '已复制' : '复制'" :aria-label="copied && copiedMessage === message ? '已复制' : '复制'" @click="copyMessage(message)">
@@ -617,6 +648,7 @@ header .tool:not(:first-child),
 .bubble-editor button:focus-visible,
 .history-link:focus-visible,
 .message-actions button:focus-visible,
+.suggestions button:focus-visible,
 .tool:focus-visible,
 .send:focus-visible {
   outline: 2px solid hsl(var(--primary));
@@ -646,6 +678,36 @@ header .tool:not(:first-child),
   gap: 8px;
   padding: 18px 0;
   color: hsl(var(--muted-foreground));
+}
+.starters {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  padding: 16px;
+}
+.starters > div {
+  width: min(100%, 390px);
+  margin: auto;
+  text-align: center;
+}
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.suggestions button {
+  background: transparent;
+  border: 1px solid hsl(var(--border));
+  border-radius: 16px;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+.suggestions button:hover,
+.suggestions button:focus-visible {
+  border-color: currentColor;
+  color: hsl(var(--primary));
 }
 .pending {
   align-items: center;

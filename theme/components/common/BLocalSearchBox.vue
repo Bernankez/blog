@@ -69,6 +69,21 @@ const searchIndex = computedAsync(async () =>
   ),
 );
 
+// Use indexed question headings rather than asking the agent to invent starters.
+const questionPool = computed(() => {
+  const questions = new Set<string>();
+  for (const hit of searchIndex.value?.search(MiniSearch.wildcard) ?? []) {
+    let title = hit.title.split(/[?？]/u)[0].trim();
+    if (/^(?:是什么|能干什么)$/u.test(title) && hit.titles?.length) {
+      title = `${hit.titles.at(-1)}${title}`;
+    }
+    if (title.length >= 5 && title.length <= 32 && /什么|如何|哪些|怎么|怎样/u.test(title) && !title.startsWith("我")) {
+      questions.add(`${title}？`);
+    }
+  }
+  return [...questions];
+});
+
 const disableQueryPersistence = computed(() => theme.value.search?.options?.disableQueryPersistence === true);
 
 const filterText = disableQueryPersistence.value ? ref("") : useSessionStorage("vitepress:local-search-filter", "");
@@ -433,7 +448,7 @@ function onMouseMove(e: MouseEvent) {
 
       <div class="shell">
         <KeepAlive :max="1">
-          <BAgentSearch v-if="asking" :key="filterText.trim()" :initial-question="filterText.trim()" @back="asking = false; nextTick(() => focusSearchInput(false))" @close="emit('close')" />
+          <BAgentSearch v-if="asking" :key="filterText.trim()" :initial-question="filterText.trim()" :question-pool="questionPool" @back="asking = false; nextTick(() => focusSearchInput(false))" @close="emit('close')" />
         </KeepAlive>
         <form
           v-show="!asking"
