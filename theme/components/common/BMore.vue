@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import type { ThemeConfig } from "../../types";
+import { useMounted } from "@vueuse/core";
 import { useData } from "vitepress";
 import { computed, toRefs } from "vue";
-import LineMdMoonToSunny from "~icons/line-md/moon-alt-to-sunny-outline-loop-transition";
-import LineMdSunnyToMoon from "~icons/line-md/sunny-outline-to-moon-alt-loop-transition";
 import { getIcon } from "../../utils/icon";
 import BIcon from "./BIcon.vue";
 import BLink from "./BLink.vue";
@@ -12,7 +11,10 @@ import BPopover from "./BPopover.vue";
 const { theme, isDark } = useData<ThemeConfig>();
 const { socialLinks } = toRefs(theme.value);
 
-const themeToggleText = computed(() => isDark.value ? "切换到浅色模式" : "切换到深色模式");
+const mounted = useMounted();
+const dark = computed(() => mounted.value && isDark.value);
+const themeToggleText = computed(() => dark.value ? "切换到浅色模式" : "切换到深色模式");
+const themeIcon = computed(() => dark.value ? "i-line-md-sunny-outline-to-moon-alt-loop-transition" : "i-line-md-moon-alt-to-sunny-outline-loop-transition");
 </script>
 
 <template>
@@ -22,7 +24,7 @@ const themeToggleText = computed(() => isDark.value ? "切换到浅色模式" : 
     </template>
     <div class="w-50 left-unset! right-sm!">
       <div class="popover-item" @click="isDark = !isDark">
-        <BIcon :icon=" isDark ? LineMdSunnyToMoon : LineMdMoonToSunny" />
+        <BIcon :icon="themeIcon" />
         <span class="text-sm opacity-70">{{ themeToggleText }}</span>
       </div>
       <div class="my-2 h-1px w-full bg-muted"></div>
@@ -33,7 +35,7 @@ const themeToggleText = computed(() => isDark.value ? "切换到浅色模式" : 
     </div>
   </BPopover>
   <div class="hidden items-center lg:flex">
-    <BIcon :icon=" isDark ? LineMdSunnyToMoon : LineMdMoonToSunny" :title="themeToggleText" @click="isDark = !isDark" />
+    <BIcon :icon="themeIcon" :title="themeToggleText" @click="isDark = !isDark" />
     <div class="mx-2 h-4 w-1px bg-muted"></div>
     <BLink v-for="link in socialLinks" :key="link.link" :title="link.title" :href="link.link" :target="link.target ?? '_target'" :aria-label="link.ariaLabel">
       <BIcon :icon="getIcon(link.icon)" />

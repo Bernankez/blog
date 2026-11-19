@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import type { ThemeConfig } from "../../types";
+import { useMounted } from "@vueuse/core";
 import { useData } from "vitepress";
-import LineMdMoonToSunny from "~icons/line-md/moon-alt-to-sunny-outline-loop-transition";
-import LineMdSunnyToMoon from "~icons/line-md/sunny-outline-to-moon-alt-loop-transition";
 import BButton from "./BButton.vue";
 
 const { isDark } = useData<ThemeConfig>();
+const mounted = useMounted();
 </script>
 
 <template>
-  <BButton variant="outline" size="icon" :title="isDark ? '切换到浅色模式' : '切换到深色模式'" class="rounded-full opacity-50 hover:bg-opacity-100 hover:opacity-100" @click="isDark = !isDark">
-    <component :is=" isDark ? LineMdSunnyToMoon : LineMdMoonToSunny" />
+  <BButton variant="outline" size="icon" :title="mounted && isDark ? '切换到浅色模式' : '切换到深色模式'" class="rounded-full opacity-50 hover:bg-opacity-100 hover:opacity-100" @click="isDark = !isDark">
+    <span :class="mounted && isDark ? 'i-line-md-sunny-outline-to-moon-alt-loop-transition' : 'i-line-md-moon-alt-to-sunny-outline-loop-transition'"></span>
   </BButton>
 </template>

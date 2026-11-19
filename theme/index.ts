@@ -1,4 +1,5 @@
 import type { Theme } from "vitepress";
+import { provideSSRWidth } from "@vueuse/core";
 import BBadge from "./components/global/BBadge.vue";
 import BCodePreview from "./components/global/BCodePreview.vue";
 import BCollapse from "./components/global/BCollapse.vue";
@@ -15,6 +16,7 @@ import "./styles/components/vp-code-group.css";
 export default {
   Layout,
   enhanceApp: ({ app }) => {
+    provideSSRWidth(0, app);
     app.component("Badge", BBadge);
     app.component("CodePreview", BCodePreview);
     app.component("Collapse", BCollapse);

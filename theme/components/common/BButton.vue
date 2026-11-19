@@ -48,7 +48,7 @@ function onClick(e: MouseEvent) {
 </script>
 
 <template>
-  <as type="button" :class="twMerge([buttonVariants({ variant, size, disabled }), classVal])" @click="onClick">
+  <component :is="as" type="button" :class="twMerge([buttonVariants({ variant, size, disabled }), classVal])" @click="onClick">
     <slot />
-  </as>
+  </component>
 </template>
