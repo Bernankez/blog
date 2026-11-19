@@ -24,7 +24,7 @@ const resultsEl = ref<HTMLElement>();
 const searchIndexData = shallowRef(localSearchIndex);
 
 if (import.meta.hot) {
-  import.meta.hot.accept("/@localSearchIndex", (m) => {
+  import.meta.hot.accept("@localSearchIndex", (m) => {
     if (m) {
       searchIndexData.value = m.default;
     }
