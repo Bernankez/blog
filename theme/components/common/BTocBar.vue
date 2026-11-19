@@ -50,7 +50,7 @@ onMounted(() => {
   }
 });
 
-const visible = useElementVisibility(headerEl);
+const visible = useElementVisibility(headerEl, { initialValue: true });
 
 const { path } = useSidebar();
 
