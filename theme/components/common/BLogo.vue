@@ -41,6 +41,7 @@ onMounted(() => {
 
 .b-logo.md {
   .b-logo-img {
+    width: var(--b-nav-logo-height);
     height: var(--b-nav-logo-height);
   }
 

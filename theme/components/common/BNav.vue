@@ -27,7 +27,7 @@ useResizeObserver(track, measure);
 
 <template>
   <header class="b-nav z-[var(--b-nav-z-index)] b-0 b-b-1 b-border b-solid bg-card bg-opacity-70 backdrop-blur-8 backdrop-saturate-50 md:sticky md:top-0">
-    <div class="grid grid-cols-3 mx-auto box-border h-full max-w-[var(--b-max-width)]">
+    <div class="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] mx-auto box-border h-full max-w-[var(--b-max-width)]">
       <section class="flex items-center">
         <BLogo class="px-xs" :show-title="sm" />
       </section>

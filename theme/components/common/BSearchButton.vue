@@ -34,11 +34,23 @@ function shouldNotTrigger(event: KeyboardEvent) {
 </script>
 
 <template>
-  <BButton variant="outline" class="mr-xs flex shrink-0 items-center justify-between gap-1.5 text-sm opacity-70 lg:w-40 hover:opacity-100" @click="show = true">
+  <BButton variant="outline" aria-label="搜索博客" class="search-button mr-xs flex items-center justify-between gap-1.5 whitespace-nowrap text-sm opacity-70 lg:w-40 hover:opacity-100" @click="show = true">
     <div class="flex items-center gap-1.5">
       <div class="i-line-md-search -scale-x-100"></div>
-      搜索...
+      <span>搜索...</span>
     </div>
     <kbd class="b-1 b-border rounded b-solid px-1">/</kbd>
   </BButton>
 </template>
+
+<style scoped>
+@media (max-width: 480px) {
+  .search-button {
+    @apply mr-0 appearance-none b-0 rounded-none bg-transparent p-xs text-base;
+  }
+
+  .search-button :is(span, kbd) {
+    display: none;
+  }
+}
+</style>
