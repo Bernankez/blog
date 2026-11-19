@@ -3,11 +3,13 @@ import { useEventListener } from "@vueuse/core";
 import { ref } from "vue";
 import { useCowModel } from "../../composables/useCowModel";
 
-const { scale, zoom, width, height } = defineProps<{
+const { scale, zoom, width, height, frontFacing, ascii } = defineProps<{
   width?: number;
   height?: number;
   scale?: number;
   zoom?: number;
+  frontFacing?: boolean;
+  ascii?: boolean;
 }>();
 
 const dragging = ref(false);
@@ -16,6 +18,8 @@ const canvasRef = ref<HTMLCanvasElement>();
 useCowModel(canvasRef, () => ({
   scale,
   zoom,
+  frontFacing,
+  ascii,
 }));
 
 useEventListener(canvasRef, "pointerdown", () => {

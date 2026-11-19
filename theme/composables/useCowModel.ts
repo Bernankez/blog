@@ -1,11 +1,15 @@
 /* eslint-disable no-new */
 import type { MaybeRefOrGetter } from "vue";
+import { useData } from "vitepress";
 import { ref, toValue, watch } from "vue";
 import Zdog from "zdog";
+import { createCowCharacterRenderer } from "../utils/cowCharacters";
 
 export interface UseCowModelOptions {
   zoom?: number;
   scale?: number;
+  frontFacing?: boolean;
+  ascii?: boolean;
 }
 
 const TAU = Zdog.TAU;
@@ -13,23 +17,36 @@ const TAU = Zdog.TAU;
 export function useCowModel(el: MaybeRefOrGetter<string | HTMLCanvasElement | SVGSVGElement | undefined | null>, options?: MaybeRefOrGetter<UseCowModelOptions | undefined>) {
   const isPlaying = ref(false);
   const scene = ref<Zdog.Illustration>();
+  const { isDark } = useData();
 
-  watch([() => toValue(el), () => toValue(options)], ([el, options]) => {
+  watch([() => toValue(el), () => toValue(options)], ([el, options], _, onCleanup) => {
     if (el) {
-      scene.value = createModel(el, options);
+      const model = createModel(el, options);
+      scene.value = model;
+      const characters = options?.ascii && el instanceof HTMLCanvasElement ? createCowCharacterRenderer(el) : undefined;
+      let frame = 0;
+      const queueRender = () => {
+        frame ||= requestAnimationFrame(render);
+      };
+      const render = () => {
+        frame = 0;
+        model.rotate.y += isPlaying.value ? 0.03 : 0;
+        model.updateRenderGraph();
+        characters?.(isDark.value);
+        if (!characters || isPlaying.value) {
+          queueRender();
+        }
+      };
+      if (characters) {
+        model.onDragMove = queueRender;
+        onCleanup(watch([isDark, isPlaying], queueRender));
+      }
       render();
+      onCleanup(() => cancelAnimationFrame(frame));
     }
   }, {
     immediate: true,
   });
-
-  function render() {
-    if (scene.value) {
-      scene.value.rotate.y += isPlaying.value ? 0.03 : 0;
-      scene.value.updateRenderGraph();
-      requestAnimationFrame(render);
-    }
-  }
 
   function play() {
     isPlaying.value = true;
@@ -47,10 +64,12 @@ export function useCowModel(el: MaybeRefOrGetter<string | HTMLCanvasElement | SV
       dragRotate: true,
       scale,
       zoom,
-      rotate: {
-        x: -TAU / 30,
-        y: -TAU / 15,
-      },
+      rotate: options?.frontFacing
+        ? { x: 0, y: 0 }
+        : {
+            x: -TAU / 30,
+            y: -TAU / 15,
+          },
     });
 
     const headGroup = new Zdog.Group({
