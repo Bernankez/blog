@@ -1,5 +1,6 @@
 import type { UserConfig } from "vite";
 import type { _DirConfig, NavItemWithLink, SidebarItem, ThemeConfig } from "../theme/types";
+import { randomUUID } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
 import { basename, parse, relative, resolve } from "node:path";
 import process from "node:process";
@@ -18,6 +19,7 @@ import llmstxt, { copyOrDownloadAsMarkdownButtons } from "vitepress-plugin-llms"
 import { RssPlugin } from "vitepress-plugin-rss";
 
 // https://vitepress.dev/reference/site-config
+const buildVersion = randomUUID();
 export default async ({ mode }: UserConfig) => {
   const env = loadEnv(mode ?? "", process.cwd()) as ImportMetaEnv;
   const navigation = generateNavigation();
@@ -153,7 +155,18 @@ export default async ({ mode }: UserConfig) => {
       },
     },
     vite: {
+      define: { __PWA_VERSION__: JSON.stringify(buildVersion) },
       plugins: [
+        {
+          name: "pwa-version",
+          generateBundle() {
+            this.emitFile({
+              type: "asset",
+              fileName: "sw.js",
+              source: `importScripts('./sw-runtime.js');\nself.addEventListener('message', e => { if (e.data?.type === 'GET_VERSION') e.ports[0]?.postMessage('${buildVersion}') })`,
+            });
+          },
+        },
         {
           name: "content-navigation",
           configureServer(server) {
@@ -218,6 +231,12 @@ export default async ({ mode }: UserConfig) => {
     },
     pwa: {
       registerType: "prompt",
+      injectRegister: false,
+      filename: "sw-runtime.js",
+      generateSW: {
+        clientsClaim: true,
+        globIgnores: ["**/sw.js", "**/node_modules/**"],
+      },
       experimental: {
         includeAllowlist: true,
       },

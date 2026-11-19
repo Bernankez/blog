@@ -12,6 +12,7 @@ const emit = defineEmits<{
 }>();
 
 function onClose() {
+  props.close?.();
   emit("closeToast");
 }
 

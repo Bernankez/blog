@@ -3,7 +3,7 @@ import type { Layout, PageClass, ThemeConfig } from "./types";
 import { useElementVisibility } from "@vueuse/core";
 import mediumZoom from "medium-zoom";
 import { useData, useRouter } from "vitepress";
-import { computed, markRaw, onMounted, ref, watchEffect } from "vue";
+import { computed, markRaw, onMounted, ref, watch } from "vue";
 import { toast } from "vue-sonner";
 import BBackToTop from "./components/common/BBackToTop.vue";
 import BContent from "./components/common/BContent.vue";
@@ -42,24 +42,30 @@ router.onAfterRouteChange = setupMediumZoom;
 
 const visible = useElementVisibility(headerEl);
 
-const { offlineReady, needRefresh, updateServiceWorker, close } = useServiceWorker();
+const { offlineReady, needRefresh, dismissed, updateServiceWorker } = useServiceWorker();
 
-watchEffect(() => {
-  if (offlineReady.value) {
+watch(offlineReady, (ready) => {
+  if (ready) {
     toast.custom(markRaw(BPwaPrompt), {
       componentProps: {
         type: "offlineReady",
       },
-      onDismiss: close,
-      onAutoClose: close,
     });
   }
-  else if (needRefresh.value && updateServiceWorker.value) {
+});
+
+watch(needRefresh, (version) => {
+  if (version) {
+    const close = () => {
+      dismissed.value = version;
+    };
     toast.custom(markRaw(BPwaPrompt), {
+      id: "pwa-update",
       duration: Infinity,
       componentProps: {
         type: "needRefresh",
-        refresh: updateServiceWorker.value,
+        close,
+        refresh: updateServiceWorker,
       },
       onDismiss: close,
       onAutoClose: close,
