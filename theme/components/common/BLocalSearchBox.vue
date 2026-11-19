@@ -4,7 +4,7 @@ import type { Ref } from "vue";
 import type { ModalTranslations } from "../../local-search";
 import type { ThemeConfig } from "../../types";
 import localSearchIndex from "@localSearchIndex";
-import { computedAsync, debouncedWatch, onKeyStroke, useEventListener, useLocalStorage, useScrollLock, useSessionStorage } from "@vueuse/core";
+import { computedAsync, debouncedWatch, onKeyStroke, useEventListener, useLocalStorage, useMediaQuery, useScrollLock, useSessionStorage } from "@vueuse/core";
 import { useFocusTrap } from "@vueuse/integrations/useFocusTrap";
 import Mark from "mark.js";
 import MiniSearch from "minisearch";
@@ -280,15 +280,22 @@ function onSearchBarClick(event: PointerEvent) {
 
 /* Search keyboard selection */
 
+const touchSearch = useMediaQuery("(pointer: coarse)");
 const selectedIndex = ref(-1);
 const disableMouseOver = ref(true);
 const offset = computed(() => Number(!!filterText.value.trim()));
 const rowCount = computed(() => offset.value + results.value.length);
 
-watch([filterText, rowCount], () => {
-  selectedIndex.value = rowCount.value ? 0 : -1;
+watch([filterText, touchSearch], () => {
+  selectedIndex.value = !touchSearch.value && rowCount.value ? 0 : -1;
   scrollToSelectedResult();
 }, { immediate: true });
+
+watch(rowCount, (count) => {
+  if (selectedIndex.value >= count) {
+    selectedIndex.value = touchSearch.value || !count ? -1 : 0;
+  }
+});
 
 function scrollToSelectedResult() {
   nextTick(() => {
@@ -325,31 +332,24 @@ onKeyStroke("ArrowDown", (event) => {
 
 const router = useRouter();
 
-onKeyStroke("Enter", (e) => {
-  if (asking.value || e.isComposing) {
-    return;
-  }
-
-  if (e.target instanceof HTMLButtonElement && e.target.type !== "submit") {
+function submitSearch() {
+  if (selectedIndex.value < 0) {
+    if (touchSearch.value) {
+      searchInput.value?.blur();
+    }
     return;
   }
 
   if (offset.value && selectedIndex.value === 0) {
-    e.preventDefault();
     asking.value = true;
     return;
   }
   const selectedPackage = results.value[selectedIndex.value - offset.value];
-  if (e.target instanceof HTMLInputElement && !selectedPackage) {
-    e.preventDefault();
-    return;
-  }
-
   if (selectedPackage) {
     router.go(selectedPackage.id);
     emit("close");
   }
-});
+}
 
 onKeyStroke("Escape", () => {
   if (!asking.value) {
@@ -454,7 +454,7 @@ function onMouseMove(e: MouseEvent) {
           v-show="!asking"
           class="search-bar"
           @pointerup="onSearchBarClick($event)"
-          @submit.prevent=""
+          @submit.prevent="submitSearch"
         >
           <label
             id="localsearch-label"
@@ -467,6 +467,7 @@ function onMouseMove(e: MouseEvent) {
           <div class="search-actions before">
             <button
               class="back-button"
+              type="button"
               :title="translate('modal.backButtonTitle')"
               @click="$emit('close')"
             >
@@ -487,10 +488,11 @@ function onMouseMove(e: MouseEvent) {
             autocomplete="off"
             autocorrect="off"
             class="search-input"
-            enterkeyhint="go"
+            :enterkeyhint="touchSearch && selectedIndex < 0 ? 'search' : 'go'"
             maxlength="64"
             :placeholder="buttonText"
             spellcheck="false"
+            @focus="touchSearch && (selectedIndex = -1)"
           />
           <div class="search-actions">
             <button
@@ -509,7 +511,7 @@ function onMouseMove(e: MouseEvent) {
               :class="{ 'detailed-list': showDetailedList }"
               :title="translate('modal.displayDetails')"
               @click="
-                selectedIndex > -1 && (showDetailedList = !showDetailedList)
+                rowCount && (showDetailedList = !showDetailedList)
               "
             >
               <div class="local-search-icon i-lucide-layout-list"></div>
