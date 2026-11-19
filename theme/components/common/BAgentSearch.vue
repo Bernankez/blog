@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useLocalStorage } from "@vueuse/core";
+import { useClipboard, useLocalStorage } from "@vueuse/core";
 import { useData } from "vitepress";
 import { nextTick, onActivated, onBeforeUnmount, onDeactivated, onMounted, ref, shallowRef } from "vue";
 import BAgentDeletePopover from "./BAgentDeletePopover.vue";
@@ -19,8 +19,15 @@ const historyButton = ref<HTMLButtonElement>();
 const input = ref<HTMLInputElement>();
 const log = ref<HTMLElement>();
 const messages = ref<Message[]>([]);
+const error = ref("");
+const editing = ref(-1);
+const editDraft = ref("");
+const editError = ref("");
+const { copy, copied } = useClipboard({ copiedDuring: 1500, legacy: true });
+const copiedMessage = shallowRef<Message>();
 const confirmTarget = ref<number | string>();
 const MarkdownRender = shallowRef<typeof import("markstream-vue")["default"]>();
+const vFocus = { mounted: (el: HTMLElement) => el.focus({ preventScroll: true }) };
 const partial = ref("");
 const request = shallowRef<AbortController>();
 const appId = "4U4R8B36SX";
@@ -48,6 +55,10 @@ function back() {
   else if (historyOpen.value) {
     historyOpen.value = false;
   }
+  else if (editing.value >= 0) {
+    cancelEdit();
+    return;
+  }
   else {
     emit("back");
     return;
@@ -60,8 +71,11 @@ function openSession(session?: Session) {
   request.value = undefined;
   activeId.value = session?.id ?? "";
   closeConfirmation();
+  editing.value = -1;
+  copiedMessage.value = undefined;
   messages.value = session?.messages.slice() ?? [];
   draft.value = "";
+  error.value = "";
   historyOpen.value = false;
   partial.value = "";
   nextTick(() => {
@@ -112,6 +126,16 @@ function historyByDay() {
   return groups;
 }
 
+async function copyMessage(message: Message) {
+  try {
+    await copy(message.text);
+    copiedMessage.value = message;
+  }
+  catch {
+    error.value = "无法访问剪贴板，请选中文字复制。";
+  }
+}
+
 function closeConfirmation(restoreFocus = false) {
   const trigger = restoreFocus && panel.value?.querySelector<HTMLButtonElement>("button[aria-haspopup=\"dialog\"][aria-expanded=\"true\"]");
   confirmTarget.value = undefined;
@@ -139,6 +163,40 @@ function deleteSession(id: string) {
   nextTick(() => historyButton.value?.focus({ preventScroll: true }));
 }
 
+function deleteFrom(index: number) {
+  messages.value.splice(index);
+  editing.value = -1;
+  closeConfirmation();
+  if (messages.value.length) {
+    saveSession();
+  }
+  else {
+    history.value = history.value.filter(s => s.id !== activeId.value);
+    activeId.value = "";
+  }
+  nextTick(() => input.value?.focus({ preventScroll: true }));
+}
+
+function startEdit(index: number) {
+  closeConfirmation();
+  editError.value = "";
+  editDraft.value = messages.value[index].text;
+  editing.value = index;
+}
+
+function cancelEdit() {
+  const index = editing.value;
+  editing.value = -1;
+  nextTick(() => log.value?.querySelector<HTMLButtonElement>(`[data-action-index="${index}"] .edit-trigger`)?.focus({ preventScroll: true }));
+}
+
+function onEditEnter(event: KeyboardEvent) {
+  if (!event.isComposing && !event.shiftKey && event.keyCode !== 229) {
+    event.preventDefault();
+    void send(editing.value);
+  }
+}
+
 function reasonText(value: unknown) {
   return typeof value === "string" ? value.trim().slice(0, 240) : "";
 }
@@ -155,18 +213,24 @@ async function httpFailure(response: Response) {
   return `HTTP ${response.status} · ${reason}`;
 }
 
-async function send(retryLast = false) {
-  const question = retryLast ? messages.value.at(-2)?.text : draft.value.trim();
-  if (!question || request.value) {
+async function send(editIndex = -1, retryLast = false) {
+  const question = retryLast ? messages.value.at(-2)?.text : (editIndex >= 0 ? editDraft : draft).value.trim();
+  if (!question || request.value || (!retryLast && editIndex !== editing.value)) {
     return;
   }
   const controller = new AbortController();
   closeConfirmation();
   request.value = controller;
   partial.value = "";
+  error.value = "";
   const previousReply = retryLast ? messages.value.pop() : undefined;
+  const replaced = editIndex >= 0 ? messages.value.splice(editIndex) : undefined;
   if (!retryLast) {
-    draft.value = "";
+    editError.value = "";
+    editing.value = -1;
+    if (!replaced) {
+      draft.value = "";
+    }
     messages.value.push({ role: "user", text: question });
   }
   const scroll = () => nextTick(() => log.value?.scrollTo(0, log.value.scrollHeight));
@@ -240,14 +304,23 @@ async function send(retryLast = false) {
     }
     const stopped = controller.signal.aborted;
     const notice = stopped ? "已停止回答" : e instanceof TypeError ? "未能连接到问答服务" : e instanceof SyntaxError ? "服务端返回的数据格式有误" : e instanceof Error ? e.message : "未收到错误详情";
-    messages.value.push({ role: "assistant", text: partial.value || previousReply?.text || "", notice, stopped });
-    saveSession();
-    scroll();
+    if (replaced) {
+      messages.value.splice(editIndex, messages.value.length - editIndex, ...replaced);
+      editing.value = editIndex;
+      editError.value = notice;
+    }
+    else {
+      messages.value.push({ role: "assistant", text: partial.value || previousReply?.text || "", notice, stopped });
+      saveSession();
+      scroll();
+    }
   }
   finally {
     if (request.value === controller) {
       request.value = undefined;
-      nextTick(() => input.value?.focus());
+      if (editing.value < 0) {
+        nextTick(() => input.value?.focus());
+      }
     }
   }
 }
@@ -295,9 +368,37 @@ async function send(retryLast = false) {
     </div>
     <template v-else>
       <div ref="log" role="log" class="transcript">
-        <div v-for="(message, i) in messages" :key="i" class="turn" :class="{ outgoing: message.role === 'user' }">
+        <div v-for="(message, i) in messages" :key="i" class="turn" :class="{ outgoing: message.role === 'user', editing: editing === i }">
+          <div class="message-actions" :data-action-index="i" role="group" aria-label="消息操作" :class="{ open: confirmTarget === i }">
+            <button v-if="message.text" type="button" :title="copied && copiedMessage === message ? '已复制' : '复制'" :aria-label="copied && copiedMessage === message ? '已复制' : '复制'" @click="copyMessage(message)">
+              <span :class="copied && copiedMessage === message ? 'i-lucide-check' : 'i-lucide-copy'" aria-hidden="true"></span>
+            </button>
+            <button v-if="message.role === 'user'" type="button" class="edit-trigger" title="修改提问" aria-label="修改提问" :disabled="!!request || editing === i" @click="startEdit(i)">
+              <span class="i-lucide-pencil" aria-hidden="true"></span>
+            </button>
+            <BAgentDeletePopover :model-value="confirmTarget === i" :question="i === messages.length - 1 ? '删除这条消息？' : '删除这条消息及之后的所有消息？'" :confirm-label="`删除 ${messages.length - i} 条消息`" @update:model-value="updateConfirmation(i, $event)" @cancel="closeConfirmation(true)" @confirm="deleteFrom(i)">
+              <button type="button" :disabled="!!request" title="删除消息" aria-label="删除消息" aria-haspopup="dialog" :aria-expanded="confirmTarget === i">
+                <span class="i-lucide-trash-2" aria-hidden="true"></span>
+              </button>
+            </BAgentDeletePopover>
+          </div>
           <div class="message" :class="[message.role, { interrupted: message.notice, failed: replyFailed(message) }]">
-            <MarkdownRender v-if="message.role === 'assistant' && message.text && MarkdownRender" mode="chat" :is-dark="isDark" :content="message.text" final html-policy="escape" />
+            <form v-if="editing === i" class="bubble-editor" @submit.prevent="send(i)">
+              <textarea v-model="editDraft" v-focus aria-label="修改提问" rows="2" maxlength="1000" @keydown.enter="onEditEnter"></textarea>
+              <div class="flex items-center justify-end gap-2">
+                <div v-if="editError" role="status" class="mr-auto min-w-0 break-words text-sm">
+                  <strong v-if="editError !== '已停止回答'" class="block text-error font-medium">重新提问失败</strong>
+                  <span>{{ editError }}</span>
+                </div>
+                <BButton variant="ghost" size="sm" @click="cancelEdit">
+                  取消
+                </BButton>
+                <BButton type="submit" variant="ghost" size="sm" class="text-primary" :class="{ 'opacity-45': !editDraft.trim() }" :inert="!editDraft.trim()" :aria-disabled="!editDraft.trim()">
+                  重新提问
+                </BButton>
+              </div>
+            </form>
+            <MarkdownRender v-else-if="message.role === 'assistant' && message.text && MarkdownRender" mode="chat" :is-dark="isDark" :content="message.text" final html-policy="escape" />
             <div v-else-if="message.text" class="min-w-0 whitespace-pre-wrap break-words leading-relaxed">
               {{ message.text }}
             </div>
@@ -306,7 +407,7 @@ async function send(retryLast = false) {
                 <strong v-if="replyFailed(message)" class="mb-1 block font-semibold">{{ message.text ? '回答未完成' : '回答生成失败' }}</strong>
                 <span>{{ message.notice }}</span>
               </div>
-              <BButton v-if="i === messages.length - 1" variant="ghost" size="sm" class="min-h-6 inline-flex shrink-0 items-center gap-0.5 px-1 py-0.5 text-xs text-foreground/75 focus-visible:text-foreground hover:text-foreground" @click="send(true)">
+              <BButton v-if="i === messages.length - 1" variant="ghost" size="sm" class="min-h-6 inline-flex shrink-0 items-center gap-0.5 px-1 py-0.5 text-xs text-foreground/75 focus-visible:text-foreground hover:text-foreground" @click="send(-1, true)">
                 <span class="i-lucide-rotate-ccw" aria-hidden="true"></span>重试
               </BButton>
             </div>
@@ -316,13 +417,16 @@ async function send(retryLast = false) {
           <span v-if="!partial" aria-hidden="true">•••</span><MarkdownRender v-else-if="MarkdownRender" mode="chat" :is-dark="isDark" :content="partial" :final="false" html-policy="escape" /><span v-else class="whitespace-pre-wrap break-words">{{ partial }}</span>
         </div>
       </div>
+      <p v-if="error" role="alert">
+        {{ error }}
+      </p>
       <div class="composer-area">
         <form class="composer" @submit.prevent="send()">
-          <input ref="input" v-model="draft" aria-label="向博客提问" :placeholder="messages.length ? '继续追问…' : '输入你的问题…'" :readonly="!!request" maxlength="1000" />
+          <input ref="input" v-model="draft" aria-label="向博客提问" :placeholder="messages.length ? '继续追问…' : '输入你的问题…'" :readonly="!!request || editing >= 0" maxlength="1000" />
           <button v-if="request" type="button" class="send" aria-label="停止回答" title="停止回答" @click="request.abort()">
             <span class="i-lucide-square fill-current"></span>
           </button>
-          <button v-else type="submit" aria-label="发送提问" title="发送提问" :disabled="!draft.trim()" class="send">
+          <button v-else type="submit" aria-label="发送提问" title="发送提问" :disabled="editing >= 0 || !draft.trim()" class="send">
             <span class="i-lucide-arrow-up"></span>
           </button>
         </form>
@@ -374,6 +478,49 @@ header .tool:first-child {
 }
 header .tool:hover {
   color: hsl(var(--primary));
+}
+.message-actions {
+  display: flex;
+  width: max-content;
+  margin: 0 3px 5px auto;
+  gap: 2px;
+  opacity: 0;
+  pointer-events: none;
+}
+.message-actions button {
+  background: transparent;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  color: hsl(var(--muted-foreground));
+}
+.message-actions button span {
+  width: 14px;
+  height: 14px;
+}
+.turn:hover .message-actions,
+.message-actions:has(:focus-visible),
+.message-actions.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.message-actions button:hover:not(:disabled),
+.message-actions button:focus-visible {
+  color: hsl(var(--primary));
+}
+.message-actions button:disabled {
+  opacity: 0.4;
+}
+@media (pointer: coarse) {
+  .message-actions {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .message-actions button {
+    width: 44px;
+    height: 44px;
+  }
 }
 .history-day {
   --history-row-height: 36px;
@@ -467,7 +614,9 @@ header .tool:not(:first-child),
 .history-row .tool:hover {
   background: hsl(var(--muted));
 }
+.bubble-editor button:focus-visible,
 .history-link:focus-visible,
+.message-actions button:focus-visible,
 .tool:focus-visible,
 .send:focus-visible {
   outline: 2px solid hsl(var(--primary));
@@ -504,6 +653,9 @@ header .tool:not(:first-child),
   letter-spacing: 3px;
 }
 @media (prefers-reduced-motion: no-preference) {
+  .message-actions {
+    transition: opacity var(--b-transition-duration) var(--b-transition-animation);
+  }
   .pending span {
     animation: thinking 1s ease-in-out infinite alternate;
   }
@@ -547,6 +699,31 @@ header .tool:not(:first-child),
 }
 .turn .message {
   max-width: 100%;
+}
+.turn.editing {
+  width: 28rem;
+}
+.turn.editing .user,
+.bubble-editor {
+  width: 100%;
+}
+.turn.editing .user {
+  background: var(--agent-field-bg, var(--b-local-search-bg));
+  outline: 1px solid hsl(var(--border));
+}
+.turn.editing .user:focus-within {
+  outline-color: hsl(var(--primary));
+}
+.bubble-editor textarea {
+  display: block;
+  width: 100%;
+  field-sizing: content;
+  min-height: 3em;
+  max-height: 10em;
+  resize: none;
+  outline: none;
+  background: transparent;
+  line-height: 1.5;
 }
 .message :deep(.markstream-vue) {
   --link-color: hsl(var(--primary) / 0.9);
