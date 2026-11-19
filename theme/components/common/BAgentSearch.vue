@@ -1,16 +1,25 @@
 <script setup lang="ts">
+import { useLocalStorage } from "@vueuse/core";
 import { useData } from "vitepress";
-import { nextTick, onActivated, onBeforeUnmount, onMounted, ref, shallowRef } from "vue";
+import { nextTick, onActivated, onBeforeUnmount, onDeactivated, onMounted, ref, shallowRef } from "vue";
+import BAgentDeletePopover from "./BAgentDeletePopover.vue";
 import BButton from "./BButton.vue";
 
 const props = defineProps<{ initialQuestion: string }>();
 const emit = defineEmits<{ back: []; close: [] }>();
 const { isDark } = useData();
 interface Message { role: "user" | "assistant"; text: string; notice?: string; stopped?: boolean }
+interface Session { id: string; messages: Message[]; updated?: number }
+const history = useLocalStorage<Session[]>("blog:ai-history:v1", []);
+const activeId = ref("");
+const historyOpen = ref(false);
 const draft = ref(props.initialQuestion);
+const panel = ref<HTMLElement>();
+const historyButton = ref<HTMLButtonElement>();
 const input = ref<HTMLInputElement>();
 const log = ref<HTMLElement>();
 const messages = ref<Message[]>([]);
+const confirmTarget = ref<number | string>();
 const MarkdownRender = shallowRef<typeof import("markstream-vue")["default"]>();
 const partial = ref("");
 const request = shallowRef<AbortController>();
@@ -29,6 +38,106 @@ onBeforeUnmount(() => {
   request.value = undefined;
 });
 onActivated(() => input.value?.focus());
+onDeactivated(() => closeConfirmation());
+
+function back() {
+  if (confirmTarget.value !== undefined) {
+    closeConfirmation(true);
+    return;
+  }
+  else if (historyOpen.value) {
+    historyOpen.value = false;
+  }
+  else {
+    emit("back");
+    return;
+  }
+  nextTick(() => input.value?.focus());
+}
+
+function openSession(session?: Session) {
+  request.value?.abort();
+  request.value = undefined;
+  activeId.value = session?.id ?? "";
+  closeConfirmation();
+  messages.value = session?.messages.slice() ?? [];
+  draft.value = "";
+  historyOpen.value = false;
+  partial.value = "";
+  nextTick(() => {
+    input.value?.focus();
+    log.value?.scrollTo(0, log.value.scrollHeight);
+  });
+}
+
+function saveSession() {
+  activeId.value ||= crypto.randomUUID();
+  history.value = [{ id: activeId.value, messages: messages.value.slice(-40), updated: Date.now() }, ...history.value.filter(s => s.id !== activeId.value)].slice(0, 20);
+}
+
+function firstReplyExcerpt(session: Session) {
+  const reply = session.messages.find(m => m.role === "assistant" && m.text.trim());
+  return reply?.text
+    .replace(/^\s*(?:```[^\n]*|#{1,6}\s+|>\s*|[-*+]\s+)/gmu, "")
+    .replace(/!?\[([^\]]*)\]\([^)]+\)/gu, "$1")
+    .replace(/(\*\*|__|~~|`)(.+?)\1/gu, "$2")
+    .replace(/\s+/gu, " ")
+    .trim();
+}
+
+function historyByDay() {
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  const groups = new Map<string, { session: Session; excerpt?: string }[]>();
+  for (const session of history.value.toSorted((a, b) => (b.updated ?? 0) - (a.updated ?? 0))) {
+    let label = "日期未知";
+    if (session.updated != null) {
+      const day = new Date(session.updated);
+      if (day.toDateString() === today.toDateString()) {
+        label = "今天";
+      }
+      else if (day.toDateString() === yesterday.toDateString()) {
+        label = "昨天";
+      }
+      else {
+        label = day.toLocaleDateString("zh-CN", { year: day.getFullYear() !== today.getFullYear() ? "numeric" : undefined, month: "long", day: "numeric" });
+      }
+    }
+    if (!groups.has(label)) {
+      groups.set(label, []);
+    }
+    groups.get(label)!.push({ session, excerpt: firstReplyExcerpt(session) });
+  }
+  return groups;
+}
+
+function closeConfirmation(restoreFocus = false) {
+  const trigger = restoreFocus && panel.value?.querySelector<HTMLButtonElement>("button[aria-haspopup=\"dialog\"][aria-expanded=\"true\"]");
+  confirmTarget.value = undefined;
+  if (trigger) {
+    nextTick(() => trigger.focus({ preventScroll: true }));
+  }
+}
+
+function updateConfirmation(target: number | string, open: boolean) {
+  if (open) {
+    confirmTarget.value = target;
+  }
+  else if (confirmTarget.value === target) {
+    closeConfirmation();
+  }
+}
+
+function deleteSession(id: string) {
+  history.value = history.value.filter(s => s.id !== id);
+  closeConfirmation();
+  if (activeId.value === id) {
+    openSession();
+    historyOpen.value = true;
+  }
+  nextTick(() => historyButton.value?.focus({ preventScroll: true }));
+}
 
 function reasonText(value: unknown) {
   return typeof value === "string" ? value.trim().slice(0, 240) : "";
@@ -52,6 +161,7 @@ async function send(retryLast = false) {
     return;
   }
   const controller = new AbortController();
+  closeConfirmation();
   request.value = controller;
   partial.value = "";
   const previousReply = retryLast ? messages.value.pop() : undefined;
@@ -121,6 +231,7 @@ async function send(retryLast = false) {
     }
     controller.signal.throwIfAborted();
     messages.value.push({ role: "assistant", text });
+    saveSession();
     scroll();
   }
   catch (e) {
@@ -130,6 +241,7 @@ async function send(retryLast = false) {
     const stopped = controller.signal.aborted;
     const notice = stopped ? "已停止回答" : e instanceof TypeError ? "未能连接到问答服务" : e instanceof SyntaxError ? "服务端返回的数据格式有误" : e instanceof Error ? e.message : "未收到错误详情";
     messages.value.push({ role: "assistant", text: partial.value || previousReply?.text || "", notice, stopped });
+    saveSession();
     scroll();
   }
   finally {
@@ -142,48 +254,80 @@ async function send(retryLast = false) {
 </script>
 
 <template>
-  <section class="agent-panel" @keydown.esc.stop.prevent="emit('back')">
+  <section ref="panel" class="agent-panel" @keydown.esc.stop.prevent="back">
+    <div id="message-popovers"></div>
     <header class="flex items-center gap-2">
-      <button type="button" class="tool" title="返回搜索" @click="emit('back')">
-        <span class="i-lucide-arrow-left"></span>返回搜索
+      <button type="button" class="tool" :title="historyOpen ? '返回问答' : '返回搜索'" @click="historyOpen ? back() : emit('back')">
+        <span class="i-lucide-arrow-left"></span>{{ historyOpen ? '返回问答' : '返回搜索' }}
       </button>
-      <button type="button" class="tool ml-auto" aria-label="关闭弹窗" title="关闭弹窗" @click="emit('close')">
+      <button ref="historyButton" type="button" class="tool ml-auto" title="历史会话" aria-label="历史会话" :aria-pressed="historyOpen" @click="closeConfirmation(); historyOpen = !historyOpen">
+        <span class="i-lucide-history"></span>
+      </button>
+      <button type="button" class="tool" aria-label="新建会话" title="新建会话" @click="openSession()">
+        <span class="i-lucide-square-pen"></span>
+      </button>
+      <button type="button" class="tool" aria-label="关闭弹窗" title="关闭弹窗" @click="emit('close')">
         <span class="i-lucide-x"></span>
       </button>
     </header>
-    <div ref="log" role="log" class="transcript">
-      <div v-for="(message, i) in messages" :key="i" class="turn" :class="{ outgoing: message.role === 'user' }">
-        <div class="message" :class="[message.role, { interrupted: message.notice, failed: replyFailed(message) }]">
-          <MarkdownRender v-if="message.role === 'assistant' && message.text && MarkdownRender" mode="chat" :is-dark="isDark" :content="message.text" final html-policy="escape" />
-          <div v-else-if="message.text" class="min-w-0 whitespace-pre-wrap break-words leading-relaxed">
-            {{ message.text }}
-          </div>
-          <div v-if="message.notice" class="reply-notice flex items-start gap-3 text-sm">
-            <div role="status" class="min-w-0 break-words">
-              <strong v-if="replyFailed(message)" class="mb-1 block font-semibold">{{ message.text ? '回答未完成' : '回答生成失败' }}</strong>
-              <span>{{ message.notice }}</span>
+    <div v-if="historyOpen" class="history" role="region" aria-label="历史会话">
+      <p v-if="!history.length" class="empty-history">
+        <span class="i-lucide-history"></span>暂无历史会话
+      </p>
+      <section v-for="[day, sessions] in historyByDay()" :key="day" class="history-day" :aria-label="day">
+        <h3>{{ day }}</h3>
+        <ul class="min-w-0">
+          <li v-for="{ session, excerpt } in sessions" :key="session.id" class="history-row flex items-center gap-2">
+            <button type="button" class="history-link min-w-0 flex-1 text-left" :aria-current="session.id === activeId || undefined" @click="openSession(session)">
+              <time v-if="session.updated != null" :datetime="new Date(session.updated).toISOString()" class="text-sm text-muted-foreground tabular-nums">{{ new Date(session.updated).toLocaleTimeString('zh-CN', { hourCycle: 'h23', hour: '2-digit', minute: '2-digit' }) }}</time>
+              <span class="history-title truncate">
+                {{ session.messages[0].text }}<span v-if="excerpt" class="ml-2 text-sm text-muted-foreground">– {{ excerpt }}</span>
+              </span>
+            </button>
+            <BAgentDeletePopover :model-value="confirmTarget === session.id" question="删除这个会话？" confirm-label="删除会话" @update:model-value="updateConfirmation(session.id, $event)" @cancel="closeConfirmation(true)" @confirm="deleteSession(session.id)">
+              <button type="button" class="tool" title="删除会话" :aria-label="`删除会话：${session.messages[0].text}`" aria-haspopup="dialog" :aria-expanded="confirmTarget === session.id">
+                <span class="i-lucide-trash-2"></span>
+              </button>
+            </BAgentDeletePopover>
+          </li>
+        </ul>
+      </section>
+    </div>
+    <template v-else>
+      <div ref="log" role="log" class="transcript">
+        <div v-for="(message, i) in messages" :key="i" class="turn" :class="{ outgoing: message.role === 'user' }">
+          <div class="message" :class="[message.role, { interrupted: message.notice, failed: replyFailed(message) }]">
+            <MarkdownRender v-if="message.role === 'assistant' && message.text && MarkdownRender" mode="chat" :is-dark="isDark" :content="message.text" final html-policy="escape" />
+            <div v-else-if="message.text" class="min-w-0 whitespace-pre-wrap break-words leading-relaxed">
+              {{ message.text }}
             </div>
-            <BButton v-if="i === messages.length - 1" variant="ghost" size="sm" class="min-h-6 inline-flex shrink-0 items-center gap-0.5 px-1 py-0.5 text-xs text-foreground/75 focus-visible:text-foreground hover:text-foreground" @click="send(true)">
-              <span class="i-lucide-rotate-ccw" aria-hidden="true"></span>重试
-            </BButton>
+            <div v-if="message.notice" class="reply-notice flex items-start gap-3 text-sm">
+              <div role="status" class="min-w-0 break-words">
+                <strong v-if="replyFailed(message)" class="mb-1 block font-semibold">{{ message.text ? '回答未完成' : '回答生成失败' }}</strong>
+                <span>{{ message.notice }}</span>
+              </div>
+              <BButton v-if="i === messages.length - 1" variant="ghost" size="sm" class="min-h-6 inline-flex shrink-0 items-center gap-0.5 px-1 py-0.5 text-xs text-foreground/75 focus-visible:text-foreground hover:text-foreground" @click="send(true)">
+                <span class="i-lucide-rotate-ccw" aria-hidden="true"></span>重试
+              </BButton>
+            </div>
           </div>
         </div>
+        <div v-if="request" class="message assistant" :class="{ pending: !partial }" role="status" aria-label="正在生成回答">
+          <span v-if="!partial" aria-hidden="true">•••</span><MarkdownRender v-else-if="MarkdownRender" mode="chat" :is-dark="isDark" :content="partial" :final="false" html-policy="escape" /><span v-else class="whitespace-pre-wrap break-words">{{ partial }}</span>
+        </div>
       </div>
-      <div v-if="request" class="message assistant" :class="{ pending: !partial }" role="status" aria-label="正在生成回答">
-        <span v-if="!partial" aria-hidden="true">•••</span><MarkdownRender v-else-if="MarkdownRender" mode="chat" :is-dark="isDark" :content="partial" :final="false" html-policy="escape" /><span v-else class="whitespace-pre-wrap break-words">{{ partial }}</span>
+      <div class="composer-area">
+        <form class="composer" @submit.prevent="send()">
+          <input ref="input" v-model="draft" aria-label="向博客提问" :placeholder="messages.length ? '继续追问…' : '输入你的问题…'" :readonly="!!request" maxlength="1000" />
+          <button v-if="request" type="button" class="send" aria-label="停止回答" title="停止回答" @click="request.abort()">
+            <span class="i-lucide-square fill-current"></span>
+          </button>
+          <button v-else type="submit" aria-label="发送提问" title="发送提问" :disabled="!draft.trim()" class="send">
+            <span class="i-lucide-arrow-up"></span>
+          </button>
+        </form>
       </div>
-    </div>
-    <div class="composer-area">
-      <form class="composer" @submit.prevent="send()">
-        <input ref="input" v-model="draft" aria-label="向博客提问" :placeholder="messages.length ? '继续追问…' : '输入你的问题…'" :readonly="!!request" maxlength="1000" />
-        <button v-if="request" type="button" class="send" aria-label="停止回答" title="停止回答" @click="request.abort()">
-          <span class="i-lucide-square fill-current"></span>
-        </button>
-        <button v-else type="submit" aria-label="发送提问" title="发送提问" :disabled="!draft.trim()" class="send">
-          <span class="i-lucide-arrow-up"></span>
-        </button>
-      </form>
-    </div>
+    </template>
   </section>
 </template>
 
@@ -231,17 +375,105 @@ header .tool:first-child {
 header .tool:hover {
   color: hsl(var(--primary));
 }
+.history-day {
+  --history-row-height: 36px;
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  column-gap: 8px;
+  align-items: start;
+}
+.history-day + .history-day {
+  margin-top: 12px;
+}
+.history-day h3 {
+  padding-block: calc((var(--history-row-height) - 24px) / 2);
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 400;
+  color: hsl(var(--muted-foreground));
+}
+.history-row {
+  padding-inline-end: 4px;
+}
+.history-row .tool {
+  opacity: 0;
+}
+.history-row:hover .tool,
+.history-row .tool[aria-expanded="true"],
+.history-row:focus-within .tool {
+  opacity: 1;
+}
+@media (pointer: coarse) {
+  .history-day {
+    --history-row-height: 44px;
+  }
+  .history-row .tool {
+    opacity: 1;
+  }
+}
+.history-link {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-height: var(--history-row-height);
+  background: transparent;
+}
+.history-title {
+  grid-column: 2;
+  position: relative;
+  padding-inline-start: 14px;
+}
+.history-title::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block: 0;
+  margin-block: auto;
+  width: 2px;
+  height: 18px;
+  background: hsl(var(--primary));
+  opacity: 0;
+  pointer-events: none;
+}
+.history-link[aria-current="true"] .history-title::before {
+  opacity: 1;
+}
+.history-link[aria-current="true"],
+.history-link:focus-visible,
+.history-row:hover .history-link {
+  color: hsl(var(--primary));
+}
+@media (prefers-reduced-motion: no-preference) {
+  .history-link {
+    transition: color var(--b-transition-duration) var(--b-transition-animation);
+  }
+  .history-title::before,
+  .history-row .tool {
+    transition: opacity var(--b-transition-duration) var(--b-transition-animation);
+  }
+  @starting-style {
+    .history-link[aria-current="true"] .history-title::before {
+      opacity: 0;
+    }
+  }
+}
 header .tool:not(:first-child),
 .send {
   width: 32px;
   height: 32px;
   justify-content: center;
 }
+.history-row .tool:hover {
+  background: hsl(var(--muted));
+}
+.history-link:focus-visible,
 .tool:focus-visible,
 .send:focus-visible {
   outline: 2px solid hsl(var(--primary));
   outline-offset: 2px;
 }
+.history,
 .transcript {
   flex: 1;
   min-height: 0;
@@ -253,6 +485,18 @@ header .tool:not(:first-child),
 }
 .transcript > .turn:first-child {
   margin-top: 0;
+}
+.history {
+  padding: 22px clamp(16px, 3vw, 32px);
+  scrollbar-width: thin;
+}
+.empty-history {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 0;
+  color: hsl(var(--muted-foreground));
 }
 .pending {
   align-items: center;
