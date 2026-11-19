@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { ThemeConfig } from "../../types";
-import { useMounted } from "@vueuse/core";
+import { onKeyStroke, useMounted } from "@vueuse/core";
 import { useData } from "vitepress";
-import { computed, toRefs } from "vue";
+import { computed, ref, toRefs } from "vue";
 import { getIcon } from "../../utils/icon";
 import BIcon from "./BIcon.vue";
 import BLink from "./BLink.vue";
@@ -15,20 +15,30 @@ const { socialLinks } = toRefs(theme.value);
 const mounted = useMounted();
 const dark = computed(() => mounted.value && isDark.value);
 const themeToggleText = computed(() => dark.value ? "切换到浅色模式" : "切换到深色模式");
+const open = ref(false);
+const trigger = ref<HTMLButtonElement>();
+onKeyStroke("Escape", () => {
+  if (open.value) {
+    open.value = false;
+    trigger.value?.focus();
+  }
+});
 </script>
 
 <template>
-  <BPopover trigger="hover" :offset="0">
+  <BPopover v-model="open" trigger="click" :offset="0" :delay="0" :duration="0">
     <template #reference>
-      <BIcon icon="i-lucide-more-horizontal" class="block lg:hidden" />
+      <button ref="trigger" type="button" aria-label="更多" :aria-expanded="open" class="appearance-none bg-transparent p-xs opacity-70 transition lg:hidden hover:opacity-100 motion-reduce:transition-none">
+        <span class="i-lucide-more-horizontal block"></span>
+      </button>
     </template>
-    <div class="w-50 left-unset! right-sm!">
-      <div class="popover-item" @click="isDark = !isDark">
+    <div class="w-50 left-unset! right-sm! lg:hidden">
+      <button type="button" class="popover-item w-full appearance-none bg-transparent" @click="isDark = !isDark; open = false">
         <BIcon><BThemeIcon /></BIcon>
         <span class="text-sm opacity-70">{{ themeToggleText }}</span>
-      </div>
+      </button>
       <div class="my-2 h-1px w-full bg-muted"></div>
-      <BLink v-for="link in socialLinks" :key="link.link" class="popover-item" :href="link.link" :target="link.target ?? '_target'" :aria-label="link.ariaLabel">
+      <BLink v-for="link in socialLinks" :key="link.link" class="popover-item" :href="link.link" :target="link.target ?? '_target'" :aria-label="link.ariaLabel" @click="open = false">
         <BIcon :icon="getIcon(link.icon)" />
         <span class="text-sm opacity-70">{{ link.title }}</span>
       </BLink>
